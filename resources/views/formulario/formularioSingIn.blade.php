@@ -3,7 +3,9 @@
   <head>
 
     <title> Crear Sesion </title>
-    <link rel="stylesheet" href="css/estilosFormularios.css">
+
+    <!-- {Manera de agregar recursos en larabel con laravel collective} -->
+    {!!Html::style('css/estilosFormularios.css')!!}
 
   </head>
 
@@ -11,37 +13,39 @@
 
     <div class="box1">
 
-      <img src="assets/logoRetocado.jpg" class="logotipo">
+    	<img src="{{ asset('assets/logoRetocado.jpg') }}" class="logotipo">
 
-      <form class="datosDeRegistro" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" METHOD="POST">
+    	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
-        <label class="indicadorInput"> Maximo 3 Caracteres
-          <input type="text" placeholder="Name" name="name" value="<?php if(isset($_POST['name'])) echo ($_POST['name']); ?>" required>
-          <!-- {placeholder: Campo donde se escribe} -->
-          <!-- {required: Campo Obligatorio} -->
-        </label>
+    		<div class="indicadorInput">
+    			{!! Form::text('name',null,['placeholder' => 'Name'], 'required') !!}
+    			<!-- {placeholder: Campo donde se escribe} -->
+          		<!-- {required: Campo Obligatorio} -->
+    		</div>
 
-        <label class="indicadorInput"> Maximo  25 Caracteres
-          <input type="text" placeholder="Last Name" name="last_name" value="<?php if(isset($_POST['last_name'])) echo ($_POST['last_name']); ?>" required>
-        </label>
+    		<div class="indicadorInput">
+    			{!! Form::text('last_name',null,['placeholder' => 'Last Name'], 'required') !!}
+    		</div>
 
-        <label class="indicadorInputVacio"> Espacio
-          <input type="email" placeholder="Email" name="email" value="<?php if(isset($_POST['email'])) echo ($_POST['email']); ?>" required>
-        </label>
+    		<div class="indicadorInput">
+    			{!! Form::text('email',null,['placeholder' => 'Email'], 'required') !!}
+    		</div>
 
-        <label class="indicadorInput"> Maximo  35 Caracteres
-          <input type="password" placeholder="Password" name="password" required>
-        </label>
+    		<div class="indicadorInput">
+    			{!! Form::password('password',['placeholder' => 'Password'], 'required') !!}
+    		</div>
 
-        <label class="indicadorInput"> Maximo 34 Caracteres
-          <input id="ultimoInput" type="password" placeholder="Repeat Password" name="psw_repeat" required>
-        </label>
+    		<div class="indicadorInput">
+    			{!! Form::password('password_repeat',['placeholder' => 'Repeat Password', 'id' => 'ultimoInput'], 'required') !!}
+    		</div>
 
-        <button type="submit" id="signupbtn">Continuar</button>
+    		{!! Form::submit('Registrar', ['class' => 'button']) !!}
+    
+		{!! Form::close() !!}
 
-      </form>
 
     </div>
+
 
   </body>
 

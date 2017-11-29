@@ -16,3 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('SingIn','FormularioController@mostrarFormularioSingIn');
+
+//Es necesario colocar el post para manejar el boton submit
+Route::post('SingIn','FormularioController@manejarEventoCrearSesion');
