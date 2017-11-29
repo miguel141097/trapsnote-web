@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace trapsnoteWeb\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

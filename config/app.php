@@ -39,7 +39,8 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    //true indica que la app está en producción
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -65,7 +66,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Caracas',
 
     /*
     |--------------------------------------------------------------------------
@@ -171,11 +172,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        trapsnoteWeb\Providers\AppServiceProvider::class,
+        trapsnoteWeb\Providers\AuthServiceProvider::class,
+        // trapsnoteWeb\Providers\BroadcastServiceProvider::class,
+        trapsnoteWeb\Providers\EventServiceProvider::class,
+        trapsnoteWeb\Providers\RouteServiceProvider::class,
 
     ],
 
