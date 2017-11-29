@@ -5,7 +5,8 @@
     <title> Crear Sesion </title>
 
     <!-- {Manera de agregar recursos en larabel con laravel collective} -->
-    {!!Html::style('css/estilosFormularios.css')!!}
+    <!--{   {!!Html::style('css/estilosFormularios.css')!!}   }-->
+    <link rel="stylesheet" href="css/estilosFormularios.css">
 
   </head>
 
@@ -13,7 +14,7 @@
 
     <div class="box1">
 
-    	<img src="{{ asset('assets/logoRetocado.jpg') }}" class="logotipo">
+    	<img src="assets/logoRetocado.jpg" class="logotipo">
 
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
