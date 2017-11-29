@@ -1,0 +1,41 @@
+#page{
+
+  background-color: #F8F8F6;
+  display: block;
+  margin: auto;
+  padding: 0px;
+  width: 50%;
+
+}
+
+
+#resultado {
+	padding: 20px;
+	padding-top: 100px;
+	text-align: center;
+}
+
+
+#Json {
+	width: 100%;
+	padding: 10px;
+	clear: both;
+	text-align: center;
+}
+
+
+.logo{
+
+	float: left;
+	width: 35%;
+}
+
+
+.error {
+	color: red;
+	width: 15%;
+}
+
+@media (max-width: 350px){
+
+}

@@ -1,0 +1,122 @@
+.box1, #box2{
+	margin: auto;		/* Centra el formulario en el eje X */
+	width: 30%;
+	padding: 20px;
+	box-sizing: border-box;
+	background: rgb(248, 248, 246);
+
+	box-sizing: border-box;
+	/* Esta propiedad funciona para que NO se agregue mas tamaño al formulario con padding,
+	si no que se va hacia adentro esta separación*/
+}
+
+.box1 {
+
+	margin-top: 50px;
+	border-radius: 30px 30px 0px 0px;
+
+}
+
+
+.logotipo {
+	width: 70%;
+
+	/*Lo centraliza*/
+	display: block;
+	margin: auto;
+
+	margin-bottom: 20px;
+}
+
+
+.datosDeRegistro input {
+	width: 100%;
+	margin-bottom: 6px;
+	padding: 10px;
+	box-sizing: border-box;
+
+}
+
+
+#ultimoInput {
+	margin: 0px 0px 20px 0px;
+}
+
+
+button {
+	color: #fff;
+	background: rgba(0,0,0,0.7);
+	padding: 5px;
+	font-size: 15px;
+	width: 100%;
+	margin-top: 10px;
+}
+
+button:hover {
+	cursor: pointer;
+	background: rgba(26,111,280,0.9);
+}
+
+
+#box2 {
+	padding-top: 0px;
+}
+
+
+.indicadorInput , .indicadorInputVacio{
+	color: rgb(248, 248, 246);
+	transition: all 0.3s;
+	display: block;
+}
+
+.indicadorInput:hover {
+	color: rgba(100,100,300,1);
+}
+
+
+/*Sirve para mantener el tamaño del formulario aunque la pantalla se disminuya*/
+@media (max-width: 350px){
+
+	.box1, #box2 {
+		width: 100%;
+		padding: 7px;
+margin-left: 30%;
+	}
+	.indicadorInput , .indicadorInputVacio,#box2,  button, input{
+		font-size:8pt;
+	}
+
+}
+@media (max-width: 500px) {
+	.box1, #box2 {
+		width: 100%;
+	}
+	.indicadorInput , .indicadorInputVacio,#box2,  button, input{
+		font-size: 10pt;
+	}
+
+}
+
+@media (max-width: 650px) {
+	.box1, #box2 {
+		width: 70%;
+	}
+}
+
+	@media ( max-width: 800px) {
+		.box1, #box2 {
+			width: 58%;
+		}
+	}
+
+	@media (max-width: 1000px) {
+		.box1, #box2 {
+			width: 48%;
+		}
+	}
+
+	@media (max-width: 1200px) {
+		.box1, #box2 {
+			width: 37%;
+		}
+	}
