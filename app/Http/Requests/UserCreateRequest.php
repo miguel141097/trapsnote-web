@@ -31,12 +31,12 @@ class UserCreateRequest extends FormRequest
         return [
             
             'name' => ['required', 'max:50' , new ValidarLetrasyEspacios],
-            'last_name' => 'required|max:50',
+            'last_name' => ['required', 'max:50' , new ValidarLetrasyEspacios],
 
             'email' => 'required|email',
 
             'password' => ['required','min:8', 'contraseña:password_repeat', new ValidarSinEspacios ],
-            'password_repeat' => 'required|min:8',            
+            'password_repeat' => ['required','min:8', new ValidarSinEspacios ],
 
         ];
     }

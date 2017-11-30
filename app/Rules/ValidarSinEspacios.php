@@ -38,6 +38,6 @@ class ValidarSinEspacios implements Rule
      */
     public function message()
     {
-        return 'The :attribute no puede contener espacios';
+        return 'El campo :attribute no puede contener espacios';
     }
 }

@@ -42,6 +42,6 @@ class ValidarLetrasyEspacios implements Rule
      */
     public function message()
     {
-        return 'The :attribute no puede contener numeros';
+        return 'El campo :attribute no puede contener numeros';
     }
 }
