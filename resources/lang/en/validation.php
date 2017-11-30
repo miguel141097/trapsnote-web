@@ -88,6 +88,9 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
 
+    //Nueva validacion (Cuando las contraseñas NO coinciden)
+    'contraseña'            => 'The: Passwords do not match.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
