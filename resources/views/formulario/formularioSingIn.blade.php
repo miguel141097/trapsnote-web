@@ -24,6 +24,12 @@
 
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
+      <div class="indicadorInput">
+        {!! Form::text('username',null,['placeholder' => 'Username']) !!}
+        <!-- {placeholder: Campo donde se escribe} -->
+            <!-- {required: Campo Obligatorio} -->
+      </div>
+
     		<div class="indicadorInput">
     			{!! Form::text('name',null,['placeholder' => 'Name']) !!}
     			<!-- {placeholder: Campo donde se escribe} -->
@@ -53,7 +59,7 @@
     		</div>
 
     		{!! Form::submit('Registrar', ['class' => 'button']) !!}
-    
+
 		{!! Form::close() !!}
 
 
