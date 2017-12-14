@@ -35,7 +35,7 @@ class UserCreateRequest extends FormRequest
             'email' => 'required|email',
             'password' => ['required','min:8', 'contraseña:password_repeat', new ValidarSinEspacios ],
             'password_repeat' => ['required','min:8', new ValidarSinEspacios ],
-
+            'year'=> 'validarEdad:month,day',
         ];
     }
 }
