@@ -10,7 +10,7 @@ use trapsnoteWeb\Http\Requests\UserCreateRequest;
 
 class FormularioController extends Controller
 {
-    
+
 
     public function mostrarFormularioSingIn(){
 
@@ -21,7 +21,7 @@ class FormularioController extends Controller
     //La variable request contiene TODOS los valores ingresados por el usuario en el formulario
     public function manejarEventoCrearSesion(UserCreateRequest $request){
 
-    	$arregloConDatosDelUsuario = array( 'name' => $request['name'], 'last_name' => $request['last_name'],'email' => $request['email'], 'password' => $request['password'],'password_repeat' => $request['password_repeat'] );
+    	$arregloConDatosDelUsuario = array( 'username'=>$request['username'],'name' => $request['name'], 'last_name' => $request['last_name'],'email' => $request['email'], 'password' => $request['password'],'password_repeat' => $request['password_repeat'] );
 
     	//Convierte el arreglo con todos los datos en un JSON
     	$JSON = json_encode($arregloConDatosDelUsuario);
