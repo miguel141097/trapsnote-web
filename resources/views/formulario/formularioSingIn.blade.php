@@ -59,6 +59,7 @@
     		</div>
 
     		{!! Form::submit('Registrar', ['class' => 'button']) !!}
+        <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>
 
 		{!! Form::close() !!}
 

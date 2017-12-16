@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //Se importa las reglas de validación del formulario
 use trapsnoteWeb\Http\Requests\UserCreateRequest;
+use trapsnoteWeb\Http\Requests\UserLoginRequest;
 
 
 class FormularioController extends Controller
