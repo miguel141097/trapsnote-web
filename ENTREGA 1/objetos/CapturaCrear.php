@@ -6,7 +6,7 @@
 
 		public function CapturaValidarFormulario(){
 
-			$arregloDeCapturas = array('name' => $_POST['name'], 'last_name' => $_POST['last_name'],'email' => $_POST['email'], 'password' => $_POST['password']);
+			$arregloDeCapturas = array('nombre' => $_POST['name'], 'last_name' => $_POST['last_name'],'email' => $_POST['email'], 'password' => $_POST['password'],'psw_repeat' => $_POST['psw_repeat']);
 
 			$NumErr;
 			$ErroresTotales = 0;
@@ -20,7 +20,7 @@
 			$ErroresTotales = $ErroresTotales + $NumErr;
 
 			$password = $arregloDeCapturas['password'];
-			$psw_repeat = $POST['psw_repeat'];
+			$psw_repeat = $arregloDeCapturas['psw_repeat'];
 			$NumErr = $this->validarContraseña($password, $psw_repeat);
 			$ErroresTotales = $ErroresTotales + $NumErr;
 
@@ -58,7 +58,7 @@
 
 
 		private function ValidarContraseña($contraseña, $contraseña_repeat){
-
+			
 			$cont = 0;
 
 			$Error = '';
@@ -69,13 +69,13 @@
 			}
 
 			$Error = Validaciones::ValidarSinEspacios($contraseña, "Password");
-
+			
 			if ($Error != ''){
 				$cont++;
 			}
 
        		$Error = Validaciones::ValidarIgualdad($contraseña, $contraseña_repeat, 'password', 'repeat password');
-
+			 
 			if ($Error != ''){
 				$cont++;
 			}

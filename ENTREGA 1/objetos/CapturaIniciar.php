@@ -8,10 +8,14 @@
 
 		public function CapturaValidarFormulario(){
 
-			$arregloDeCapturas = array('email' => $_POST['email'], 'password' => $_POST['password']);
+			$arregloDeCapturas = array('nombre' => $_POST['name'], 'password' => $_POST['password']);
 
 			$NumErr;
 			$ErroresTotales = 0;
+
+			$name = $arregloDeCapturas['nombre'];
+			$NumErr = $this->ValidarNombre($name, "Name");
+			$ErroresTotales = $ErroresTotales + $NumErr;
 
 			$password = $arregloDeCapturas['password'];
 			$NumErr = $this->validarContraseña($password);
@@ -25,7 +29,7 @@
 		}
 
 		private function ValidarNombre($nombre, $Parametro){
-
+			
 			/*Cuenta Los Errores*/
 			$cont = 0;
 
@@ -61,7 +65,7 @@
 			}
 
 			$Error = Validaciones::ValidarSinEspacios($contraseña, "Password");
-
+			
 			if ($Error != ''){
 				$cont++;
 			}
