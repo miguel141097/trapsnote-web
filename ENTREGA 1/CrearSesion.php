@@ -53,7 +53,7 @@
         </div>
 
 
-        <?php  
+        <?php
 
           if($_POST){
 
@@ -69,7 +69,7 @@
 
               /*   ENVIO    */
               echo $JSON;
-              $url = 'https://quiet-basin-87095.herokuapp.com';
+              $url = 'https://dry-forest-40048.herokuapp.com/usuarios';
               $ch = curl_init( $url );
               // Este es el setup para enviar los datos del json a la base de datos
               $payload = json_encode(array('usuario' => $datos));
@@ -84,7 +84,7 @@
 
               if($datos != "Error"){
                 echo "<script language='javascript'>window.location='salidas/action_crear_sesion.php'</script>";
-              } 
+              }
 
           }
 

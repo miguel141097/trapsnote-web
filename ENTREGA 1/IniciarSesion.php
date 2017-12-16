@@ -19,7 +19,7 @@
   		 <form class="datosDeRegistro" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" METHOD="POST">
 
 	  		 <label class="indicadorInput"> Maximo <?php  echo maxLengthNames; ?> Caracteres
-          		<input type="text" placeholder="Name" name="name" value="<?php if(isset($_POST['name'])) echo ($_POST['name']); ?>" maxlength="<?php  echo maxLengthNames; ?>" required>
+          		<input type="email" placeholder="Email adress" name="email" value="<?php if(isset($_POST['email'])) echo ($_POST['email']); ?>" maxlength="<?php  echo maxLengthNames; ?>" required>
               <!-- el atributo value se utiliza para que haya un valor por defecto, en este caso se utiliza para mantener un valor
               en el formulario mientras se valida dicho valor -->
         	 </label>
@@ -40,7 +40,7 @@
 
     </div>
 
-    <?php  
+    <?php
 
       if($_POST){
 
@@ -50,12 +50,22 @@
 
           $datos = $capture->CapturaValidarFormulario();
 
-          //Lo Guardamos en una Variable JSON
-          $JSON = json_encode($datos);
+          $url = 'https://dry-forest-40048.herokuapp.com/login';
+          $ch = curl_init( $url );
+          // Este es el setup para enviar los datos del json a la base de datos
+          $payload = json_encode($datos);
+          curl_setopt($ch, CURLOPT_POST, 1);
+          curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+          curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+          $result = curl_exec($ch);
+          curl_close($ch);
+          // Aqui se imprime la respuesta del servidor
+          $result = json_decode($result, true);
+          echo $result['email'];
+          echo "<pre>$result</pre>";
+          echo $datos['email'];
+          echo $datos['password'];
 
-          if($datos != "Error"){
-            echo "<script language='javascript'>window.location='salidas/action_iniciar_sesion.php'</script>";
-          } 
 
       }
 
