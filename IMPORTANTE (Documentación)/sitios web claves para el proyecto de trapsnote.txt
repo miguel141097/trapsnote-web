@@ -1,0 +1,31 @@
+Montar laravel en Heroku:
+
+   https://devcenter.heroku.com/articles/getting-started-with-laravel
+
+Configuracion de laravel:
+
+   https://laravel.com/docs/5.5/configuration
+
+Video de ayuda para aprender laravel:
+
+   https://www.youtube.com/watch?v=YunVjXjKFzg&list=PLIddmSRJEJ0u-5Nv2k6W8Vhe0wUP_7H5W&index=4
+
+Manera de hacer los links en laravel:
+
+   https://laracasts.com/discuss/channels/general-discussion/what-is-the-l5-equivalent-of-htmlstylecssdefaultcss?page=1
+
+Hacer una validación con DOS parametros:
+
+   https://es.stackoverflow.com/questions/27876/validaci%C3%B3n-mayor-que-o-menor-que-en-el-request-de-laravel
+
+Clonar un proyecto laravel:
+
+   https://parzibyte.me/blog/2017/05/29/hacer-despues-clonar-proyecto-laravel/
+
+Crear clases personalizadas:
+
+   https://es.stackoverflow.com/questions/4547/a%C3%B1adir-carpeta-adicional-a-laravel-5
+
+
+
+
