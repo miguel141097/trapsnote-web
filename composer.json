@@ -22,9 +22,6 @@
             "database/seeds",
             "database/factories"
         ],
-        "files": [
-            "Libreria/RecursoHTTP.php"
-        ],
         "psr-4": {
             "trapsnoteWeb\\": "app/"
         }

@@ -35,7 +35,7 @@
     		</div>
 
     		{!! Form::submit('Iniciar Sesion', ['class' => 'button']) !!}
-        <button type="button" class ='button' onclick="window.location='{{ url("SingUp") }}'">Crear cuenta</button>
+        <button type="button" class ='button' onclick="window.location='{{ url("SingIn") }}'">Crear cuenta</button>
 
 		{!! Form::close() !!}
 
