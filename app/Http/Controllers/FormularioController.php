@@ -13,6 +13,7 @@ class FormularioController extends Controller
 {
 
 
+
     public function mostrarFormularioSingIn(){
 
     	return view('formulario.formularioSingIn');
@@ -76,21 +77,28 @@ class FormularioController extends Controller
         if($ch != false){
 
         	//Configuración del recurso cURL
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+          curl_setopt($ch, CURLOPT_VERBOSE, 1);
+          curl_setopt($ch, CURLOPT_HEADER, 1);
 	        curl_setopt($ch, CURLOPT_POST, 1);
 	        curl_setopt($ch, CURLOPT_POSTFIELDS, $JSON);
 	        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 
 	        // Captura la URL y envia a la base de datos
-	        curl_exec($ch);
+	        $response = curl_exec($ch);
+          $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+          $header = substr($response, 0, $header_size);
+          $body = substr($response, $header_size);
 
-	        // Cierrar el recurso cURLy libera recursos del sistema
-			curl_close($ch);
-
-			echo "<br> Datos enviados exitosamente ";
+	        // Cerrar el recurso cURLy libera recursos del sistema
+			    curl_close($ch);
+          echo $header;
+         //Si da error 400 es que el usuario no existe
 
 		}
 		else{
 			echo "<br> Hubo problemas al enviar los datos al servidor";
+      curl_close($ch);
 		}
     }
 
