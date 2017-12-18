@@ -10,10 +10,12 @@ use trapsnoteWeb\Http\Requests\UserLoginRequest;
 use trapsnoteWeb\Http\Requests\CrearTareaRequest;
 
 
-class FormularioController extends Controller
-{
-  private $urltarea;
+class FormularioController extends Controller {
+  private $recurso;
+public function __construct(){
+ $this->recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
 
+}
     public function mostrarFormularioSingIn(){
 
     	return view('formulario.formularioSingIn');
@@ -97,6 +99,7 @@ class FormularioController extends Controller
     echo"<br> <br> <br> <br>";
   echo "BIENVENIDO SIR ".$menos;
       echo"<br> <br> <br> <br>";       echo"<br> <br> <br> <br>";
+         $recurso->setAtributo($menos);
 	        // Cerrar el recurso cURLy libera recursos del sistema
 			    curl_close($ch);
 
@@ -124,17 +127,17 @@ class FormularioController extends Controller
 
 public function manejarCrearTarea(CrearTareaRequest $request){
 //$urltarea=array('url'=>$request['url']);
-  var_dump($this->urltarea);
+$recurso->getAtributo() as $urltarea;
   $arregloContarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
 //  var_dump($arregloContarea);
   //Convierte el arreglo con todos los datos en un JSON
 
   $JSONT = json_encode($arregloContarea);
-  var_dump($this->urltarea);
+  var_dump($urltarea);
   //Crea un nuevo recurso cURL
-    $ch2 = curl_init( $this->urltarea);
+    $ch2 = curl_init( $urltarea);
     echo"<br> <br> <br> <br> <br> <br> <br> ";
-echo $this->urltarea;
+echo $urltarea;
     //Si no hubo ningún error, se procede a enviar los datos al servidor
     if($ch2 != false){
 
@@ -150,9 +153,9 @@ echo $this->urltarea;
       		 $bien=  curl_exec($ch2);
           curl_close($ch2);
           if($ch2)
-          var_dump($this->urltarea);
+          var_dump($urltarea);
           echo "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa";
-            var_dump($this->urltarea);
+            var_dump($urltarea);
 
 }
 
