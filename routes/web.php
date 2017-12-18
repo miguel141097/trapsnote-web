@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('SignUp','FormularioController@mostrarFormularioSingIn');
+Route::get('SignUp','FormularioController@mostrarFormularioSignUp');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
 
 //Es necesario colocar el post para manejar el boton submit

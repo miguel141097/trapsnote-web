@@ -24,11 +24,11 @@
 
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
-      <div class="indicadorInput">
-        {!! Form::text('username',null,['placeholder' => 'Username']) !!}
-        <!-- {placeholder: Campo donde se escribe} -->
-            <!-- {required: Campo Obligatorio} -->
-      </div>
+            <div class="indicadorInput">
+                {!! Form::text('username',null,['placeholder' => 'Username']) !!}
+                <!-- {placeholder: Campo donde se escribe} -->
+                    <!-- {required: Campo Obligatorio} -->
+            </div>
 
     		<div class="indicadorInput">
     			{!! Form::text('name',null,['placeholder' => 'Name']) !!}
@@ -58,8 +58,8 @@
     			{!! Form::selectRange('year', 1960, date('o') ) !!}
     		</div>
 
-    		{!! Form::submit('Registrar', ['class' => 'button']) !!}
-        <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>
+        		{!! Form::submit('Registrar', ['class' => 'button']) !!}
+            <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>
 
 		{!! Form::close() !!}
 

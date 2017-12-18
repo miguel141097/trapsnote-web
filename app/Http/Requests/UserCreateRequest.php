@@ -7,6 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 //Nuevas validaciones
 use trapsnoteWeb\Rules\ValidarLetrasyEspacios;
 use trapsnoteWeb\Rules\ValidarSinEspacios;
+use trapsnoteWeb\Rules\ValidarCorreoRepetido;
+use trapsnoteWeb\Rules\ValidarUsernameRepetido;
 
 
 class UserCreateRequest extends FormRequest
@@ -29,12 +31,16 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username'=>['required', new ValidarSinEspacios],
+            'username'=>['required', new ValidarSinEspacios, new ValidarUsernameRepetido],
+
             'name' => ['required', 'max:50' , new ValidarLetrasyEspacios],
             'last_name' => ['required', 'max:50' , new ValidarLetrasyEspacios],
-            'email' => 'required|email',
-            'password' => ['required','min:8', 'contraseña:password_repeat', new ValidarSinEspacios ],
-            'password_repeat' => ['required','min:8', new ValidarSinEspacios ],
+
+            'email' => ['required', 'email', new ValidarCorreoRepetido],
+
+            'password' => ['required','min:8', 'contraseña:password_repeat', new ValidarSinEspacios],
+            'password_repeat' => ['required','min:8', new ValidarSinEspacios],
+
             'year'=> 'validarEdad:month,day',
         ];
     }
