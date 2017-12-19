@@ -14,11 +14,12 @@ class FormularioController extends Controller
 
 
 
-    public function mostrarFormularioSingIn(){
+    public function mostrarFormularioSignUp(){
 
-    	return view('formulario.formularioSingIn');
+    	return view('formulario.formularioSignUp');
 
     }
+
     public function mostrarFormularioLogin(){
       return view('formulario.formularioLogin');
     }
@@ -38,6 +39,7 @@ class FormularioController extends Controller
     }
 
     public function manejarEventoLogin(UserLoginRequest $request){
+      
       $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
 
     	//Convierte el arreglo con todos los datos en un JSON
