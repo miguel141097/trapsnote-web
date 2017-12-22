@@ -14,9 +14,12 @@
   </head>
 
   <body>
+
   	<!-- {Incluye las alertas} -->
   	@include('alert.request')
 
+<?php 
+     //echo $urltarea;  ?>
     <div class="box1">
 
     	<img src="assets/logoRetocado.jpg" class="logotipo">

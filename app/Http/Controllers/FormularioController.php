@@ -11,11 +11,11 @@ use trapsnoteWeb\Http\Requests\CrearTareaRequest;
 
 
 class FormularioController extends Controller {
-  private $recurso;
-public function __construct(){
- $this->recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-
-}
+  protected $recurso;
+   public function __construct()
+       {
+           $this->recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+       }
     public function mostrarFormularioSingIn(){
 
     	return view('formulario.formularioSingIn');
@@ -99,17 +99,18 @@ public function __construct(){
     echo"<br> <br> <br> <br>";
   echo "BIENVENIDO SIR ".$menos;
       echo"<br> <br> <br> <br>";       echo"<br> <br> <br> <br>";
-         $recurso->setAtributo($menos);
+
 	        // Cerrar el recurso cURLy libera recursos del sistema
 			    curl_close($ch);
 
 
-//url 
-         $this->urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
-           var_dump($this->urltarea);
-             var_dump($this->urltarea);
-               var_dump($this->urltarea);
-        return view('formulario.formularioTarea');
+//url
+         $urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
+         $this->recurso ->setAtributo($urltarea);
+           var_dump($urltarea);
+             var_dump($urltarea);
+               var_dump($urltarea);
+        return view('formulario.formularioTarea')->with('url',$urltarea);
 
 
 
@@ -127,7 +128,7 @@ public function __construct(){
 
 public function manejarCrearTarea(CrearTareaRequest $request){
 //$urltarea=array('url'=>$request['url']);
-$recurso->getAtributo() as $urltarea;
+ $urltarea= $this->recurso-> getAtributo();
   $arregloContarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
 //  var_dump($arregloContarea);
   //Convierte el arreglo con todos los datos en un JSON
