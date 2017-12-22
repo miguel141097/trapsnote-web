@@ -104,7 +104,7 @@ public function __construct(){
 			    curl_close($ch);
 
 
-
+//url 
          $this->urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
            var_dump($this->urltarea);
              var_dump($this->urltarea);
