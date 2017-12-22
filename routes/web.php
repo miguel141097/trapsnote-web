@@ -15,12 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('SingIn','FormularioController@mostrarFormularioSingIn');
+Route::get('SignUp','FormularioController@mostrarFormularioSingIn');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
 Route::get('Login/tarea', function(){
   return view ('formulario.formularioTarea');
 });
 //Es necesario colocar el post para manejar el boton submit
-Route::post('SingIn','FormularioController@manejarEventoCrearSesion');
+Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
+//tareas
 Route::post('Login/tarea', 'FormularioController@manejarCrearTarea');
