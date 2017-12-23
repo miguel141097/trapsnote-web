@@ -23,7 +23,7 @@
     	<img src="assets/logoRetocado.jpg" class="logotipo">
 
           	{!! Form::open( ['action' => 'FormularioController@manejarCrearTarea', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
-
+          <!-- Encargada de mandar la url al controlador al hacer el post -->  
           <input type="hidden" name="url" value="{{$nombre}}">
 
             <div class="indicadorInput">

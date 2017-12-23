@@ -12,7 +12,7 @@ protected $valor;
     	//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
 
-    	//Crea un nuevo recurso cURL   
+    	//Crea un nuevo recurso cURL
         $ch = curl_init($url);
 
         //Si no hubo ningún error, se procede a enviar los datos al servidor

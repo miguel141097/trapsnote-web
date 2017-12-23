@@ -96,16 +96,16 @@ class FormularioController extends Controller {
   $s  =substr($menos,-1);
   $menos= str_replace($s, "/", $menos);
     echo"<br> <br> <br> <br>";
-  echo "BIENVENIDO SIR ".$menos;
+  echo "BIENVENIDO SEÑOR:  ".$menos;
       echo"<br> <br> <br> <br>";       echo"<br> <br> <br> <br>";
 
 	        // Cerrar el recurso cURLy libera recursos del sistema
 			    curl_close($ch);
 
          $urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
-
+//pasarle a la vista el link generado
         return view('tareasCrear')->with('nombre',$urltarea);
-         //Si da error 400 es que el usuario no existe
+
 		}
 		else{
 			echo "<br> Hubo problemas al enviar los datos al servidor";
