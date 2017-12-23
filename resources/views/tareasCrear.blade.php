@@ -18,13 +18,13 @@
   	<!-- {Incluye las alertas} -->
   	@include('alert.request')
 
-<?php 
-     //echo $urltarea;  ?>
     <div class="box1">
 
     	<img src="assets/logoRetocado.jpg" class="logotipo">
 
           	{!! Form::open( ['action' => 'FormularioController@manejarCrearTarea', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
+
+          <input type="hidden" name="url" value="{{$nombre}}">
 
             <div class="indicadorInput">
               {!! Form::text('descripcion',null,['placeholder' => 'Descripcion']) !!}
@@ -37,9 +37,6 @@
               <!-- {placeholder: Campo donde se escribe} -->
                   <!-- {required: Campo Obligatorio} -->
             </div>
-          		<div class="indicadorInput">
-          			{!! Form::text('username',null, ['placeholder' => 'username']) !!}
-          		</div>
 
               <div>
                 {!! Form::selectRange('completado', 0, 1) !!}

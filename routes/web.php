@@ -17,11 +17,10 @@ Route::get('/', function () {
 
 Route::get('SignUp','FormularioController@mostrarFormularioSingIn');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
-Route::get('Login', function($urltarea){
-  return view ('formulario.formularioTarea')->with('url',$urltarea);
-});
+Route::get('Login/tarea', 'FormularioController@mostrarTareas');
+
 //Es necesario colocar el post para manejar el boton submit
 Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
 //tareas
-Route::post('Login/tarea', 'FormularioController@manejarCrearTarea');
+Route::post('Login/tarea', ['as' => 'Login/tarea', 'uses' => 'FormularioController@manejarCrearTarea']);

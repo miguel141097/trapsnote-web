@@ -11,11 +11,6 @@ use trapsnoteWeb\Http\Requests\CrearTareaRequest;
 
 
 class FormularioController extends Controller {
-  protected $recurso;
-   public function __construct()
-       {
-           $this->recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-       }
     public function mostrarFormularioSingIn(){
 
     	return view('formulario.formularioSingIn');
@@ -24,6 +19,10 @@ class FormularioController extends Controller {
     public function mostrarFormularioLogin(){
       return view('formulario.formularioLogin');
     }
+    public function mostrarTareas(){
+      return view('formulario.formularioTarea');
+    }
+
 
     //La variable request contiene TODOS los valores ingresados por el usuario en el formulario
     public function manejarEventoCrearSesion(UserCreateRequest $request){
@@ -103,19 +102,10 @@ class FormularioController extends Controller {
 	        // Cerrar el recurso cURLy libera recursos del sistema
 			    curl_close($ch);
 
-
-//url
          $urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
-         $this->recurso ->setAtributo($urltarea);
-           var_dump($urltarea);
-             var_dump($urltarea);
-               var_dump($urltarea);
-        return view('formulario.formularioTarea')->with('url',$urltarea);
 
-
-
+        return view('tareasCrear')->with('nombre',$urltarea);
          //Si da error 400 es que el usuario no existe
-
 		}
 		else{
 			echo "<br> Hubo problemas al enviar los datos al servidor";
@@ -127,37 +117,26 @@ class FormularioController extends Controller {
 
 
 public function manejarCrearTarea(CrearTareaRequest $request){
-//$urltarea=array('url'=>$request['url']);
- $urltarea= $this->recurso-> getAtributo();
-  $arregloContarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
-//  var_dump($arregloContarea);
-  //Convierte el arreglo con todos los datos en un JSON
 
+  $urltarea = $request['url'];
+  $arregloContarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
   $JSONT = json_encode($arregloContarea);
-  var_dump($urltarea);
   //Crea un nuevo recurso cURL
     $ch2 = curl_init( $urltarea);
     echo"<br> <br> <br> <br> <br> <br> <br> ";
-echo $urltarea;
     //Si no hubo ningún error, se procede a enviar los datos al servidor
     if($ch2 != false){
 
-      //Configuración del recurso cURL
-      curl_setopt($ch2, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch2, CURLOPT_VERBOSE, 1);
-      curl_setopt($ch2, CURLOPT_HEADER, 1);
-      curl_setopt($ch2, CURLOPT_POST, 1);
-      curl_setopt($ch2, CURLOPT_POSTFIELDS, $JSONT);
-      curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-      }
-      		 $bien=  curl_exec($ch2);
+        curl_setopt($ch2, CURLOPT_POST, 1);
+        curl_setopt($ch2, CURLOPT_POSTFIELDS, $JSONT);
+        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        curl_exec($ch2);
           curl_close($ch2);
           if($ch2)
-          var_dump($urltarea);
-          echo "JAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa";
-            var_dump($urltarea);
-
+          echo "<br> <br> <br> La tarea fue agregada exitosamente";
+          else
+          echo "Lo sentimos no se pudo agregar Correctamente";
 }
 
+}
 }
