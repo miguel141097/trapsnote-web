@@ -10,12 +10,21 @@ use trapsnoteWeb\Http\Requests\UserLoginRequest;
 use trapsnoteWeb\Http\Requests\CrearTareaRequest;
 
 
+
 class FormularioController extends Controller {
     public function mostrarFormularioSingIn(){
 
-    	return view('formulario.formularioSingIn');
+class FormularioController extends Controller
+{
+
+
+
+    public function mostrarFormularioSignUp(){
+
+    	return view('formulario.formularioSignUp');
 
     }
+
     public function mostrarFormularioLogin(){
       return view('formulario.formularioLogin');
     }
@@ -63,6 +72,7 @@ class FormularioController extends Controller {
     }
 
     public function manejarEventoLogin(UserLoginRequest $request){
+
       $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
 
     	//Convierte el arreglo con todos los datos en un JSON

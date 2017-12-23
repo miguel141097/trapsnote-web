@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('SignUp','FormularioController@mostrarFormularioSingIn');
+Route::get('SignUp','FormularioController@mostrarFormularioSignUp');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
 Route::get('Login/tarea', 'FormularioController@mostrarTareas');
 
