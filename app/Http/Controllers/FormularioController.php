@@ -10,12 +10,7 @@ use trapsnoteWeb\Http\Requests\UserLoginRequest;
 use trapsnoteWeb\Http\Requests\CrearTareaRequest;
 
 
-
-class FormularioController extends Controller {
-    public function mostrarFormularioSingIn(){
-
-class FormularioController extends Controller
-{
+class FormularioController extends Controller{
 
 
 
