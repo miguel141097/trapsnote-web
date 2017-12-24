@@ -3,7 +3,7 @@
 namespace trapsnoteWeb\Libreria;
 
 class RecursoHTTP{
-
+protected $valor;
 	public function sendPostNuevoUsuario($usuario){
 
         //Convierte el arreglo con todos los datos en un JSON
@@ -34,6 +34,7 @@ class RecursoHTTP{
 		}
 		else{
 			echo "<br> Hubo problemas al enviar el nuevo usuario al servidor";
+
 		}
 
 	}
@@ -74,6 +75,7 @@ class RecursoHTTP{
 		}
 		else{
 			echo "<br> Hubo problemas al recibir los USERNAME del servidor";
+
 		}
 
 	}
@@ -118,6 +120,12 @@ class RecursoHTTP{
 
 	}
 
+public function setAtributo($valor){
+	$this->valor=$valor;
+}
 
+public function getAtributo(){
+	return $this->valor;
+}
 
 }
