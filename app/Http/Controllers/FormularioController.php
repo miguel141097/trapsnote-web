@@ -24,7 +24,7 @@ class FormularioController extends Controller{
       return view('formulario.formularioLogin');
     }
     public function mostrarTareas(){
-      return view('formulario.formularioTarea');
+      return view('tareasCrear');
     }
 
 
@@ -95,7 +95,7 @@ class FormularioController extends Controller{
 
 
 public function manejarCrearTarea(CrearTareaRequest $request){
-
+//recibir url mandado en la vista
   $urltarea = $request['url'];
   $arregloContarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
   $JSONT = json_encode($arregloContarea);
@@ -117,4 +117,5 @@ public function manejarCrearTarea(CrearTareaRequest $request){
 }
 
 }
+
 }
