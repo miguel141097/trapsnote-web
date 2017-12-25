@@ -1,0 +1,167 @@
+*{
+	margin: 0;
+	padding: 0;
+	/*Borra todos los margenes*/
+
+	cursor: default;
+}
+
+
+header {
+	/*Separación de la barra que contiene el titulo*/
+	margin-top: 77px;
+}
+
+
+header nav {
+
+	/*Con los dos primeros se limita el tamaño*/
+	width: 250px;
+	height: 100%;
+
+	/*Se coloca esta medida para que el menu no aparezca hasta que se le de al botón*/
+	left: -100%;
+
+	/*El menu solapa la app*/
+	position: fixed;
+
+	/*Se superpone sobre el contenido*/
+	z-index: 2;
+
+	background:#024959;
+
+	float: left;
+	
+}
+
+
+header nav ul {
+	/*Separa el menu del texto*/
+	overflow:hidden;
+	list-style:none;
+}
+ 
+
+header nav ul li {
+	
+	display: block;
+
+	/*Uno debajo de otro*/
+	float: none;
+
+	border-bottom: 2px solid rgba(255,255,255,0.4);
+}
+
+
+header a {
+
+	/*Color de las opciones*/
+	color:#fff;
+
+	padding:20px;
+	display:block;
+
+	/*Quita el subrayado*/
+	text-decoration:none;
+
+	cursor: pointer;
+}
+ 
+
+header nav ul li span {
+	/*Separa los iconos de la opción */
+	margin-right:10px;
+
+	cursor: pointer;
+}
+
+
+header nav ul li a{
+	/*Tiempo de transición*/
+	transition: all ease-in 0.15s;
+}
+
+
+header nav ul li a:hover {
+	background:#037E8C;
+
+	color:#fff;
+
+	/*Quita el subrayado*/
+	text-decoration:none;
+
+	font-size: 120%; 
+}
+
+
+.menuDesplegable{
+	display: block;
+	width: 100%;
+
+	background: #1C1C1C;
+
+	/*Se crea la barra movil*/
+	position:fixed;
+	left:0px;
+	top: 0px;
+
+	/*Se superpone sobre el contenido*/
+	z-index: 3;
+
+}
+
+
+.menuDesplegable .btn-menu {
+	display:block;
+	padding:20px;
+
+	/*Color del MENU*/
+	color:#fff;
+	text-decoration:none;
+
+	font-size:25px;
+
+
+}
+
+.menuDesplegable span {
+	cursor: pointer;
+}
+
+
+.logoSideBar{
+
+	width: 150px;
+
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	border-radius: 100%;
+
+	display:block;
+	margin:auto;
+}
+
+
+.identificador {
+	text-align: center;
+	color: #fff;
+	font-size: 20px;
+	padding-bottom: 10px;
+}
+
+
+.contenido {
+
+	padding-top: 20px;
+	padding-left: 20px;
+
+	/*Si se quiere mover esta sección*/
+	position: relative;
+	z-index: 1;
+
+	left: 20%;
+
+}
+
+

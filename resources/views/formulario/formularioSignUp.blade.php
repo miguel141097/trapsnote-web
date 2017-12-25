@@ -9,7 +9,7 @@
 
     <!-- {Sin embargo Heroku maneja estos direcciones sin estos comandos de laravel collective} -->
     <link rel="stylesheet" href="css/estilosFormularios.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 
   </head>
 
