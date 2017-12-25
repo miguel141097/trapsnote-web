@@ -34,7 +34,7 @@ class ValidarUsernameRepetido implements Rule
             }
 
         }
-       
+
         return true;
     }
 

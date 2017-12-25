@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Route::get('SignUp','FormularioController@mostrarFormularioSignUp');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
+//Edicion de perfil de usuario
+Route::get('Login/editProfile','FormularioController@mostrarEdicionPerfil');
 Route::get('Login/tarea', 'FormularioController@mostrarTareas');
+
 
 //Es necesario colocar el post para manejar el boton submit
 Route::post('SignUp','FormularioController@manejarEventoCrearSesion');

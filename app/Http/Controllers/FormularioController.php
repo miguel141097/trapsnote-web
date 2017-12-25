@@ -23,6 +23,11 @@ class FormularioController extends Controller{
     public function mostrarFormularioLogin(){
       return view('formulario.formularioLogin');
     }
+
+   public function mostrarEdicionPerfil(){
+     return view('editarPerfil');
+   }
+
     public function mostrarTareas(){
       return view('tareasCrear');
     }
