@@ -17,10 +17,11 @@ Route::get('/', function () {
 
 Route::get('SignUp','FormularioController@mostrarFormularioSignUp');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
-Route::get('Login/tarea', 'FormularioController@mostrarTareas');
 
 //Es necesario colocar el post para manejar el boton submit
 Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
-//tareas
-Route::post('Login/tarea', ['as' => 'Login/tarea', 'uses' => 'FormularioController@manejarCrearTarea']);
+
+//Este controlador maneja la app luego de registrar e iniciar sesión
+Route::get('Tarea', 'FrontController@mostrarTarea');
+Route::post('Tarea', 'FrontController@manejarEventoCrearTarea');
