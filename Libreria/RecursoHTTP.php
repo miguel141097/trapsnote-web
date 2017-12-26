@@ -183,7 +183,7 @@ class RecursoHTTP{
 
 		//Crea un nuevo recurso cURL
 		$ch2 = curl_init($url);
-		
+
 		//Si no hubo ningún error, se procede a enviar los datos al servidor
 		if($ch2 != false){
 
@@ -204,6 +204,47 @@ class RecursoHTTP{
 			echo "Lo sentimos la tarea no se pudo enviar al servidor";
 
 	}
+	public function postgetTarea($url){
+		//Crea un nuevo recurso cURL
+			$ch = curl_init($url);
+
+			//Si no hubo ningún error, se procede a enviar los datos al servidor
+			if($ch != false){
+
+				//Configuración del recurso cURL
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_URL,$url);
+
+				// Captura la URL y envia a la base de datos
+				$result = curl_exec($ch);
+
+				// Cierrar el recurso cURLy libera recursos del sistema
+		curl_close($ch);
+
+		$decode = json_decode($result, true);
+
+		$arregloDeTarea = array();
+
+				foreach ($decode['tareas'] as $valor) {
+
+					?>
+
+					<ul>
+		<li>
+			<?php echo $valor['categoria']; ?>
+		</li>
+					</ul>
+					<?php
+
+		}
+		var_dump($arregloDeTarea);
+		}
+
+	else{
+		echo "<br> Hubo problemas al recibir las tareas del servidor";
+	}
 
 
+}
 }

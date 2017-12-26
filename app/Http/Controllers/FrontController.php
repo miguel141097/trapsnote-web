@@ -12,6 +12,12 @@ class FrontController extends Controller
 
     public function mostrarTarea(){
 
+    	return view('app.getTarea');
+
+    }
+
+    public function crearTarea(){
+
     	return view('app.tareas');
 
     }
@@ -29,7 +35,5 @@ class FrontController extends Controller
     	$recurso->postNuevaTarea($arregloDeTarea, $urltarea);
 
 	}
-
-
 
 }
