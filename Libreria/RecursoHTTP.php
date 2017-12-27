@@ -204,7 +204,7 @@ class RecursoHTTP{
 			echo "Lo sentimos la tarea no se pudo enviar al servidor";
 
 	}
-	public function postgetTarea($url){
+	public function getTarea($url){
 		//Crea un nuevo recurso cURL
 			$ch = curl_init($url);
 

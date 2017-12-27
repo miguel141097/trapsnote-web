@@ -16,8 +16,7 @@
 				<?php
 					//Iniciar una nueva sesión o reanudar la existente
 	         		session_start();
-
-						?>
+         		?>
 
 				<!-- Encargada de mandar la url al controlador al hacer el post -->
 	        	<input type="hidden" name="url" value="{{ $_SESSION['url'] }}">

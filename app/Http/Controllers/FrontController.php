@@ -17,7 +17,6 @@ class FrontController extends Controller
     }
 
     public function crearTarea(){
-
     	return view('app.tareas');
 
     }

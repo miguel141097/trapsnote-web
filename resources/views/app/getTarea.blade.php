@@ -15,12 +15,11 @@
 	         		session_start();
 							$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
 							$urltarea=$_SESSION['url'];
-							$recurso->postgetTarea($urltarea);
+							$recurso->getTarea($urltarea);
 						?>
-						{!! Form::open( ['action' => 'FrontController@crearTarea'] ) !!}
+						{!! Form::open( ['action' => 'FrontController@crearTarea' , 'method'=>'GET']) !!}
 						{!! Form::submit('Crear Tarea', ['class' => 'btn btn-primary']) !!}
 				{!! Form::close() !!}
-
 		</div>
 
 	</div>
