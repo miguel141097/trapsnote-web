@@ -32,7 +32,7 @@ class FrontController extends Controller
 		//Esta clase maneja el envio de los datos por parte del usuario
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$recurso->postNuevaTarea($arregloDeTarea, $urltarea);
-
+        return redirect()->action('FrontController@mostrarTarea');
 	}
 
 }
