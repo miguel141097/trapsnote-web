@@ -183,7 +183,7 @@ class RecursoHTTP{
 
 		//Crea un nuevo recurso cURL
 		$ch2 = curl_init($url);
-		
+
 		//Si no hubo ningún error, se procede a enviar los datos al servidor
 		if($ch2 != false){
 
@@ -203,6 +203,23 @@ class RecursoHTTP{
 		else
 			echo "Lo sentimos la tarea no se pudo enviar al servidor";
 
+	}
+
+	public function postEditarUsuario($edicion, $url){
+		$JSONEU = json_encode($edicion);
+		$ch2 = curl_init($url);
+
+		if($ch2 != false){
+					curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'PATCH');
+	        curl_setopt($ch2, CURLOPT_POSTFIELDS, $JSONEU);
+	        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+	        $response = curl_exec($ch2);
+	        curl_close($ch2);
+					var_dump ($response);
+		}
+		else
+			echo "Lo sentimos la tarea no se pudo enviar al servidor";
 	}
 
 

@@ -17,32 +17,32 @@
     <!-- Es sumamente importante colocar esta libreria ANTES para que la librería propia, para que el movimiento del menu funcione-->
     <script src="menu/jquery-latest.js"></script>
     <script src="menu/menu.js"></script>
-    
+
   </head>
 
 
   <body>
-    
+
     <header>
 
       <div class="menuDesplegable">
         <a href="#" class="btn-menu"><span class="icon-menu"> Menu</span></a>
       </div>
-   
+
       <!-- Menu desplegable -->
       <nav>
 
         <ul>
 
           <li>
-            <img src="assets/logoRetocado.jpg" class="logoSideBar"> 
+            <img src="assets/logoRetocado.jpg" class="logoSideBar">
             <p class="identificador">{{ $_SESSION['username'] }}</p>
           </li>
 
           <!-- la etiqueta SPAN incorpora cada uno de los iconos que acompañan a las opciones -->
           <li><a href="#"><span class="icon-books"></span>Tareas</a></li>
 
-          <li><a href="#"><span class="icon-cogs"></span>Configuracion</a></li>
+          <li><a href="EditProfile"><span class="icon-cogs"></span>Configuracion</a></li>
 
           <li><a href="#"><span class="icon-switch"></span>Cerrar Sesion</a></li>
 

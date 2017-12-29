@@ -26,3 +26,6 @@ Route::post('Login', 'FormularioController@manejarEventoLogin');
 //Este controlador maneja la app luego de registrar e iniciar sesión
 Route::get('Tarea', 'FrontController@mostrarTarea');
 Route::post('Tarea', 'FrontController@manejarEventoCrearTarea');
+
+Route::get('EditProfile','FrontController@mostrarEditarPerfil');
+Route::post('EditProfile', 'FrontController@manejarEventoEditarPerfil');
