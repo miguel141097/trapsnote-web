@@ -5,8 +5,8 @@
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3>Nueva Tarea</h3>	
-		
+			<h3>Nueva Tarea</h3>
+
 			<!-- Alertas -->
 			@include('alert.request')
 
@@ -39,7 +39,9 @@
 		    	{!! Form::reset('Cancelar', ['class' => 'btn btn-danger']) !!}
 
 			{!! Form::close() !!}
-
+			{!! Form::open( ['action' => 'FrontController@mostrarTarea' , 'method'=>'GET']) !!}
+			{!! Form::submit('Atras', ['class' => 'btn btn-success']) !!}
+			{!! Form::close() !!}
 		</div>
 
 	</div>

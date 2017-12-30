@@ -23,5 +23,8 @@ Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
 
 //Este controlador maneja la app luego de registrar e iniciar sesión
+//mostrar las tareas
 Route::get('Tarea', 'FrontController@mostrarTarea');
+//mostrar la pantalla de crear tareas
+Route::get('tarea/crear', 'FrontController@crearTarea');
 Route::post('Tarea', 'FrontController@manejarEventoCrearTarea');
