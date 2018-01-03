@@ -178,7 +178,7 @@ class RecursoHTTP{
 	public function getListaUsername(){
 
 		//URL de la base de datos en Heroku
-    	$url = 'https://dry-forest-40048.herokuapp.com/usuarios/y';
+    	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
 
 		//Usa el recurso GET
  		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();

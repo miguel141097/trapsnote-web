@@ -1,7 +1,11 @@
 Link:
 
-   
-
 	https://trapsnote.herokuapp.com/SignUp
 
 	https://trapsnote.herokuapp.com/Login
+
+	https://trapsnote.herokuapp.com/Tarea
+
+	https://trapsnote.herokuapp.com/Tarea/Editar
+
+	https://trapsnote.herokuapp.com/Tarea/Nueva
