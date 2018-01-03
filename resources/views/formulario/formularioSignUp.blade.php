@@ -15,6 +15,10 @@
 
   <body>
 
+    <?php   
+        @session_start();
+    ?>
+
   	<!-- {Incluye las alertas} -->
   	@include('alert.request')
 
@@ -24,16 +28,23 @@
 
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
+            <?php
+                //Se inicializa para NO repetir los errores al recargar la página  
+                $_SESSION['error'] = "";
+                $_SESSION['exito'] = "";
+                $_SESSION['falla'] = false;
+            ?>
+
+            <!-- {Indica que el registro se llevó a caba desde la aplicación web} -->
+            <input type="hidden" name="formaRegistro" value="web">
+
             <div class="indicadorInput">
                 {!! Form::text('username',null,['placeholder' => 'Username']) !!}
                 <!-- {placeholder: Campo donde se escribe} -->
-                    <!-- {required: Campo Obligatorio} -->
             </div>
 
     		<div class="indicadorInput">
     			{!! Form::text('name',null,['placeholder' => 'Name']) !!}
-    			<!-- {placeholder: Campo donde se escribe} -->
-          		<!-- {required: Campo Obligatorio} -->
     		</div>
 
     		<div class="indicadorInput">
