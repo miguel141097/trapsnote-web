@@ -11,9 +11,10 @@ class ValidarUsernameRepetido implements Rule
      *
      * @return void
      */
+
     public function __construct()
     {
-        //
+
     }
 
     /**
@@ -25,15 +26,22 @@ class ValidarUsernameRepetido implements Rule
      */
     public function passes($attribute, $value)
     {
+
         $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->getListaUsername();
 
-        foreach ($recurso->getListaUsername() as $correos) {
+        if($respuesta != false){
 
-            if($correos === $value){
-                return false;
+            foreach ($respuesta as $usuarios) {
+
+                if($usuarios === $value){
+                    return false;
+                }
+
             }
-
         }
+        else
+            $_SESSION['falla'] = true;
 
         return true;
     }

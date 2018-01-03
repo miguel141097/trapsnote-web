@@ -9,7 +9,7 @@
 
 header {
 	/*Separación de la barra que contiene el titulo*/
-	margin-top: 77px;
+	margin-top: 78px;
 }
 
 
@@ -160,7 +160,7 @@ header nav ul li a:hover {
 	position: relative;
 	z-index: 1;
 
-	left: 20%;
+	left: 20px;
 
 }
 

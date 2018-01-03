@@ -24,8 +24,9 @@ class CrearTareaRequest extends FormRequest
     public function rules()
     {
         return [
-            'descripcion'=>'required',
-            'categoria'=>'required',
+            'nombre' => 'required', 'max:255',
+            'descripcion' => 'required', 'max:255',
+            'categoria' =>'required',
         ];
     }
 }

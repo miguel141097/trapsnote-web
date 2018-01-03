@@ -23,9 +23,15 @@ Route::get('Login', 'FormularioController@mostrarFormularioLogin');
 Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
 
-//Este controlador maneja la app luego de registrar e iniciar sesión
+//Estos controladores manejan la app luego de registrar e iniciar sesión
+
 Route::get('Tarea', 'FrontController@mostrarTarea');
-Route::post('Tarea', 'FrontController@manejarEventoCrearTarea');
 
 Route::get('EditProfile','FrontController@mostrarEditarPerfil');
 Route::post('EditProfile', 'FrontController@manejarEventoEditarPerfil');
+
+Route::get('Tarea/Nueva', 'FrontController@crearTarea');
+Route::post('Tarea/Nueva', 'FrontController@manejarEventoCrearTarea');
+
+Route::get('Tarea/Editar', 'FrontController@mostrarDetalles');
+Route::post('Tarea/Editar', 'FrontController@manejarEventoEditarTarea');
