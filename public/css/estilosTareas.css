@@ -1,0 +1,46 @@
+.retorno {
+
+	/*Color de las opciones*/
+	color:#816464;
+
+	/*Quita el subrayado*/
+	text-decoration:none;
+
+	cursor: pointer;
+}
+
+.retorno:hover {
+
+	/*Color de las opciones*/
+	color:#5064BA;
+
+	/*Quita el subrayado*/
+	text-decoration:none;
+
+}
+
+
+.thead-inverse th {
+
+	color: #fff;
+	background-color: #373a3c;
+
+	text-align: center;
+}
+
+.table tr td{
+
+	color: #000000;
+	background-color: #A8AEC2;
+}
+
+.table:hover .thead-inverse th{
+	background-color: #265B8C;
+	cursor: pointer;
+}
+
+.table:hover .nombreTarea td{
+	background-color: #D2D6DA;
+	cursor: pointer;
+}
+

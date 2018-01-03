@@ -26,6 +26,30 @@ Crear clases personalizadas:
 
    https://es.stackoverflow.com/questions/4547/a%C3%B1adir-carpeta-adicional-a-laravel-5
 
+Ejemplo de Peticiones (POST, GET, PATCH, etc):
+
+   http://sandritascs.blogspot.com.es/2015/06/tipos-de-peticionesrequest-con-php-curl.html
+
+Iconos:
+
+   https://icomoon.io/
+
+Ocultar Divs (HTML con JAVASCRIPT):
+
+   http://www.forosdelweb.com/f13/mostrar-ocultar-divs-segun-valor-radiobutton-885020/
+
+Aplicar estilo a otro div:
+
+   http://www.forosdelweb.com/f53/aplicar-estilo-div-haciendo-hover-otro-962996/
+
+Variables por url:
+
+   https://desarrolloweb.com/articulos/317.php
+
+Valor por defecto en select:
+
+   http://laravel-recipes.com/recipes/164/creating-a-select-range-field
+
 
 
 

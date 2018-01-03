@@ -15,6 +15,10 @@
 
   <body>
 
+    <?php   
+      @session_start();
+    ?>
+
   	<!-- {Incluye las alertas} -->
   	@include('alert.request')
 
@@ -24,11 +28,17 @@
 
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoLogin', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
-      <div class="indicadorInput">
-        {!! Form::text('email',null,['placeholder' => 'Email']) !!}
-        <!-- {placeholder: Campo donde se escribe} -->
-            <!-- {required: Campo Obligatorio} -->
-      </div>
+        <?php
+          //Se inicializa para NO repetir los errores al recargar la página  
+          $_SESSION['error'] = "";
+          $_SESSION['exito'] = "";
+          $_SESSION['falla'] = false;
+        ?>
+
+        <div class="indicadorInput">
+          {!! Form::text('email',null,['placeholder' => 'Email']) !!}
+          <!-- {placeholder: Campo donde se escribe} -->
+        </div>
 
     		<div class="indicadorInput">
     			{!! Form::password('password',['placeholder' => 'Password']) !!}

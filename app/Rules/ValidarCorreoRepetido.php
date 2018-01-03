@@ -26,15 +26,21 @@ class ValidarCorreoRepetido implements Rule
     public function passes($attribute, $value)
     {
         $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->getListaCorreo();
 
-        foreach ($recurso->getListaCorreo() as $correos) {
+        if($respuesta != false){
 
-            if($correos === $value){
-                return false;
+            foreach ($respuesta as $correos) {
+
+                if($correos === $value){
+                    return false;
+                }
+
             }
-
         }
-       
+        else
+            $_SESSION['falla'] = true;
+        
         return true;
 
     }

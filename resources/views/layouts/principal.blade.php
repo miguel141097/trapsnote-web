@@ -4,9 +4,13 @@
   <head>
 
     <title>Trapsnote</title>
-//mosca hay que usar "asset()" porque puede fallar agregando los estilos
+
+    <!-- Hay que usar "asset()" porque puede fallar agregando los estilos -->
     <link rel="stylesheet" href="{{asset('menu/fonts.css')}}">
     <link rel="stylesheet" href="{{asset('menu/estilosMenu.css')}}">
+
+    <!-- Se incorpora esta oja de estilos en las vistas derivadas de esta -->
+    <link rel="stylesheet" href="{{asset('css/estilosTareas.css')}}">
 
     <!-- Implementar bootstrap en el formulario -->
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.css')}}">
@@ -39,8 +43,9 @@
             <p class="identificador">{{ $_SESSION['username'] }}</p>
           </li>
 
+
           <!-- la etiqueta SPAN incorpora cada uno de los iconos que acompañan a las opciones -->
-          <li><a href="#"><span class="icon-books"></span>Tareas</a></li>
+          <li><a href="../Tarea"><span class="icon-books"></span>Tareas</a></li>
 
           <li><a href="#"><span class="icon-cogs"></span>Configuracion</a></li>
 

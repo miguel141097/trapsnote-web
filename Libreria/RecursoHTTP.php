@@ -5,79 +5,200 @@ namespace trapsnoteWeb\Libreria;
 class RecursoHTTP{
 
 
-	public function postNuevoUsuario($usuario){
+	public function POST($datos, $url){
 
-        //Convierte el arreglo con todos los datos en un JSON
-        $JSON = json_encode($usuario);
+		//Convierte el arreglo con todos los datos en un JSON
+        $JSON = json_encode($datos);
+
+ 		//Crea un nuevo recurso cURL
+		$conexion = curl_init($url);
+
+		//Inicia la sesión
+		@session_start();
+
+		//Si no hubo ningún error, se procede a enviar los datos al servidor
+        if($conexion != false){
+
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			 
+			//Datos que se van a enviar por POST
+			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
+			 
+			//Cabecera incluyendo la longitud de los datos de envio
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON)));
+			 
+			//Petición POST
+			curl_setopt($conexion, CURLOPT_POST, 1);
+			 
+			//HTTPGET a false porque no se trata de una petición GET
+			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+			 
+			//HEADER a false
+			curl_setopt($conexion, CURLOPT_HEADER, FALSE);
+
+			//Hace que la respuesta no sea SOLO true o false, si no, que sea la respuesta de la base de datos
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
+
+			//Captura la RESPUESTA y envia los datos a la base de datos
+			$respuesta = curl_exec($conexion);
+
+			// Cierrar el recurso cURLy libera recursos del sistema
+			curl_close($conexion);
+
+			if( ($respuesta == false)||(strpos($respuesta,'Cannot POST') != false) ){
+				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+				return false;
+			}
+
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
+			return false;
+		}
+
+		return $respuesta;
+
+	}
+
+
+	public function GET($url){
+
+ 
+		$conexion = curl_init($url);
+
+		if($conexion != false){
+			 
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			 
+			//Petición GET		 
+			curl_setopt($conexion, CURLOPT_HTTPGET, TRUE);
+			 
+			//Cabecera HTTP
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+			 
+			//Para recibir respuesta de la conexión
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+			 
+			//Respuesta de la base de datos
+			$respuesta = curl_exec($conexion);
+
+			// Cierrar el recurso cURLy libera recursos del sistema
+			curl_close($conexion);
+
+			//Se guarda la información en un arreglo
+			$decode = json_decode($respuesta, true);
+			 
+			if( ($respuesta == false)||(strpos($respuesta,'Cannot GET') != false) ){
+				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+				return false;
+			}			
+
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
+			return false;
+		}
+		 
+		return $decode;
+
+	}
+
+
+	public function PATCH($datos, $url){
+		 
+		//Convierte el arreglo con todos los datos en un JSON
+        $JSON = json_encode($datos);
+
+ 		//Crea un nuevo recurso cURL
+		$conexion = curl_init($url);
+		 
+		//Si no hubo ningún error, se procede a enviar los datos al servidor
+        if($conexion != false){
+		 
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			 
+			//Datos que se van a enviar por PATCH
+			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
+			 
+			//Cabecera incluyendo la longitud de los datos de envio
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON), "id" => $_SESSION['id']));
+			 
+			//Petición PATCH
+			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+			 
+			//HTTPGET a false porque no se trata de una petición GET
+			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+			 
+			//Respuesta 
+			$respuesta = curl_exec($conexion);
+
+			curl_close($conexion);
+
+			if($respuesta == ""){
+				$_SESSION['error'] = "ERROR no se pudo modificar la tarea, intente mas tarde";
+				return false;
+			}	
+
+			return $respuesta;	
+			 
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
+			return false;
+		}
+		 
+		
+		 
+	}
+
+
+	public function postNuevoUsuario($usuario){
 
     	//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
 
-    	//Crea un nuevo recurso cURL
-        $ch = curl_init($url);
+    	//Usa el recurso POST
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->POST($usuario, $url);
 
-        //Si no hubo ningún error, se procede a enviar los datos al servidor
-        if($ch != false){
-
-        	//Configuración del recurso cURL
-	        curl_setopt($ch, CURLOPT_POST, 1);
-	        curl_setopt($ch, CURLOPT_POSTFIELDS, $JSON);
-	        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-	        // Captura la URL y envia a la base de datos
-	        curl_exec($ch);
-
-	        // Cierrar el recurso cURLy libera recursos del sistema
-			curl_close($ch);
-
-			echo "<br> Se ha registrado exitosamente ";
-
+		//No presenta fallas
+		if($respuesta != false){
+			$_SESSION['exito'] = "Se ha registrado con exito";
+			return true;
 		}
-		else{
-			echo "<br> Hubo problemas al enviar el nuevo usuario al servidor";
-
-		}
+		
+		//Se presentó algún error
+		return false;
 
 	}
 
 
 	public function getListaUsername(){
 
-    	//URL de la base de datos en Heroku
+		//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
 
-    	//Crea un nuevo recurso cURL
-        $ch = curl_init($url);
+		//Usa el recurso GET
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->GET($url);
 
-        //Si no hubo ningún error, se procede a enviar los datos al servidor
-        if($ch != false){
+    	if($respuesta != false){
 
-        	//Configuración del recurso cURL
-	        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	        curl_setopt($ch, CURLOPT_URL,$url);
+    		$arrgloDeUsername = array();
 
-	        // Captura la URL y envia a la base de datos
-	        $result = curl_exec($ch);
-
-	        // Cierrar el recurso cURLy libera recursos del sistema
-			curl_close($ch);
-
-			$decode = json_decode($result, true);
-
-			$arrgloDeUsername = array();
-
-        	foreach ($decode['usuarios'] as $valor) {
+        	foreach ($respuesta['usuarios'] as $valor) {
     			array_push($arrgloDeUsername, $valor['username']);
 			}
 
 			return $arrgloDeUsername;
-
 		}
-		else{
-			echo "<br> Hubo problemas al recibir los USERNAME del servidor";
 
-		}
+		@session_start();
+		$_SESSION['error'] = "Problemas con la conexion a Trapsnote, intente mas tarde";
+
+		return false;
 
 	}
 
@@ -87,164 +208,147 @@ class RecursoHTTP{
     	//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
 
-    	//Crea un nuevo recurso cURL
-        $ch = curl_init($url);
+    	//Usa el recurso GET
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->GET($url);
 
-        //Si no hubo ningún error, se procede a enviar los datos al servidor
-        if($ch != false){
+    	if($respuesta != false){
 
-        	//Configuración del recurso cURL
-	        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	        curl_setopt($ch, CURLOPT_URL,$url);
+			$arrgloDeEmail = array();
 
-	        // Captura la URL y envia a la base de datos
-	        $result = curl_exec($ch);
-
-	        // Cierrar el recurso cURLy libera recursos del sistema
-			curl_close($ch);
-
-			$decode = json_decode($result, true);
-
-			$arrgloDeUsername = array();
-
-        	foreach ($decode['usuarios'] as $valor) {
-    			array_push($arrgloDeUsername, $valor['email']);
+        	foreach ($respuesta['usuarios'] as $valor) {
+    			array_push($arrgloDeEmail, $valor['email']);
 			}
 
-			return $arrgloDeUsername;
+			return $arrgloDeEmail;
+		}
 
-		}
-		else{
-			echo "<br> Hubo problemas al recibir los EMAIL del servidor";
-		}
+		@session_start();
+		$_SESSION['error'] = "Problemas con la conexion a Trapsnote, intente mas tarde";
+
+		return false;
 
 	}
 
 
 	public function postLogin($usuario){
 
-		//Convierte el arreglo con todos los datos en un JSON
-    	$JSON = json_encode($usuario);
-
     	//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/login';
 
-    	//Crea un nuevo recurso cURL
-        $ch = curl_init($url);
+    	//Usa el recurso POST
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->POST($usuario, $url);
 
-        //Si no hubo ningún error, se procede a enviar los datos al servidor
-        if($ch != false){
+    	if($respuesta != false){
 
-        	//Configuración del recurso cURL
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_VERBOSE, 1);
-			curl_setopt($ch, CURLOPT_HEADER, 1);
-			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $JSON);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+			//Se concatena para que al capturar el error no devuelva 0 (false) al encontrar el error
+			$errores = "." . $respuesta;
 
-			// Captura la URL y envia a la base de datos
-			$response = curl_exec($ch);
-			$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+			if( (strpos($errores,'{"errormsg":"Contraseña incorrecta"}')) != false){
+				$_SESSION['error'] = "Contraseña incorrecta";
+				return false;
+			}
 
-			$header = substr($response, 0, $header_size);
-			$body = substr($response, $header_size);
-			$claves = preg_split("/[\s,]+/", $body);
+			if( (strpos($errores,'{"errormsg":"El usuario no existe"}')) != false){
+				$_SESSION['error'] = "El Usuario NO existe";
+				return false;
+			}
 
-			$menos = substr($claves[1],12);
-			$s  =substr($menos,-1);
-			$menos= str_replace($s, "/", $menos);
+			$usuario = json_decode($respuesta, true);
+			$nombre = $usuario['username'];
 
-			// Cerrar el recurso cURLy libera recursos del sistema
-			curl_close($ch);
+			@session_start();
 
+			//Variables globales
+			$_SESSION['username'] = $usuario['username'];
+			$_SESSION['url'] = "https://dry-forest-40048.herokuapp.com/$nombre/"."tareas";
 			//Se le pasa a la vista el link generado
-			$urltarea ="https://dry-forest-40048.herokuapp.com/:$menos"."tareas";
 
-			session_start();
-
-    		//Variables globales
-    		$_SESSION['username'] = $menos;
-    		$_SESSION['url'] = $urltarea;
-
+			//Fue exitoso el inicio de sesión
+			return true;
 		}
-		else{
-			echo "<br> Hubo problemas al enviar los datos al servidor";
-      		curl_close($ch);
-		}
+
+		return false;
 
 	}
 
 
-	public function postNuevaTarea($tarea, $url){
+	public function postNuevaTarea($tarea){
 
-		$JSONT = json_encode($tarea);
+		@session_start();
 
-		//Crea un nuevo recurso cURL
-		$ch2 = curl_init($url);
+		//URL de la base de datos en Heroku
+    	$url = $_SESSION['url'];
 
-		//Si no hubo ningún error, se procede a enviar los datos al servidor
-		if($ch2 != false){
-
-	        curl_setopt($ch2, CURLOPT_POST, 1);
-	        curl_setopt($ch2, CURLOPT_POSTFIELDS, $JSONT);
-	        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-
-	        curl_exec($ch2);
-	        curl_close($ch2);
-
-	        if($ch2)
-	        	echo "<br> <br> La tarea fue agregada exitosamente";
-	        else
-	        	echo "Lo sentimos no se pudo agregar Correctamente";
-
+    	//Usa el recurso POST
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->POST($tarea, $url);
+    	
+		if($respuesta != false){
+	        $_SESSION['exito'] = "La tarea fue agregada exitosamente";
+	        return true;
 		}
-		else
-			echo "Lo sentimos la tarea no se pudo enviar al servidor";
+
+		return false;
 
 	}
-	public function getTarea($url){
-		//Crea un nuevo recurso cURL
-			$ch = curl_init($url);
 
-			//Si no hubo ningún error, se procede a enviar los datos al servidor
-			if($ch != false){
 
-				//Configuración del recurso cURL
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($ch, CURLOPT_URL,$url);
 
-				// Captura la URL y envia a la base de datos
-				$result = curl_exec($ch);
+	public function getTarea(){
+		
+		//Usa el recurso GET
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->GET($_SESSION['url']);
 
-				// Cierrar el recurso cURLy libera recursos del sistema
-		curl_close($ch);
-
-		$decode = json_decode($result, true);
-
-		$arregloDeTarea = array();
-
-				foreach ($decode['tareas'] as $valor) {
-
-					?>
-
-					<ul>
-		<li>
-			<?php echo $valor['categoria']; ?>
-		</li>
-					</ul>
-					<?php
-
-		}
-		var_dump($arregloDeTarea);
+		if($respuesta != false){
+			$_SESSION['tareas'] = $respuesta['tareas'];
+	        return $respuesta['tareas'];
 		}
 
-	else{
-		echo "<br> Hubo problemas al recibir las tareas del servidor";
+		return false;
+
+	}
+
+
+	public function getTareaID($id){
+
+		//Usa el recurso GET
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->getTarea();
+
+    	foreach ($respuesta as $tareas) {
+    		if ($tareas['_id'] == $id){
+    			return $tareas;
+    		}
+    	}
+
+    	$_SESSION['error'] = "La tarea no se puede modificar en este momento, por favor intente mas tarde";
+    	return false;
+
+	}
+
+
+	public function patchTarea($tarea){
+
+		@session_start();
+
+		//URL de la base de datos en Heroku
+    	$url = $_SESSION['url'] . "/" . $_SESSION['id'];		
+
+		//Usa el recurso PATCH
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->PATCH($tarea, $url);
+
+    	if($respuesta == false)
+    		return false;
+
+    	$_SESSION['exito'] = "La tarea fue modificada exitosamente";
+    	return true;
+
 	}
 
 
 }
-}
+

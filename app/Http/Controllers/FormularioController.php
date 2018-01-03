@@ -19,24 +19,34 @@ class FormularioController extends Controller{
   }
 
   public function mostrarFormularioLogin(){
-    return view('formulario.formularioLogin');
-  }
 
+    return view('formulario.formularioLogin');
+
+  }
 
   //La variable request contiene TODOS los valores ingresados por el usuario en el formulario
   public function manejarEventoCrearSesion(UserCreateRequest $request){
 
-    //Concatena la fecha
-    $fechaDeNacimiento = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
+    @session_start();
 
-    $arregloConDatosDelUsuario = array( 'username'=>$request['username'],'name' => $request['name'], 'last_name' => $request['last_name'],'email' => $request['email'], 'password' => $request['password'],'password_repeat' => $request['password_repeat'], 'fechaDeNacimiento' => $fechaDeNacimiento);
+    if( (isset($_SESSION['falla'])) && ($_SESSION['falla'] == false) ){
 
-    //Esta clase maneja el envio de los datos por parte del usuario
-    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $recurso->postNuevoUsuario($arregloConDatosDelUsuario);
+      //Concatena la fecha
+      $fechaDeNacimiento = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
 
-    //Redirecciona para el login
-    return redirect()->action('FormularioController@manejarEventoLogin');
+      $arregloConDatosDelUsuario = array( 'username'=> $request['username'], 'name' => $request['name'], 'last_name' => $request['last_name'], 'email' => $request['email'], 'password' => $request['password'], 'fechaDeNacimiento' => $fechaDeNacimiento, 'formaRegistro' => $request['formaRegistro'] );
+
+      //Esta clase maneja el envio de los datos por parte del usuario
+      $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+      $respuesta = $recurso->postNuevoUsuario($arregloConDatosDelUsuario);
+
+      //Redirecciona dependiendo de si fue exitoso o no
+      if($respuesta == true)
+        return redirect()->action('FormularioController@mostrarFormularioLogin');
+
+    }
+
+    return redirect()->action('FormularioController@mostrarFormularioSignUp');
 
   }
 
@@ -46,9 +56,13 @@ class FormularioController extends Controller{
     $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
 
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $recurso->postLogin($arregloConDatosDelUsuario);
+    $respuesta = $recurso->postLogin($arregloConDatosDelUsuario);
 
-    return redirect()->action('FrontController@mostrarTarea');
+    //Redirecciona dependiendo de si fue exitoso o no
+    if($respuesta == true)
+      return redirect()->action('FrontController@mostrarTarea');
+    else
+      return redirect()->action('FormularioController@mostrarFormularioLogin');
 
   }
 

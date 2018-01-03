@@ -17,22 +17,58 @@ class FrontController extends Controller
     }
 
     public function crearTarea(){
-    	return view('app.tareas');
+        
+    	return view('app.nuevaTarea');
+
+    }
+
+    public function mostrarDetalles(){
+
+        return view('app.editarTarea');
+
+    }
+
+
+    public function manejarEventoEditarTarea(CrearTareaRequest $request){
+
+        if($request['fecha'] == "SI"){
+            //Concatena la fecha
+            $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
+        }
+        else
+            $fechaLimite = null;
+
+        $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
+
+        //Usa el recurso PATCH
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->patchTarea($arregloDeTarea);
+
+        return redirect()->action('FrontController@mostrarTarea');
 
     }
 
 
     public function manejarEventoCrearTarea(CrearTareaRequest $request){
 
-		//Recibe el url mandado en la vista
-		$urltarea = $request['url'];
+        if($request['fecha'] == "SI"){
+            //Concatena la fecha
+            $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
+        }
+        else
+            $fechaLimite = null;
 
-		$arregloDeTarea = array('descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'completado'=>$request['completado'],'horaCompletado'=>$request['horaCompletado'], 'fechaRegistro'=>$request['fechaRegistro']);
+		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
 
 		//Esta clase maneja el envio de los datos por parte del usuario
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    	$recurso->postNuevaTarea($arregloDeTarea, $urltarea);
-        return redirect()->action('FrontController@mostrarTarea');
+    	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
+
+        if($respuesta == true)
+            return redirect()->action('FrontController@mostrarTarea');
+        else
+            return redirect()->action('FormularioController@crearTarea');
+
 	}
 
 }

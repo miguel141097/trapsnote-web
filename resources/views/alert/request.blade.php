@@ -9,3 +9,21 @@
 	    </ul>
 	</div>
 @endif
+
+
+@if ( (isset($_SESSION['error'])) and ($_SESSION['error'] != "") )
+	<div class="alert alert-warning alert-dismissible" role="alert">
+	    <ul>
+			<li>{{ $_SESSION['error'] }}</li>
+		</ul>
+	</div>
+@endif
+
+
+@if ( (isset($_SESSION['exito'])) and ($_SESSION['exito'] != "") )
+	<div class="alert alert-success alert-dismissible" role="alert">
+	    <ul>
+			<li>{{ $_SESSION['exito'] }}</li>
+		</ul>
+	</div>
+@endif
