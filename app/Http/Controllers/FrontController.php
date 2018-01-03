@@ -37,7 +37,7 @@ class FrontController extends Controller
 
   public function manejarEventoEditarPerfil(EditarUsuario $request){
     session_start();
-    $urledicion = "https://dry-forest-40048.herokuapp.com/usuarios/:".$_SESSION['username'];
+    $urledicion = "https://dry-forest-40048.herokuapp.com/usuarios/".$_SESSION['username'];
     $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $recurso->postEditarUsuario($arregloEdicion, $urledicion);
