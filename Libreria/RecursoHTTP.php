@@ -243,6 +243,8 @@ class RecursoHTTP{
 			//Variables globales
 			$_SESSION['username'] = $usuario['username'];
 			$_SESSION['url'] = "https://dry-forest-40048.herokuapp.com/$nombre/"."tareas";
+			$_SESSION['name'] = $usuario['name'];
+			$_SESSION['last_name'] = $usuario['last_name'];
 			//Se le pasa a la vista el link generado
 
 			//Fue exitoso el inicio de sesión
