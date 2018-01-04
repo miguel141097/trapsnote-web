@@ -77,7 +77,11 @@ class FrontController extends Controller
     $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta = $recurso->postEditarUsuario($arregloEdicion, $urledicion);
-    return redirect()->action('FrontController@mostrarTarea');
+    if ($respuesta == true)
+        return redirect()->action('FrontController@mostrarTarea');
+        else {
+          return redirect()->action('FrontController@mostrarEditarPerfil');
+        }
 
   }
 

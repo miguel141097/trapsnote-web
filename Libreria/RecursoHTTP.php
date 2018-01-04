@@ -96,7 +96,6 @@ class RecursoHTTP{
 
 		//Convierte el arreglo con todos los datos en un JSON
         $JSON = json_encode($datos);
-
  		//Crea un nuevo recurso cURL
 		$conexion = curl_init($url);
 
@@ -113,7 +112,6 @@ class RecursoHTTP{
 
 			//Petición PATCH
 			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "PATCH");
-
 			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
 			//HTTPGET a false porque no se trata de una petición GET
@@ -121,14 +119,11 @@ class RecursoHTTP{
 
 			//Respuesta
 			$respuesta = curl_exec($conexion);
-
 			curl_close($conexion);
-
 			if($respuesta == ""){
 				$_SESSION['error'] = "ERROR no se pudo modificar la tarea, intente mas tarde";
 				return false;
 			}
-
 			return $respuesta;
 
 		}
@@ -136,9 +131,6 @@ class RecursoHTTP{
 			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
 			return false;
 		}
-
-
-
 	}
 
 
@@ -332,6 +324,17 @@ class RecursoHTTP{
 	}
 
 	public function postEditarUsuario($edicion, $url){
+
+
+		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    $respuesta = $recurso->PATCH($edicion, $url);
+
+		if($respuesta != false){
+	        $_SESSION['exito'] = "El usuario fue modificado exitosamente";
+	        return true;
+		}
+		return false;
+		/*
 		$JSONEU = json_encode($edicion);
 		$ch2 = curl_init($url);
 
@@ -345,7 +348,7 @@ class RecursoHTTP{
 					var_dump ($response);
 		}
 		else
-			echo "Lo sentimos la tarea no se pudo enviar al servidor";
+			echo "Lo sentimos la tarea no se pudo enviar al servidor";*/
 	}
 
 
