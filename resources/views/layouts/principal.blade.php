@@ -47,7 +47,7 @@
           <!-- la etiqueta SPAN incorpora cada uno de los iconos que acompañan a las opciones -->
           <li><a href="../Tarea"><span class="icon-books"></span>Tareas</a></li>
 
-          <li><a href="#"><span class="icon-cogs"></span>Configuracion</a></li>
+          <li><a href="../EditProfile"><span class="icon-cogs"></span>Configuracion</a></li>
 
           <li><a href="#"><span class="icon-switch"></span>Cerrar Sesion</a></li>
 

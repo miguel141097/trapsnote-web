@@ -42,7 +42,7 @@ class ValidarUsernameRepetido implements Rule
         }
         else
             $_SESSION['falla'] = true;
-        
+
         return true;
     }
 

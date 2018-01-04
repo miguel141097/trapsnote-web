@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::get('SignUp','FormularioController@mostrarFormularioSignUp');
 Route::get('Login', 'FormularioController@mostrarFormularioLogin');
 
+
 //Es necesario colocar el post para manejar el boton submit
 Route::post('SignUp','FormularioController@manejarEventoCrearSesion');
 Route::post('Login', 'FormularioController@manejarEventoLogin');
@@ -25,6 +26,9 @@ Route::post('Login', 'FormularioController@manejarEventoLogin');
 //Estos controladores manejan la app luego de registrar e iniciar sesión
 
 Route::get('Tarea', 'FrontController@mostrarTarea');
+
+Route::get('EditProfile','FrontController@mostrarEditarPerfil');
+Route::post('EditProfile', 'FrontController@manejarEventoEditarPerfil');
 
 Route::get('Tarea/Nueva', 'FrontController@crearTarea');
 Route::post('Tarea/Nueva', 'FrontController@manejarEventoCrearTarea');

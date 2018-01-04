@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 //Se importa las reglas de validación del formulario
 use trapsnoteWeb\Http\Requests\CrearTareaRequest;
+use trapsnoteWeb\Http\Requests\EditarUsuario;
 
 class FrontController extends Controller
 {
@@ -17,7 +18,7 @@ class FrontController extends Controller
     }
 
     public function crearTarea(){
-        
+
     	return view('app.nuevaTarea');
 
     }
@@ -48,27 +49,44 @@ class FrontController extends Controller
 
     }
 
+    public function mostrarEditarPerfil(){
+      return view('app.editarPerfil');
+    }
+
 
     public function manejarEventoCrearTarea(CrearTareaRequest $request){
-
         if($request['fecha'] == "SI"){
             //Concatena la fecha
             $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
         }
         else
             $fechaLimite = null;
-
 		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
-
 		//Esta clase maneja el envio de los datos por parte del usuario
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
-
         if($respuesta == true)
             return redirect()->action('FrontController@mostrarTarea');
         else
             return redirect()->action('FormularioController@crearTarea');
-
 	}
+
+  public function manejarEventoEditarPerfil(EditarUsuario $request){
+    session_start();
+    $urledicion = "https://dry-forest-40048.herokuapp.com/usuarios/".$_SESSION['username'];
+    if ($request['name'] == "")
+       $request['name'] = $_SESSION['name'];
+    if ($request['last_name'] == "")
+       $request['last_name'] = $_SESSION['last_name'];
+    $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
+    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    $respuesta = $recurso->postEditarUsuario($arregloEdicion, $urledicion);
+    if ($respuesta == true)
+        return redirect()->action('FrontController@mostrarTarea');
+        else {
+          return redirect()->action('FrontController@mostrarEditarPerfil');
+        }
+
+  }
 
 }
