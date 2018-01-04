@@ -30,11 +30,12 @@
 		    	</div>
 
 		    	<div class="form-group">
-						{!! Form::text('password',null,['placeholder' => 'Nueva contraseña', 'class' => 'form-control']) !!}
+						{!! Form::password('password',['placeholder' => 'Nueva contraseña', 'class' => 'form-control']) !!}
+
 		    	</div>
 
           <div class="form-group">
-            {!! Form::text('password_repeat',null,['placeholder' => 'Repetir nueva contraseña', 'class' => 'form-control']) !!}
+            {!! Form::password('password_repeat',['placeholder' => 'Repetir nueva contraseña', 'class' => 'form-control']) !!}
 		    	</div>
 
 		    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}

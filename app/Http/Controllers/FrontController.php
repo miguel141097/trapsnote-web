@@ -55,32 +55,29 @@ class FrontController extends Controller
 
 
     public function manejarEventoCrearTarea(CrearTareaRequest $request){
-
         if($request['fecha'] == "SI"){
             //Concatena la fecha
             $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
         }
         else
             $fechaLimite = null;
-
 		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
-
 		//Esta clase maneja el envio de los datos por parte del usuario
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
-
         if($respuesta == true)
             return redirect()->action('FrontController@mostrarTarea');
         else
             return redirect()->action('FormularioController@crearTarea');
-      }
+	}
 
   public function manejarEventoEditarPerfil(EditarUsuario $request){
     session_start();
     $urledicion = "https://dry-forest-40048.herokuapp.com/usuarios/".$_SESSION['username'];
     $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $recurso->postEditarUsuario($arregloEdicion, $urledicion);
+    $respuesta = $recurso->postEditarUsuario($arregloEdicion, $urledicion);
+    return redirect()->action('FrontController@mostrarTarea');
 
   }
 
