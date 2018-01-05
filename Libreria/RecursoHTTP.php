@@ -57,7 +57,7 @@ class RecursoHTTP{
 		}
 
 		return $respuesta;
-	
+
 	}
 
 
@@ -152,25 +152,25 @@ class RecursoHTTP{
 
 
 	public function DELETE($url){
-		 
+
 		$conexion = curl_init($url);
 
 		if($conexion != false){
-		 
+
 			curl_setopt($conexion, CURLOPT_URL,$url);
-			 
+
 			//Cabecera
 			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
-			 
+
 			//Petición DELETE
 			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "DELETE");
-			 
-			//HTTPGET a false porque no se trata de una petición GET	 
+
+			//HTTPGET a false porque no se trata de una petición GET
 			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
 
 			//Para que devuelva la respuesta
 			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
-			 
+
 			//Respuesta
 			$respuesta = curl_exec($conexion);
 
@@ -190,41 +190,41 @@ class RecursoHTTP{
 			return false;
 		}
 
-	 
+
 	}
 
 
 	public function PUT($url, $datos){
-		 
+
 		//Convierte el arreglo con todos los datos en un JSON
         $JSON = json_encode($datos);
-		 
+
 		$conexion = curl_init($url);
 
 		if($conexion != false){
-		 
+
 			curl_setopt($conexion, CURLOPT_URL,$url);
-			 
-			//Datos que se van a enviar por PUT 
+
+			//Datos que se van a enviar por PUT
 			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
-			 
+
 			//Cabecera incluyendo la longitud de los datos de envio
 			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON)));
-			 
+
 			//Petición PUT
 			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "PUT");
-			 
+
 			//HTTPGET a false porque no se trata de una petición GET
 			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
-			 
+
 			//Para que devuelva la respuesta
 			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
 			//Respuesta
 			$respuesta = curl_exec($conexion);
-			 
+
 			var_dump($respuesta);
-			 
+
 			curl_close($conexion);
 
 			//Se pueden presentar estos errores al hacer la solicitud
@@ -240,7 +240,7 @@ class RecursoHTTP{
 			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
 			return false;
 		}
-	
+
 	}
 
 
@@ -262,6 +262,20 @@ class RecursoHTTP{
 
 		//Se presentó algún error
 		return false;
+
+	}
+
+	public function getCategoriasActivas(){
+		$nombres = array();
+		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
+		$listaDeCategorias = $listaCategorias['categorias'];
+		foreach($listaDeCategorias as $categoria){
+		$nombres[] = $categoria['nombre'];
+		}
+		sort($nombres);
+
+		@session_start();
+		$_SESSION['categorias'] = $nombres;
 
 	}
 
@@ -418,7 +432,7 @@ class RecursoHTTP{
 	    		}
 	    	}
     	}
-    	
+
     	return false;
 
 	}
@@ -495,7 +509,7 @@ class RecursoHTTP{
 	    	$_SESSION['error'] = "";
     	}
 
-	
+
 	}
 
 
@@ -509,7 +523,7 @@ class RecursoHTTP{
     	$respuesta = $recurso->PUT($url, $datos);
 
     	if($respuesta == false)
-    		$_SESSION['error'] = $_SESSION['error'].". No se pudo completar la tarea";   	
+    		$_SESSION['error'] = $_SESSION['error'].". No se pudo completar la tarea";
 
 	}
 

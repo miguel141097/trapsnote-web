@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-	<?php   
+	<?php
       @session_start();
     ?>
 
@@ -10,7 +10,7 @@
 	@include('alert.request')
 
 	<?php
-      //Se inicializa para NO repetir los errores al recargar la página  
+      //Se inicializa para NO repetir los errores al recargar la página
       $_SESSION['error'] = "";
       $_SESSION['exito'] = "";
       $_SESSION['falla'] = false;
@@ -32,9 +32,9 @@
 		    		{!! Form::textarea('descripcion',null,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 		    	</div>
 
-		    	<div class="form-group">
-		    		{!! Form::text('categoria',null,['placeholder' => 'Categoria', 'class' => 'form-control']) !!}
-		    	</div>
+					<div class="form-group">
+					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], 'Estudios',  array('class' => 'form-control')) !!}
+					</div>
 
 				<div class="form-group">
 		    		<label> ¿Desea Colocar Una Fecha Limite? </label>
@@ -53,7 +53,7 @@
 			            	document.getElementById("fechaDesplegable").style.display = "block";
 			            else
 			            	document.getElementById("fechaDesplegable").style.display = "none";
-			     
+
 			        }
 
 				</script>
