@@ -17,11 +17,6 @@ class FrontController extends Controller
 
     }
 
-    public function crearTarea(){
-
-    	return view('app.nuevaTarea');
-
-    }
 
     public function mostrarDetalles(){
 
@@ -45,48 +40,76 @@ class FrontController extends Controller
         $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
         $respuesta = $recurso->patchTarea($arregloDeTarea);
 
+        if( ($respuesta != false) && ($request['completado'] == true) ){
+            $completado = array('completado' => $request['completado']);
+            $recurso->putCompletado($completado);
+        }
+
         return redirect()->action('FrontController@mostrarTarea');
 
     }
 
-    public function mostrarEditarPerfil(){
-      return view('app.editarPerfil');
+
+    public function crearTarea(){
+
+        return view('app.nuevaTarea');
+
     }
 
 
     public function manejarEventoCrearTarea(CrearTareaRequest $request){
+
         if($request['fecha'] == "SI"){
             //Concatena la fecha
             $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
         }
         else
             $fechaLimite = null;
+
 		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
+
 		//Esta clase maneja el envio de los datos por parte del usuario
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
+
         if($respuesta == true)
             return redirect()->action('FrontController@mostrarTarea');
         else
             return redirect()->action('FormularioController@crearTarea');
 	}
 
-  public function manejarEventoEditarPerfil(EditarUsuario $request){
-    session_start();
-    $urledicion = "https://dry-forest-40048.herokuapp.com/usuarios/".$_SESSION['username'];
-    if ($request['name'] == "")
-       $request['name'] = $_SESSION['name'];
-    if ($request['last_name'] == "")
-       $request['last_name'] = $_SESSION['last_name'];
-    $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
-    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $respuesta = $recurso->postEditarUsuario($arregloEdicion, $urledicion);
-    if ($respuesta == true)
-        return redirect()->action('FrontController@mostrarTarea');
+
+    public function mostrarEditarPerfil(){
+
+      return view('app.editarPerfil');
+      
+    }
+
+
+    public function manejarEventoEditarPerfil(EditarUsuario $request){
+
+        $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
+
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->postEditarUsuario($arregloEdicion);
+        
+        if ($respuesta == true)
+            return redirect()->action('FrontController@mostrarTarea');
         else {
-          return redirect()->action('FrontController@mostrarEditarPerfil');
+            return redirect()->action('FrontController@mostrarEditarPerfil');
         }
 
-  }
+    }
+
+
+    public function manejarEventoEliminarTarea(){
+        
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $recurso->deleteTarea();
+
+        return redirect()->action('FrontController@mostrarTarea');
+
+    }
+
 
 }

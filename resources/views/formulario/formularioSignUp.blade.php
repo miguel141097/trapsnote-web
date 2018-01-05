@@ -64,10 +64,14 @@
     		</div>
 
     		<div>
-    			{!! Form::selectRange('day', 1, 31) !!}
-    			{!! Form::selectMonth('month') !!}
-    			{!! Form::selectRange('year', 1960, date('o') ) !!}
+                <label>Fecha de Nacimiento</label>
     		</div>
+
+            <div class = "form-group">
+                {!! Form::selectRange('day', 1, 31) !!}
+                {!! Form::selectMonth('month') !!}
+                {!! Form::selectRange('year', 1960, date('o') ) !!}
+            </div>
 
         		{!! Form::submit('Registrar', ['class' => 'button']) !!}
             <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>

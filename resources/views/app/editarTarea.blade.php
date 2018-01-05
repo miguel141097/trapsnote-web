@@ -25,6 +25,7 @@
 			$descripcion = $respuesta['descripcion'];
 			$categoria = $respuesta['categoria'];
 
+			$completado = $respuesta['completado'];
 			$hora = $respuesta['fechaLimite'];
 
 			//Si la tarea tiene fecha limite se procede a colocarla como valor por defecto
@@ -54,24 +55,55 @@
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			<h3>Editar Tarea <a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a> </h3>
+
+			<h3> Editar Tarea 
+				<a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a> 
+				
+
+			</h3>
 
 				<!-- Para evitar que muestre el formulario en caso de error -->
 				@if ($respuesta != null)
-				
+
+					<div class="form-group">
+						{!! Form::open( ['action' => 'FrontController@manejarEventoEliminarTarea', 'method' => 'DELETE'] ) !!}
+							{{ Form::submit('Eliminar', ['class' => 'btn btn-danger'] ) }}
+						{!! Form::close() !!}
+					</div>
+
+
 					<!-- Formulario -->
 					{!! Form::open( ['action' => 'FrontController@manejarEventoEditarTarea', 'method' => 'POST'] ) !!}
 
+						@if ($completado == false)
+							<div class="form-group switch">
+
+								<input id="interruptor" type="checkbox" name="completado" value="true" />
+								<label for="interruptor">¿Tarea Completa?</label>
+
+					    	</div>
+				    	@endif
+
+				    	@if ($completado != false)
+							<div class="form-group switch switchCompletado">
+
+								<input id="interruptor" type="checkbox" name="completado" value="true" />
+								<label for="interruptor">¿Tarea Completa?</label>
+
+					    	</div>
+				    	@endif
+
+
 		         		<div class="form-group">
-		         			<input type="text" name="nombre" value="<?php echo $nombre ?>" placeholder="Nombre" class="form-control">
+		         			{!! Form::text('nombre',$nombre,['placeholder' => 'Nombre', 'class' => 'form-control']) !!}
 				    	</div>
 
 				    	<div class="form-group">
-				    		<textarea type="textarea" name="descripcion" placeholder="Descripcion ..." class="form-control"><?php echo $descripcion ?></textarea> 
+				    		{!! Form::textarea('descripcion',$descripcion,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 				    	</div>
 
 				    	<div class="form-group">
-				    		<input type="text" name="categoria" value="<?php echo $categoria ?>" placeholder="Categoria" class="form-control">
+				    		{!! Form::text('categoria',$categoria,['placeholder' => 'Categoria', 'class' => 'form-control']) !!}
 				    	</div>
 
 						<div class="form-group">
@@ -126,11 +158,11 @@
 				    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 
 				    	@if($hora == null)
-				    		<button type="reset" class="btn btn-danger" onclick="deploy(this)" value="NO">Cancelar</button>
+				    		<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
 				    	@endif
 
 				    	@if($hora != null)
-				    		<button type="reset" class="btn btn-danger" onclick="deploy(this)" value="SI">Cancelar</button>
+				    		<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="SI">Cancelar</button>
 				    	@endif
 
 					{!! Form::close() !!}

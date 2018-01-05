@@ -11,6 +11,7 @@
 
     <!-- Se incorpora esta oja de estilos en las vistas derivadas de esta -->
     <link rel="stylesheet" href="{{asset('css/estilosTareas.css')}}">
+    <link rel="stylesheet" href="{{asset('css/estilosSwitch.css')}}">
 
     <!-- Implementar bootstrap en el formulario -->
     <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.css')}}">
