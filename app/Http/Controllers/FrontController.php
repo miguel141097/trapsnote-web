@@ -34,6 +34,30 @@ class FrontController extends Controller
         else
             $fechaLimite = null;
 
+            switch($request['categoria']){
+              case 0:
+                $request['categoria'] = 'Estudios';
+                break;
+              case 1:
+                $request['categoria'] = 'Trabajo';
+                break;
+              case 2:
+                $request['categoria'] = 'Hogar';
+                break;
+              case 3:
+                $request['categoria'] = 'Actividad';
+                break;
+              case 4:
+                $request['categoria'] = 'Ejercicio';
+                break;
+              case 5:
+                $request['categoria'] = 'Plan';
+                break;
+              case 6:
+                $request['categoria'] = 'Informacion';
+                break;
+            }
+
         $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
 
         //Usa el recurso PATCH
@@ -66,6 +90,30 @@ class FrontController extends Controller
         else
             $fechaLimite = null;
 
+        switch($request['categoria']){
+          case 0:
+            $request['categoria'] = 'Estudios';
+            break;
+          case 1:
+            $request['categoria'] = 'Trabajo';
+            break;
+          case 2:
+            $request['categoria'] = 'Hogar';
+            break;
+          case 3:
+            $request['categoria'] = 'Actividad';
+            break;
+          case 4:
+            $request['categoria'] = 'Ejercicio';
+            break;
+          case 5:
+            $request['categoria'] = 'Plan';
+            break;
+          case 6:
+            $request['categoria'] = 'Informacion';
+            break;
+        }
+
 		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
 
 		//Esta clase maneja el envio de los datos por parte del usuario
@@ -76,13 +124,14 @@ class FrontController extends Controller
             return redirect()->action('FrontController@mostrarTarea');
         else
             return redirect()->action('FormularioController@crearTarea');
+
 	}
 
 
     public function mostrarEditarPerfil(){
 
       return view('app.editarPerfil');
-      
+
     }
 
 
@@ -92,7 +141,7 @@ class FrontController extends Controller
 
         $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
         $respuesta = $recurso->postEditarUsuario($arregloEdicion);
-        
+
         if ($respuesta == true)
             return redirect()->action('FrontController@mostrarTarea');
         else {
@@ -103,7 +152,7 @@ class FrontController extends Controller
 
 
     public function manejarEventoEliminarTarea(){
-        
+
         $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
         $recurso->deleteTarea();
 

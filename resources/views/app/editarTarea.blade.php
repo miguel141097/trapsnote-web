@@ -32,7 +32,7 @@
 			if($hora != null){
 				$year = substr($hora, 0, 4);
 				$month = substr($hora, 5, 2);
-				$day = substr($hora, 8, 2); 
+				$day = substr($hora, 8, 2);
 			}
 
 		}
@@ -43,7 +43,7 @@
 	@include('alert.request')
 
 	<?php
-      //Se inicializa para NO repetir los errores al recargar la página  
+      //Se inicializa para NO repetir los errores al recargar la página
       $_SESSION['error'] = "";
       $_SESSION['exito'] = "";
       $_SESSION['falla'] = false;
@@ -56,9 +56,9 @@
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-			<h3> Editar Tarea 
-				<a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a> 
-				
+			<h3> Editar Tarea
+				<a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a>
+
 
 			</h3>
 
@@ -102,9 +102,9 @@
 				    		{!! Form::textarea('descripcion',$descripcion,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 				    	</div>
 
-				    	<div class="form-group">
-				    		{!! Form::text('categoria',$categoria,['placeholder' => 'Categoria', 'class' => 'form-control']) !!}
-				    	</div>
+              <div class="form-group">
+    					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], 'Estudios',  array('class' => 'form-control')) !!}
+    					</div>
 
 						<div class="form-group">
 				    		<label> ¿Desea Colocar Una Fecha Limite? </label>
@@ -132,7 +132,7 @@
 					            	document.getElementById("fechaDesplegable").style.display = "block";
 					            else
 					            	document.getElementById("fechaDesplegable").style.display = "none";
-					     
+
 					        }
 
 						</script>
