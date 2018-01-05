@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-	<?php   
+	<?php
       @session_start();
     ?>
 
@@ -10,11 +10,11 @@
 	@include('alert.request')
 
 	<?php
-      //Se inicializa para NO repetir los errores al recargar la página  
+      //Se inicializa para NO repetir los errores al recargar la página
       $_SESSION['error'] = "";
       $_SESSION['exito'] = "";
       $_SESSION['falla'] = false;
-    ?>
+     ?>
 
 	<div class="row">
 
@@ -32,9 +32,16 @@
 		    		{!! Form::textarea('descripcion',null,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 		    	</div>
 
-		    	<div class="form-group">
+					<div class="form-group">
+					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], null,  array('class' => 'form-control')) !!}
+					</div>
+<!--
+
+					<div class="form-group">
 		    		{!! Form::text('categoria',null,['placeholder' => 'Categoria', 'class' => 'form-control']) !!}
 		    	</div>
+-->
+
 
 				<div class="form-group">
 		    		<label> ¿Desea Colocar Una Fecha Limite? </label>
@@ -42,7 +49,26 @@
 		    		<label>SI <input type="radio" name="fecha" onclick="deploy(this)" value="SI"> </label>
 		    		<label>NO <input type="radio" name="fecha" onclick="deploy(this)" value="NO" checked="checked"> </label>
 		    	</div>
+<!--
+					<table class="table">
 
+						<thead class="thead-inverse">
+							<tr>
+								<th> Categorias</th>
+							</th>
+						</thead>
+						<tbody>
+							@foreach ($_SESSION['categorias'] as $categoria)
+							 <tr>
+								 <td>
+									 {{$categoria}}
+								 </td>
+							 </tr>
+							@endforeach
+						</tbody>
+
+					</table>
+-->
 
 		    	<!-- Funcion que sirve para desplegar la fecha limite de la tarea -->
 		    	<script type="text/javascript">
@@ -53,7 +79,7 @@
 			            	document.getElementById("fechaDesplegable").style.display = "block";
 			            else
 			            	document.getElementById("fechaDesplegable").style.display = "none";
-			     
+
 			        }
 
 				</script>

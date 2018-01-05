@@ -210,6 +210,20 @@ class RecursoHTTP{
 
 	}
 
+	public function getCategorias(){
+		$nombres = array();
+		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
+		$listaDeCategorias = $listaCategorias['categorias'];
+		foreach($listaDeCategorias as $categoria){
+		$nombres[] = $categoria['nombre'];
+		}
+		sort($nombres);
+
+		@session_start();
+		$_SESSION['categorias'] = $nombres;
+
+	}
+
 
 	public function postLogin($usuario){
 
