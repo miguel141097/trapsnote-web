@@ -28,10 +28,10 @@ class EditarUsuario extends FormRequest
     public function rules()
     {
         return [
-          'name' => ['max:50' , new ValidarLetrasyEspacios],
-          'last_name' => ['max:50' , new ValidarLetrasyEspacios],
-          'password' => ['min:8', 'contraseña:password_repeat', new ValidarSinEspacios],
-          'password_repeat' => ['min:8', new ValidarSinEspacios],
+          'name' => ['required' , 'max:50' , new ValidarLetrasyEspacios],
+          'last_name' => ['required' , 'max:50' , new ValidarLetrasyEspacios],
+          'password' => ['required' , 'min:8', 'contraseña:password_repeat', new ValidarSinEspacios],
+          'password_repeat' => ['required' , 'min:8', new ValidarSinEspacios],
         ];
     }
 }

@@ -1,0 +1,124 @@
+/*Para la elaboración de los estilos de este botón se usó como guía la siguiente página
+
+    https://bootsnipp.com/snippets/featured/material-design-switch
+
+*/
+
+.switch > input[type="checkbox"] {
+    /*Quita la forma de checkbox*/
+    display: none;
+}
+
+.switch > label {
+    cursor: pointer;
+}
+
+
+/*Opcion NO (Barra)*/
+.switch > label:before {
+
+
+    border-radius: 8px;
+    
+    content: '';
+
+    /*Posición*/
+    left: 155px;
+    margin-top: 5px;
+
+    height: 16px;
+    
+    /*Con relativa se separa del label*/
+    position: absolute;
+
+    opacity: 0.3;
+    transition: all 0.4s ease-in-out;
+
+    /*Largo y color del fondo*/
+    background-color: #F60B0B;
+    width: 40px;
+
+}
+
+
+/*Opcion NO (Punto)*/
+.switch > label:after {
+
+    background-color: #F60B0B;
+    border-radius: 16px;
+
+    /* "Crea" el punto*/
+    content: '';
+
+    height: 24px;
+
+    /*Posición*/
+    left: 150px;
+    margin-top: 0px;
+
+    position: absolute;
+
+    transition: all 0.3s ease-in-out;
+    width: 24px;
+}
+
+
+/*Opcion SI (Barra)*/
+.switch > input[type="checkbox"]:checked + label::before {
+
+    background-color: #2FC848;
+    opacity: 0.5;
+
+}
+
+
+/*Opcion SI (Punto)*/
+.switch > input[type="checkbox"]:checked + label::after {
+
+    background-color: #2FC848;
+
+    /*Distancia de recorrido hacia la derecha*/
+    left: 180px;
+
+}
+
+
+/* --------- COMPLETADO ------------ */
+
+/*Opcion NO (Barra)*/
+.switchCompletado > label:before {
+
+    /*Largo y color del fondo*/
+    background-color: #2FC848;
+
+}
+
+
+/*Opcion NO (Punto)*/
+.switchCompletado > label:after {
+
+    background-color: #2FC848;
+
+    /*Posición*/
+    left: 180px;
+}
+
+
+/*Opcion SI (Barra)*/
+.switchCompletado > input[type="checkbox"]:checked + label::before {
+
+    background-color: #F60B0B;
+    opacity: 0.5;
+
+}
+
+
+/*Opcion SI (Punto)*/
+.switchCompletado > input[type="checkbox"]:checked + label::after {
+
+    background-color: #F60B0B;
+
+    /*Distancia de recorrido hacia la derecha*/
+    left: 150px;
+
+}

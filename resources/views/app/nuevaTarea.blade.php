@@ -68,7 +68,7 @@
 
 		    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 
-		    	<button type="reset" class="btn btn-danger" onclick="deploy(this)" value="NO">Cancelar</button>
+		    	<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
 
 			{!! Form::close() !!}
 

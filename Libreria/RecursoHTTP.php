@@ -6,14 +6,19 @@ class RecursoHTTP{
 
 
 	public function POST($datos, $url){
+
 		//Convierte el arreglo con todos los datos en un JSON
         $JSON = json_encode($datos);
+
  		//Crea un nuevo recurso cURL
 		$conexion = curl_init($url);
+
 		//Inicia la sesión
 		@session_start();
+
 		//Si no hubo ningún error, se procede a enviar los datos al servidor
         if($conexion != false){
+
 			curl_setopt($conexion, CURLOPT_URL,$url);
 
 			//Datos que se van a enviar por POST
@@ -30,22 +35,29 @@ class RecursoHTTP{
 
 			//HEADER a false
 			curl_setopt($conexion, CURLOPT_HEADER, FALSE);
+
 			//Hace que la respuesta no sea SOLO true o false, si no, que sea la respuesta de la base de datos
 			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
+
 			//Captura la RESPUESTA y envia los datos a la base de datos
 			$respuesta = curl_exec($conexion);
-			// Cierrar el recurso cURLy libera recursos del sistema
+
+			// Cierra el recurso cURLy libera recursos del sistema
 			curl_close($conexion);
+
 			if( ($respuesta == false)||(strpos($respuesta,'Cannot POST') != false) ){
 				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
 				return false;
 			}
+
 		}
 		else{
 			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
 			return false;
 		}
+
 		return $respuesta;
+	
 	}
 
 
@@ -92,7 +104,7 @@ class RecursoHTTP{
 	}
 
 
-	public function PATCH($datos, $url){
+	public function PATCH($datos, $url, $id){
 
 		//Convierte el arreglo con todos los datos en un JSON
         $JSON = json_encode($datos);
@@ -108,10 +120,12 @@ class RecursoHTTP{
 			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
 
 			//Cabecera incluyendo la longitud de los datos de envio
-			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON), "id" => $_SESSION['id']));
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON), $id));
 
 			//Petición PATCH
 			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+			//Para que devuelva la respuesta
 			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
 			//HTTPGET a false porque no se trata de una petición GET
@@ -119,11 +133,14 @@ class RecursoHTTP{
 
 			//Respuesta
 			$respuesta = curl_exec($conexion);
+
 			curl_close($conexion);
+
 			if($respuesta == ""){
 				$_SESSION['error'] = "ERROR no se pudo modificar la tarea, intente mas tarde";
 				return false;
 			}
+
 			return $respuesta;
 
 		}
@@ -132,6 +149,100 @@ class RecursoHTTP{
 			return false;
 		}
 	}
+
+
+	public function DELETE($url){
+		 
+		$conexion = curl_init($url);
+
+		if($conexion != false){
+		 
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			 
+			//Cabecera
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json'));
+			 
+			//Petición DELETE
+			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "DELETE");
+			 
+			//HTTPGET a false porque no se trata de una petición GET	 
+			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+
+			//Para que devuelva la respuesta
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+			 
+			//Respuesta
+			$respuesta = curl_exec($conexion);
+
+			curl_close($conexion);
+
+			//Se pueden presentar estos errores al hacer la solicitud
+			if( ($respuesta == "")||(strpos($respuesta,'Cannot DELETE') != false) ){
+				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+				return false;
+			}
+
+			return $respuesta;
+
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
+			return false;
+		}
+
+	 
+	}
+
+
+	public function PUT($url, $datos){
+		 
+		//Convierte el arreglo con todos los datos en un JSON
+        $JSON = json_encode($datos);
+		 
+		$conexion = curl_init($url);
+
+		if($conexion != false){
+		 
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			 
+			//Datos que se van a enviar por PUT 
+			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
+			 
+			//Cabecera incluyendo la longitud de los datos de envio
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON)));
+			 
+			//Petición PUT
+			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "PUT");
+			 
+			//HTTPGET a false porque no se trata de una petición GET
+			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+			 
+			//Para que devuelva la respuesta
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+
+			//Respuesta
+			$respuesta = curl_exec($conexion);
+			 
+			var_dump($respuesta);
+			 
+			curl_close($conexion);
+
+			//Se pueden presentar estos errores al hacer la solicitud
+			if( ($respuesta == "")||(strpos($respuesta,'Cannot PUT') != false) ){
+				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+				return false;
+			}
+
+			return $respuesta;
+
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
+			return false;
+		}
+	
+	}
+
 
 
 	public function postNuevoUsuario($usuario){
@@ -243,9 +354,10 @@ class RecursoHTTP{
 			//Variables globales
 			$_SESSION['username'] = $usuario['username'];
 			$_SESSION['url'] = "https://dry-forest-40048.herokuapp.com/$nombre/"."tareas";
+			//Se le pasa a la vista el link generado
+
 			$_SESSION['name'] = $usuario['name'];
 			$_SESSION['last_name'] = $usuario['last_name'];
-			//Se le pasa a la vista el link generado
 
 			//Fue exitoso el inicio de sesión
 			return true;
@@ -257,9 +369,12 @@ class RecursoHTTP{
 
 
 	public function postNuevaTarea($tarea){
+
 		@session_start();
+
 		//URL de la base de datos en Heroku
     	$url = $_SESSION['url'];
+
     	//Usa el recurso POST
  		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->POST($tarea, $url);
@@ -269,6 +384,7 @@ class RecursoHTTP{
 	        return true;
 		}
 		return false;
+
 	}
 
 
@@ -295,12 +411,14 @@ class RecursoHTTP{
  		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->getTarea();
 
-    	foreach ($respuesta as $tareas) {
-    		if ($tareas['_id'] == $id){
-    			return $tareas;
-    		}
+    	if($respuesta != false){
+	    	foreach ($respuesta as $tareas) {
+	    		if ($tareas['_id'] == $id){
+	    			return $tareas;
+	    		}
+	    	}
     	}
-    	$_SESSION['error'] = "La tarea no se puede modificar en este momento, por favor intente mas tarde";
+    	
     	return false;
 
 	}
@@ -315,42 +433,84 @@ class RecursoHTTP{
 
 		//Usa el recurso PATCH
  		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    	$respuesta = $recurso->PATCH($tarea, $url);
+    	$respuesta = $recurso->PATCH($tarea, $url, $_SESSION['id']);
 
-    	if($respuesta == false)
+    	if($respuesta == false){
+    		$_SESSION['error'] = "La tarea no se puede modificar en este momento, por favor intente mas tarde";
     		return false;
+    	}
+
+    	//Se concatena para que al capturar el error no devuelva 0 (false) al encontrar el error
+		$errores = "." . $respuesta;
+
+    	if( (strpos($errores,'{"errormsg":"La tarea ya ha sido completada"}')) != false){
+			$_SESSION['error'] = "No se permite modificar. La tarea ya fue completada";
+			return false;
+		}
 
     	$_SESSION['exito'] = "La tarea fue modificada exitosamente";
     	return true;
 
 	}
 
-	public function postEditarUsuario($edicion, $url){
 
+	public function postEditarUsuario($edicion){
+
+		@session_start();
+
+		$url = "https://dry-forest-40048.herokuapp.com/usuarios/".$_SESSION['username'];
 
 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $respuesta = $recurso->PATCH($edicion, $url);
+    	$respuesta = $recurso->PATCH($edicion, $url, $_SESSION['username']);
 
 		if($respuesta != false){
 	        $_SESSION['exito'] = "El usuario fue modificado exitosamente";
 	        return true;
 		}
-		return false;
-		/*
-		$JSONEU = json_encode($edicion);
-		$ch2 = curl_init($url);
 
-		if($ch2 != false){
-					curl_setopt($ch2, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($ch2, CURLOPT_CUSTOMREQUEST, 'PATCH');
-	        curl_setopt($ch2, CURLOPT_POSTFIELDS, $JSONEU);
-	        curl_setopt($ch2, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-	        $response = curl_exec($ch2);
-	        curl_close($ch2);
-					var_dump ($response);
-		}
-		else
-			echo "Lo sentimos la tarea no se pudo enviar al servidor";*/
+		return false;
+
+	}
+
+
+	public function deleteTarea(){
+
+		@session_start();
+
+		$url = $_SESSION['url']."/".$_SESSION['id'];
+
+		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->DELETE($url);
+
+    	//Se presento algún error
+    	if($respuesta == false){
+    		$_SESSION['error'] = $_SESSION['error'].". No se puede eliminar la tarea en este momento";
+    		return false;
+    	}
+
+    	$respuesta = $recurso->getTareaID($_SESSION['id']);
+
+    	if($respuesta == false){
+	    	$_SESSION['exito'] = "La tarea fue eliminada con exito";
+	    	$_SESSION['error'] = "";
+    	}
+
+	
+	}
+
+
+	public function putCompletado($datos){
+
+		@session_start();
+
+		$url = $_SESSION['url']."/".$_SESSION['id'];
+
+		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->PUT($url, $datos);
+
+    	if($respuesta == false)
+    		$_SESSION['error'] = $_SESSION['error'].". No se pudo completar la tarea";   	
+
 	}
 
 

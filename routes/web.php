@@ -35,3 +35,4 @@ Route::post('Tarea/Nueva', 'FrontController@manejarEventoCrearTarea');
 
 Route::get('Tarea/Editar', 'FrontController@mostrarDetalles');
 Route::post('Tarea/Editar', 'FrontController@manejarEventoEditarTarea');
+Route::delete('Tarea/Editar', 'FrontController@manejarEventoEliminarTarea');
