@@ -372,6 +372,7 @@ class RecursoHTTP{
 
 			$_SESSION['name'] = $usuario['name'];
 			$_SESSION['last_name'] = $usuario['last_name'];
+			$_SESSION['menu'] = 0;
 
 			//Fue exitoso el inicio de sesión
 			return true;

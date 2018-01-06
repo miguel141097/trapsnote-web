@@ -33,7 +33,7 @@
 		    	</div>
 
 					<div class="form-group">
-					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], 'Estudios',  array('class' => 'form-control')) !!}
+					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], "Estudios",  array('class' => 'form-control')) !!}
 					</div>
 
 				<div class="form-group">

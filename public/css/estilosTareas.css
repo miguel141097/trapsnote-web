@@ -24,17 +24,17 @@
 
 	color: #fff;
 	background-color: #373a3c;
-
 	text-align: center;
 }
 
 .table tr td{
-
 	color: #000000;
 	background-color: #A8AEC2;
+	text-align: center;
+	overflow:hidden;
 }
 
-.table:hover .thead-inverse th{
+/*.table:hover .thead-inverse th{
 	background-color: #265B8C;
 	cursor: pointer;
 }
@@ -42,7 +42,9 @@
 .table:hover .nombreTarea td{
 	background-color: #D2D6DA;
 	cursor: pointer;
-}
+}*/
+
+
 
 
 textarea {

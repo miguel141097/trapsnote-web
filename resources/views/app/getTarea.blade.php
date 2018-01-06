@@ -2,7 +2,7 @@
 
 @section('contenido')
 
-	<?php   
+	<?php
     	@session_start();
     ?>
 
@@ -23,7 +23,7 @@
 	@include('alert.request')
 
 	<?php
-      //Se inicializa para NO repetir los errores al recargar la página  
+      //Se inicializa para NO repetir los errores al recargar la página
       $_SESSION['error'] = "";
       $_SESSION['exito'] = "";
     ?>
@@ -33,7 +33,7 @@
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
 			<h3>Mis Tareas <a href="Tarea/Nueva"> <button class="btn btn-success">Nuevo</button> </a></h3>
-				
+
 		</div>
 
 	</div>
@@ -44,23 +44,25 @@
 
 		@foreach ($listaDeTareas as $tarea)
 
-			<?php  
+			<?php
 				$id = $tarea['_id'];
 			?>
 
-			<table class="table">
+			<table class="table" id='getTareas'>
 
 				<thead class="thead-inverse">
 
-					<th onclick="window.location='Tarea/Editar?id=<?php echo $id ?>'">Categoria: {!! $tarea['categoria'] !!}</th>
+					<th>
+						{!! $tarea['nombre'] !!}</th>
 
 				</thead>
 
-			
+
 				<tr class="nombreTarea">
 
-					<td onclick="window.location='Tarea/Editar?id=<?php echo $id ?>'">Nombre: {!! $tarea['nombre'] !!}</td>
-
+					<td >Categoria: {!! $tarea['categoria'] !!} - {!!$tarea['descripcion']!!}
+						<button class="btn btn-success" style="float: right" onclick="window.location='Tarea/Editar?id=<?php echo $id ?>'">edit</button>
+					</td>
 				</tr>
 
 			</table>
@@ -72,14 +74,3 @@
 
 
 @endsection
-
-
-
-
-
-
-
-
-
-
-

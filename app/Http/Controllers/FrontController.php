@@ -160,5 +160,14 @@ class FrontController extends Controller
 
     }
 
+    public function manejarEventoMenu(){
+      session_start();
+      if ($_SESSION['menu'] == 0){
+        $_SESSION['menu'] = 1;
+      }
+      else $_SESSION['menu'] = 0;
+      return Redirect::back();
+    }
+
 
 }
