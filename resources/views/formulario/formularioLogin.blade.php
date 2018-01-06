@@ -15,7 +15,7 @@
 
   <body>
 
-    <?php   
+    <?php
       @session_start();
     ?>
 
@@ -29,10 +29,14 @@
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoLogin', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
         <?php
-          //Se inicializa para NO repetir los errores al recargar la página  
+          //Se inicializa para NO repetir los errores al recargar la página
           $_SESSION['error'] = "";
           $_SESSION['exito'] = "";
           $_SESSION['falla'] = false;
+          @session_start();
+          $_SESSION=array();
+          @session_destroy();
+          @setcookie();
         ?>
 
         <div class="indicadorInput">
