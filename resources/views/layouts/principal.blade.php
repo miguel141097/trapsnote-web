@@ -35,7 +35,7 @@
       </div>
 
       <!-- Menu desplegable -->
-      <nav id="myDropdown">
+      <nav>
 
         <ul>
 
@@ -50,7 +50,7 @@
 
           <li><a href="../EditProfile"><span class="icon-cogs"></span>Configuracion</a></li>
 
-          <li><a href="#"><span class="icon-switch"></span>Cerrar Sesion</a></li>
+          <li><a href="../logout"><span class="icon-switch"></span>Cerrar Sesion</a></li>
 
         </ul>
 
@@ -59,7 +59,7 @@
     </header>
 
     <!-- En esta sección va el contenido dinámico -->
-    <div id='tipoDeContenido' class="contenido">
+    <div class="contenido">
       @yield('contenido')
     </div>
 

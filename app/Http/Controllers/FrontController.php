@@ -160,14 +160,23 @@ class FrontController extends Controller
 
     }
 
-    public function manejarEventoMenu(){
-      session_start();
-      if ($_SESSION['menu'] == 0){
-        $_SESSION['menu'] = 1;
-      }
-      else $_SESSION['menu'] = 0;
-      return Redirect::back();
+    public function mostrarLogout(){
+
+        return view('app.logout');
+
     }
+
+  public function manejarEventoLogout(){
+
+      //$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+      //$recurso->logout();
+      @session_start();
+      $_SESSION=array();
+      @session_destroy();
+      @setcookie();
+      echo "CERRO SESION CORRECTAMENTE";
+  }
+
 
 
 }
