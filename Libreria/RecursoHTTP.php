@@ -365,7 +365,8 @@ class RecursoHTTP{
 
 			@session_start();
 
-			//Variables globales
+			//------- VARIABLES GLOBALES ------
+
 			$_SESSION['username'] = $usuario['username'];
 			$_SESSION['url'] = "https://dry-forest-40048.herokuapp.com/$nombre/"."tareas";
 			//Se le pasa a la vista el link generado
@@ -373,6 +374,23 @@ class RecursoHTTP{
 			$_SESSION['name'] = $usuario['name'];
 			$_SESSION['last_name'] = $usuario['last_name'];
 			$_SESSION['menu'] = 0;
+
+			/*Se devuelve +02:00 o -02:00 (Diferencia con la hora de Greenwich [GMT]). En nuestro caso (Venezuela) es -04:00*/
+			$diferencia = date("P");
+			$signo = substr($diferencia, 0, 1);
+
+			$horaSinSigno = substr($diferencia, 1, 2);
+			$minutoSinSigno = substr($diferencia, 4);
+
+			/*Si es una hora negativa*/
+			if($signo == '-'){
+				$_SESSION['horaMostrar'] = "- ".$horaSinSigno." hours - ".$minutoSinSigno." minutes";
+				$_SESSION['horaEnviar'] = "+ ".$horaSinSigno." hours + ".$minutoSinSigno." minutes";
+			}
+			else{
+				$_SESSION['horaMostrar'] = "+ ".$horaSinSigno." hours + ".$minutoSinSigno." minutes";
+				$_SESSION['horaEnviar'] = "- ".$horaSinSigno." hours - ".$minutoSinSigno." minutes";
+			}
 
 			//Fue exitoso el inicio de sesión
 			return true;

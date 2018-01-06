@@ -14,10 +14,14 @@ class Autenticado
      * @return mixed
      */
      public function handle($request, Closure $next){
+        
         @session_start();
-          if($_SESSION!=NULL)
-              return redirect()->action('FrontController@mostrarLogout');
 
-         return $next($request);
+        if( isset($_SESSION['username']) )
+            return redirect()->action('FrontController@mostrarLogout');
+
+        return $next($request);
+
      }
+     
 }

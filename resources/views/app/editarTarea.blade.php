@@ -3,7 +3,7 @@
 @section('contenido')
 
 
-    <?php
+	<?php
 
     	@session_start();
 
@@ -33,6 +33,40 @@
 				$year = substr($hora, 0, 4);
 				$month = substr($hora, 5, 2);
 				$day = substr($hora, 8, 2);
+
+				$hour = substr($hora, 11, 2);
+				$minute = substr($hora, 14, 2);
+
+				/*Se acomoda la fecha con respecto a la hora del pais donde se usa la APP*/
+				$fecha = $year."-".$month."-".$day."T".$hour.":".$minute.":00";
+				$fechaParaMostrar = $fecha." ".$_SESSION['horaMostrar'];
+
+				$fechaParaMostrar = date('Y-m-d H:i', strtotime($fechaParaMostrar));
+
+				$year = substr($fechaParaMostrar, 0, 4);
+				$month = substr($fechaParaMostrar, 5, 2);
+				$day = substr($fechaParaMostrar, 8, 2);
+
+				$hour = substr($fechaParaMostrar, 11, 2);
+				$minute = substr($fechaParaMostrar, 14, 2);
+			}
+
+
+			/*Se utiliza para que el formato de hora sea 00:00 y no 0:0*/
+			$horas = array();
+
+			for ($i = 0; $i < 24; $i ++) {
+				if($i < 10)
+					$i = '0'.$i;
+    			array_push($horas, $i);
+			}
+
+			$minutos = array();
+
+			for ($i = 0; $i < 60; $i ++) {
+				if($i < 10)
+					$i = '0'.$i;
+    			array_push($minutos, $i);
 			}
 
 		}
@@ -101,8 +135,8 @@
 				    		{!! Form::textarea('descripcion',$descripcion,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 				    	</div>
 
-              <div class="form-group">
-    					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], "Estudios",  array('class' => 'form-control')) !!}
+              			<div class="form-group">
+    					   {!! Form::select('categoria', ['Estudios' => 'Estudios', 'Trabajo' => 'Trabajo', 'Hogar' => 'Hogar', 'Actividad' => 'Actividad', 'Ejercicio' => 'Ejercicio', 'Plan' => 'Plan', 'Informacion' => 'Informacion'], $categoria, array('class' => 'form-control')) !!}
     					</div>
 
 						<div class="form-group">
@@ -136,23 +170,40 @@
 
 						</script>
 
-						<!-- Se coloca estos condicionales para mostrar o no la fecha limite -->
-						@if($hora == null)
-					    	<div class = "form-group" id = "fechaDesplegable" style="display:none">
-				    			{!! Form::selectRange('day', 1, 31) !!}
-				    			{!! Form::selectMonth('month') !!}
-				    			{!! Form::selectRange('year', date('o'), 2030 ) !!}
-			    			</div>
-		    			@endif
+					<!-- Se coloca estos condicionales para mostrar o no la fecha limite -->
+					@if($hora == null)
+				    	<div class = "form-group" id = "fechaDesplegable" style="display:none">
+			    			{!! Form::selectRange('day', 1, 31 ) !!}
+			    			{!! Form::selectMonth('month') !!}
+			    			{!! Form::selectRange('year', date('o'), 2030) !!}
 
-		    			@if($hora != null)
-					    	<div class = "form-group" id = "fechaDesplegable" style="display:block">
-				    			{!! Form::selectRange('day', 1, 31, $day) !!}
-				    			{!! Form::selectMonth('month',$month) !!}
-				    			{!! Form::selectRange('year', date('o'), 2030, $year) !!}
-			    			</div>
-		    			@endif
+			    			<div class = "form-group hora">
+				    			<label>HORA</label>
+				    			{!! Form::select('hour',$horas) !!}
+				    			<label class="puntos">:</label>
+				    			{!! Form::select('minute',$minutos) !!}
+				    		</div>
+		    			</div>
+	    			@endif
 
+	    			@if($hora != null)
+				    	<div class = "form-group" id = "fechaDesplegable" style="display:block">
+				    		{!! Form::selectRange('day', 1, 31, $day) !!}
+			    			{!! Form::selectMonth('month', $month) !!}
+			    			{!! Form::selectRange('year', date('o'), 2030, $year) !!}
+
+			    			<div class = "form-group hora">
+								<label>HORA</label>
+				    			{!! Form::select('hour',$horas, $hour) !!}
+				    			<label class="puntos">:</label>
+				    			{!! Form::select('minute',$minutos, $minute) !!}
+				    		</div>
+		    			</div>
+	    			@endif
+
+
+
+	    			<div class = "form-group">
 
 				    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
 
@@ -163,6 +214,8 @@
 				    	@if($hora != null)
 				    		<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="SI">Cancelar</button>
 				    	@endif
+
+			    	</div>
 
 					{!! Form::close() !!}
 
