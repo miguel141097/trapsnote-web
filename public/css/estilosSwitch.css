@@ -19,7 +19,7 @@
 
 
     border-radius: 8px;
-    
+
     content: '';
 
     /*Posición*/
@@ -27,7 +27,7 @@
     margin-top: 5px;
 
     height: 16px;
-    
+
     /*Con relativa se separa del label*/
     position: absolute;
 

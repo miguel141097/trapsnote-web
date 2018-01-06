@@ -35,7 +35,7 @@
       </div>
 
       <!-- Menu desplegable -->
-      <nav>
+      <nav id="myDropdown">
 
         <ul>
 
@@ -59,7 +59,7 @@
     </header>
 
     <!-- En esta sección va el contenido dinámico -->
-    <div class="contenido">
+    <div id='tipoDeContenido' class="contenido">
       @yield('contenido')
     </div>
 

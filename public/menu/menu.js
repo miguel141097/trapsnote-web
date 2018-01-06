@@ -10,7 +10,8 @@ function main(){
 			$('nav').animate({
 				left: '0'
 			});
-			
+			 $('#tipoDeContenido :input').attr('disabled', true);
+
 			contador = 0;
 
 		} else {
@@ -18,10 +19,24 @@ function main(){
 			$('nav').animate({
 				left: '-100%'
 			});
+			$('#tipoDeContenido :input').attr('disabled', false);
+
+
 
 			contador = 1;
 		}
 
+	});
+
+	$('.contenido').click(function(){
+		if(contador == 0){
+			$('nav').animate({
+				left: '-100%'
+			});
+			$('#tipoDeContenido :input').attr('disabled', false);
+
+			contador = 1;
+		}
 	});
 
 };

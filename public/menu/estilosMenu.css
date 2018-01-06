@@ -31,7 +31,7 @@ header nav {
 	background:#024959;
 
 	float: left;
-	
+
 }
 
 
@@ -40,10 +40,10 @@ header nav ul {
 	overflow:hidden;
 	list-style:none;
 }
- 
+
 
 header nav ul li {
-	
+
 	display: block;
 
 	/*Uno debajo de otro*/
@@ -66,7 +66,7 @@ header a {
 
 	cursor: pointer;
 }
- 
+
 
 header nav ul li span {
 	/*Separa los iconos de la opción */
@@ -90,7 +90,7 @@ header nav ul li a:hover {
 	/*Quita el subrayado*/
 	text-decoration:none;
 
-	font-size: 120%; 
+	font-size: 120%;
 }
 
 
@@ -154,14 +154,22 @@ header nav ul li a:hover {
 .contenido {
 
 	padding-top: 20px;
-	padding-left: 20px;
+	padding-left: 5%;
+	padding-right: 5%;
 
 	/*Si se quiere mover esta sección*/
 	position: relative;
 	z-index: 1;
+	left: 20px;
+}
+.contenidoTarea {
+	padding-top: 20px;
+	padding-left: 5%;
+	padding-right: 5%;
 
+	/*Si se quiere mover esta sección*/
+	position: relative;
+	z-index: 1;
 	left: 20px;
 
 }
-
-
