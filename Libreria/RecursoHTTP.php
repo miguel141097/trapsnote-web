@@ -257,10 +257,18 @@ class RecursoHTTP{
 		//No presenta fallas
 		if($respuesta != false){
 			$_SESSION['exito'] = "Se ha registrado con exito";
+			@session_start();
+			$_SESSION=array();
+			@session_destroy();
+			@setcookie();
 			return true;
 		}
 
 		//Se presentó algún error
+		@session_start();
+		$_SESSION=array();
+		@session_destroy();
+		@setcookie();
 		return false;
 
 	}
