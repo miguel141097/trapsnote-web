@@ -14,7 +14,7 @@
 		$_SESSION['error'] = "";
       	$_SESSION['exito'] = "";
       	$_SESSION['falla'] = false;
-
+var_dump($_SESSION['header']);
     	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
 		$listaDeTareas = $recurso->getTarea();
     ?>

@@ -175,13 +175,24 @@ class FrontController extends Controller
 
   public function manejarEventoLogout(){
 
-      //$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-      //$recurso->logout();
-      @session_start();
-      $_SESSION=array();
-      @session_destroy();
-      @setcookie();
-      echo "CERRO SESION CORRECTAMENTE";
+      $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    $respuesta=  $recurso->DeleteLogout();
+
+
+  $porciones = explode("HTTP/1.1", $respuesta);
+  $libre=explode(" ", $porciones[1]);
+if($libre[1]==200){
+  @session_start();
+$_SESSION=array();
+@session_destroy();
+@setcookie();
+echo "CERRO SESION CORRECTAMENTE     ";
+}
+  else{
+$_SESSION['error']="NO PUDO CERRAR SESION CORRECTAMENTE";
+      return  redirect()->action('FrontController@mostrarLogout');
+  }
+
   }
 
 
