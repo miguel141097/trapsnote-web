@@ -480,6 +480,9 @@ class RecursoHTTP{
 
 		if($respuesta != false){
 	        $_SESSION['exito'] = "El usuario fue modificado exitosamente";
+					$usuario = json_decode($respuesta, true);
+					$_SESSION['name'] = $edicion['name'];
+					$_SESSION['last_name'] = $edicion['last_name'];
 	        return true;
 		}
 
