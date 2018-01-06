@@ -92,6 +92,10 @@ header nav ul li a:hover {
 
 	font-size: 120%;
 }
+.vacio{
+	padding-top: 100%;
+	border-bottom: #024959;
+}
 
 
 .menuDesplegable{
@@ -107,8 +111,8 @@ header nav ul li a:hover {
 
 	/*Se superpone sobre el contenido*/
 	z-index: 3;
-
 }
+
 
 
 .menuDesplegable .btn-menu {
@@ -120,8 +124,6 @@ header nav ul li a:hover {
 	text-decoration:none;
 
 	font-size:25px;
-
-
 }
 
 .menuDesplegable span {
