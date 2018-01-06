@@ -35,7 +35,7 @@
       </div>
 
       <!-- Menu desplegable -->
-      <nav id="myDropdown">
+      <nav id="myDropdown" style="overflow: auto; height: 100%">
 
         <ul>
 
@@ -51,6 +51,9 @@
           <li><a href="../EditProfile"><span class="icon-cogs"></span>Configuracion</a></li>
 
           <li><a href="#"><span class="icon-switch"></span>Cerrar Sesion</a></li>
+          <li class="vacio"></li>
+
+
 
         </ul>
 
