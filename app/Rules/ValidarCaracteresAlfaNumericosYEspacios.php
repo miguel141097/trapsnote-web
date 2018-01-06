@@ -29,7 +29,7 @@ class ValidarCaracteresAlfaNumericosYEspacios implements Rule
         for($i = 0; $i < strlen($value); $i++) {
 
             /* /([a-zA-Z0-9\s])/ Se anulan los acentos*/
-            if (! (preg_match('/([a-zA-Z0-9ñÑáéíóúÁÉÍÓÚ\s])/', $value[$i])) ){
+            if (! (preg_match('/([a-zA-Z0-9\s])/', $value[$i])) ){
                 return false;
             }
 
@@ -45,6 +45,6 @@ class ValidarCaracteresAlfaNumericosYEspacios implements Rule
      */
     public function message()
     {
-        return 'El campo :attribute solo puede contener caractesres alfa numericos y espacios';
+        return 'El campo :attribute solo puede contener caracteres alfa-numericos (INGLES) y espacios';
     }
 }
