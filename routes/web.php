@@ -1,5 +1,4 @@
 <?php
-use trapsnoteWeb\Http\Controllers\FrontController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
