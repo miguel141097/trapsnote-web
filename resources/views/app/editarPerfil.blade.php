@@ -14,8 +14,8 @@
 	@include('alert.request')
 
 	<?php
-	
-		//Se inicializa para NO repetir los errores al recargar la página  
+
+		//Se inicializa para NO repetir los errores al recargar la página
 		$_SESSION['error'] = "";
 		$_SESSION['exito'] = "";
 		$_SESSION['falla'] = false;
@@ -25,8 +25,8 @@
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			
-			<h3>Editar Perfil</h3>
+
+			<h3 class = "titulo">Editar Perfil</h3>
 
 			<!-- Formulario -->
 			{!! Form::open( ['action' => 'FrontController@manejarEventoEditarPerfil', 'method' => 'POST'] ) !!}

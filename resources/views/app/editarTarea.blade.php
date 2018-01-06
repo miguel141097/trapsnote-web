@@ -56,9 +56,8 @@
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-			<h3> Editar Tarea
+			<h3 class = "titulo"> Editar Tarea
 				<a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a>
-
 
 			</h3>
 

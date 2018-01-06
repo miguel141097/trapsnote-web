@@ -161,5 +161,15 @@ header nav ul li a:hover {
 	position: relative;
 	z-index: 1;
 	left: 20px;
+}
+.contenidoTarea {
+	padding-top: 20px;
+	padding-left: 5%;
+	padding-right: 5%;
+
+	/*Si se quiere mover esta sección*/
+	position: relative;
+	z-index: 1;
+	left: 20px;
 
 }
