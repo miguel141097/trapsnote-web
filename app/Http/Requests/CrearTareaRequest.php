@@ -28,7 +28,6 @@ class CrearTareaRequest extends FormRequest
         return [
             'nombre' => ['required' , 'max:255' , new ValidarCaracteresAlfaNumericosYEspacios],
             'descripcion' => ['required' , 'max:255' , new ValidarCaracteresAlfaNumericosYEspacios],
-            'categoria' =>'required',
         ];
     }
 }

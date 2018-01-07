@@ -42,28 +42,28 @@
             <input type="hidden" name="formaRegistro" value="web">
 
             <div class="indicadorInput">
-                {!! Form::text('username',null,['placeholder' => 'Username']) !!}
+                {!! Form::text('username',null,['placeholder' => 'Username', 'class' => 'form-control']) !!}
                 <!-- {placeholder: Campo donde se escribe} -->
             </div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('name',null,['placeholder' => 'Name']) !!}
+    			{!! Form::text('name',null,['placeholder' => 'Name', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('last_name',null,['placeholder' => 'Last Name']) !!}
+    			{!! Form::text('last_name',null,['placeholder' => 'Last Name', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('email',null,['placeholder' => 'Email']) !!}
+    			{!! Form::text('email',null,['placeholder' => 'Email', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::password('password',['placeholder' => 'Password']) !!}
+    			{!! Form::password('password',['placeholder' => 'Password', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::password('password_repeat',['placeholder' => 'Repeat Password', 'id' => 'ultimoInput']) !!}
+    			{!! Form::password('password_repeat',['placeholder' => 'Repeat Password', 'id' => 'ultimoInput', 'class' => 'form-control']) !!}
     		</div>
 
     		<div>
@@ -73,11 +73,13 @@
             <div class = "form-group">
                 {!! Form::selectRange('day', 1, 31) !!}
                 {!! Form::selectMonth('month') !!}
-                {!! Form::selectRange('year', 1960, date('o') ) !!}
+                {!! Form::selectRange('year', date('o') - 100, date('o'), date('o')) !!}
             </div>
 
+            <div class = "form-group">
         		{!! Form::submit('Registrar', ['class' => 'button']) !!}
-            <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>
+                <button type="button" class ='button' onclick="window.location='../Login'">Ya tienes una cuenta?</button>
+            </div>
 
 		{!! Form::close() !!}
 

@@ -17,6 +17,13 @@
 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
 		$respuesta = $recurso->getTareaID($_SESSION['id']);
 
+		if($respuesta != false){
+      		$listaCategorias = $recurso->getCategorias();
+
+      		if($listaCategorias == false) 
+      			$respuesta = $listaCategorias;
+		}
+
 		//Si no se presentó ningún fallo se procede a extraer la información
 		if($respuesta != false){
 
@@ -96,7 +103,7 @@
 			</h3>
 
 				<!-- Para evitar que muestre el formulario en caso de error -->
-				@if ($respuesta != null)
+				@if ($respuesta != false)
 
 					<div class="form-group">
 						{!! Form::open( ['action' => 'FrontController@manejarEventoEliminarTarea', 'method' => 'DELETE'] ) !!}
@@ -136,7 +143,7 @@
 				    	</div>
 
               			<div class="form-group">
-    					   {!! Form::select('categoria', ['Estudios' => 'Estudios', 'Trabajo' => 'Trabajo', 'Hogar' => 'Hogar', 'Actividad' => 'Actividad', 'Ejercicio' => 'Ejercicio', 'Plan' => 'Plan', 'Informacion' => 'Informacion'], $categoria, array('class' => 'form-control')) !!}
+    					   {!! Form::select('categoria',$listaCategorias, $categoria, array('class' => 'form-control')) !!}
     					</div>
 
 						<div class="form-group">

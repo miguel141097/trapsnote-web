@@ -265,17 +265,30 @@ class RecursoHTTP{
 
 	}
 
-	public function getCategoriasActivas(){
-		$nombres = array();
-		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
-		$listaDeCategorias = $listaCategorias['categorias'];
-		foreach($listaDeCategorias as $categoria){
-		$nombres[] = $categoria['nombre'];
-		}
-		sort($nombres);
+	public function getCategorias(){
 
 		@session_start();
-		$_SESSION['categorias'] = $nombres;
+		
+		$nombres = array();
+
+		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
+
+		/*Se presentó alguna falla al hacer el GET*/
+		if($listaCategorias != false){
+
+			$listaDeCategorias = $listaCategorias['categorias'];
+
+			foreach($listaDeCategorias as $categoria){
+				$nombres[ $categoria['nombre'] ] = $categoria['nombre'];
+			}
+
+			return $nombres;
+
+		}
+
+		$_SESSION['error'] = "Se presento un error al cargar las categorias";
+		return false;
 
 	}
 
@@ -357,6 +370,11 @@ class RecursoHTTP{
 
 			if( (strpos($errores,'{"errormsg":"El usuario no existe"}')) != false){
 				$_SESSION['error'] = "El Usuario NO existe";
+				return false;
+			}
+
+			if( (strpos($errores,'{"errormsg":"Su usuario se encuentra bloqueado"}')) != false){
+				$_SESSION['error'] = "Ese Usuario se encuentra BLOQUEADO";
 				return false;
 			}
 

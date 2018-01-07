@@ -50,7 +50,9 @@
 
           <li><a href="../EditProfile"><span class="icon-cogs"></span>Configuracion</a></li>
 
-          <li><a href="../logout"><span class="icon-switch"></span>Cerrar Sesion</a></li>
+          <li><a href="../Logout"><span class="icon-switch"></span>Cerrar Sesion</a></li>
+
+          <li class="vacio"></li>
 
         </ul>
 

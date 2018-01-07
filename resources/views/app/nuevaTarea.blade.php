@@ -4,6 +4,10 @@
 
 	<?php
       @session_start();
+
+      $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+      $listaCategorias = $recurso->getCategorias();
+
     ?>
 
 	<!-- Alertas -->
@@ -19,94 +23,99 @@
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			
 			<h3 class = "titulo">Nueva Tarea <a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a> </h3>
 
-			<!-- Formulario -->
-			{!! Form::open( ['action' => 'FrontController@manejarEventoCrearTarea', 'method' => 'POST'] ) !!}
+			@if($listaCategorias != false)
 
-         		<div class="form-group">
-		    		{!! Form::text('nombre',null,['placeholder' => 'Nombre', 'class' => 'form-control']) !!}
-		    	</div>
+				<!-- Formulario -->
+				{!! Form::open( ['action' => 'FrontController@manejarEventoCrearTarea', 'method' => 'POST'] ) !!}
 
-		    	<div class="form-group">
-		    		{!! Form::textarea('descripcion',null,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
-		    	</div>
+	         		<div class="form-group">
+			    		{!! Form::text('nombre',null,['placeholder' => 'Nombre', 'class' => 'form-control']) !!}
+			    	</div>
 
-				<div class="form-group">
-				   {!! Form::select('categoria', ['Estudios' => 'Estudios', 'Trabajo' => 'Trabajo', 'Hogar' => 'Hogar', 'Actividad' => 'Actividad', 'Ejercicio' => 'Ejercicio', 'Plan' => 'Plan', 'Informacion' => 'Informacion'], null, array('class' => 'form-control')) !!}
-				</div>
+			    	<div class="form-group">
+			    		{!! Form::textarea('descripcion',null,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
+			    	</div>
 
-				<div class="form-group">
-		    		<label> ¿Desea Colocar Una Fecha Limite? </label>
+					<div class="form-group">
+					   {!! Form::select('categoria',$listaCategorias, null, array('class' => 'form-control')) !!}
+					</div>
 
-		    		<label>SI <input type="radio" name="fecha" onclick="deploy(this)" value="SI"> </label>
-		    		<label>NO <input type="radio" name="fecha" onclick="deploy(this)" value="NO" checked="checked"> </label>
-		    	</div>
+					<div class="form-group">
+			    		<label> ¿Desea Colocar Una Fecha Limite? </label>
 
-
-		    	<!-- Funcion que sirve para desplegar la fecha limite de la tarea -->
-		    	<script type="text/javascript">
-
-			        function deploy(elemento) {
-
-			          	if(elemento.value == "SI")
-			            	document.getElementById("fechaDesplegable").style.display = "block";
-			            else
-			            	document.getElementById("fechaDesplegable").style.display = "none";
-
-			        }
-
-				</script>
+			    		<label>SI <input type="radio" name="fecha" onclick="deploy(this)" value="SI"> </label>
+			    		<label>NO <input type="radio" name="fecha" onclick="deploy(this)" value="NO" checked="checked"> </label>
+			    	</div>
 
 
-		    	<div class = "form-group" id = "fechaDesplegable" style="display:none">
-	    			{!! Form::selectRange('day', 1, 31) !!}
-	    			{!! Form::selectMonth('month') !!}
-	    			{!! Form::selectYear('year', date('o'), date('o') + 10) !!}
+			    	<!-- Funcion que sirve para desplegar la fecha limite de la tarea -->
+			    	<script type="text/javascript">
 
-	    			<?php  
+				        function deploy(elemento) {
 
-	    				/*Se utiliza para que el formato de hora sea 00:00 y no 0:0*/
+				          	if(elemento.value == "SI")
+				            	document.getElementById("fechaDesplegable").style.display = "block";
+				            else
+				            	document.getElementById("fechaDesplegable").style.display = "none";
 
-	    				$horas = array();
+				        }
 
-        				for ($i = 0; $i < 24; $i ++) {
-        					if($i < 10)
-        						$i = '0'.$i;
-			    			array_push($horas, $i);
-						}
+					</script>
 
-						$minutos = array();
 
-        				for ($i = 0; $i < 60; $i ++) {
-        					if($i < 10)
-        						$i = '0'.$i;
-			    			array_push($minutos, $i);
-						}
+			    	<div class = "form-group" id = "fechaDesplegable" style="display:none">
+		    			{!! Form::selectRange('day', 1, 31) !!}
+		    			{!! Form::selectMonth('month') !!}
+		    			{!! Form::selectYear('year', date('o'), date('o') + 10) !!}
 
-	    			?>
+		    			<?php  
 
-	    			<div class = "form-group hora">
+		    				/*Se utiliza para que el formato de hora sea 00:00 y no 0:0*/
 
-		    			<label>HORA</label>
-		    			{!! Form::select('hour',$horas) !!}
-		    			<label class = "puntos">:</label>
-		    			{!! Form::select('minute',$minutos) !!}
+		    				$horas = array();
+
+	        				for ($i = 0; $i < 24; $i ++) {
+	        					if($i < 10)
+	        						$i = '0'.$i;
+				    			array_push($horas, $i);
+							}
+
+							$minutos = array();
+
+	        				for ($i = 0; $i < 60; $i ++) {
+	        					if($i < 10)
+	        						$i = '0'.$i;
+				    			array_push($minutos, $i);
+							}
+
+		    			?>
+
+		    			<div class = "form-group hora">
+
+			    			<label>HORA</label>
+			    			{!! Form::select('hour',$horas) !!}
+			    			<label class = "puntos">:</label>
+			    			{!! Form::select('minute',$minutos) !!}
+
+		    			</div>
 
 	    			</div>
 
-    			</div>
+
+	    			<div class = "form-group" >
+
+				    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+				    	<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
+
+			    	</div>
 
 
-    			<div class = "form-group" >
+				{!! Form::close() !!}
 
-			    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
-			    	<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
-
-		    	</div>
-
-
-			{!! Form::close() !!}
+			@endif
 
 		</div>
 
