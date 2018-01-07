@@ -41,21 +41,23 @@
         ?>
 
         <div class="indicadorInput">
-          {!! Form::text('email',null,['placeholder' => 'Email']) !!}
+          {!! Form::text('email',null,['placeholder' => 'Email', 'class' => 'form-control']) !!}
           <!-- {placeholder: Campo donde se escribe} -->
         </div>
 
     		<div class="indicadorInput">
-    			{!! Form::password('password',['placeholder' => 'Password']) !!}
+    			{!! Form::password('password',['placeholder' => 'Password', 'class' => 'form-control']) !!}
     		</div>
 
         <div class="form-group">
           <label>Zona Horaria:</label>
-          {!! Form::select('ZonaHoraria', ['America/Caracas' => 'Caracas', 'America/Bogota' => 'Bogota', 'America/Sao_Paulo' => 'Sao Paulo', 'America/Argentina/Buenos_Aires' => 'Buenos Aires', 'America/Santiago' => 'Santiago de Chile', 'America/Mexico_City' => 'Ciudad de Mexico', 'Asia/Tokyo' => 'Tokio'], null, array('class' => 'form-control')) !!}
+          {!! Form::select('ZonaHoraria', ['America/Caracas' => 'Caracas', 'America/Bogota' => 'Bogota', 'America/Sao_Paulo' => 'Sao Paulo', 'America/Argentina/Buenos_Aires' => 'Buenos Aires', 'America/Santiago' => 'Santiago de Chile', 'America/Mexico_City' => 'Ciudad de Mexico', 'Asia/Tokyo' => 'Tokio', 'Europe/Madrid' => 'Madrid'], null, array('class' => 'form-control')) !!}
         </div>
 
-    		{!! Form::submit('Iniciar Sesion', ['class' => 'button']) !!}
-        <button type="button" class ='button' onclick= "window.location='{{ url('SignUp') }}'">Crear cuenta</button>
+        <div class = "form-group">
+      		{!! Form::submit('Iniciar Sesion', ['class' => 'button']) !!}
+          <button type="button" class ='button' onclick= "window.location='../SignUp'">Crear cuenta</button>
+        </div>
 
 		{!! Form::close() !!}
 

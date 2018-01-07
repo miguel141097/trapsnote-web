@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'SinAutenticar'=>  \trapsnoteWeb\Http\Middleware\SinAutenticar::class,
         'Autenticado'=>  \trapsnoteWeb\Http\Middleware\Autenticado::class,
+        'SinAutenticarYconTarea' => \trapsnoteWeb\Http\Middleware\SinAutenticarYconTarea::class,
     ];
 }

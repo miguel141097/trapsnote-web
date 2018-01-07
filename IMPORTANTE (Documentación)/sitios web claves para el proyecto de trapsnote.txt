@@ -50,6 +50,8 @@ Valor por defecto en select:
 
    http://laravel-recipes.com/recipes/164/creating-a-select-range-field
 
+Sumar horas:
 
+   http://www.forosdelweb.com/f18/suma-horas-con-php-950887/
 
 

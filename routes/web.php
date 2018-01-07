@@ -33,10 +33,10 @@ Route::post('EditProfile', 'FrontController@manejarEventoEditarPerfil');
 Route::get('Tarea/Nueva', 'FrontController@crearTarea')->middleware(SinAutenticar::class);
 Route::post('Tarea/Nueva', 'FrontController@manejarEventoCrearTarea');
 
-Route::get('Tarea/Editar', 'FrontController@mostrarDetalles')->middleware(SinAutenticar::class);
+Route::get('Tarea/Editar', 'FrontController@mostrarDetalles')->middleware(SinAutenticarYconTarea::class);
 Route::post('Tarea/Editar', 'FrontController@manejarEventoEditarTarea');
 Route::delete('Tarea/Editar', 'FrontController@manejarEventoEliminarTarea');
 
 
-Route::get('logout', 'FrontController@mostrarLogout')->middleware(SinAutenticar::class);
-Route::delete('logout', 'FrontController@manejarEventoLogout');
+Route::get('Logout', 'FrontController@mostrarLogout')->middleware(SinAutenticar::class);
+Route::delete('Logout', 'FrontController@manejarEventoLogout');

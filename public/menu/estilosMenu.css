@@ -177,3 +177,18 @@ header nav ul li a:hover {
 	margin-right: 5%;
 
 }
+
+
+.vacio{
+	padding-top: 100%;
+	border-bottom: #024959;
+}
+
+
+
+#myDropdown{
+
+	overflow: auto; 
+	height: 100%;
+
+}
