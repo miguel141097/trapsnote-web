@@ -129,12 +129,6 @@ class FrontController extends Controller
 
     }
 
-    public function mostrarSesionCerrada(){
-
-        return view('app.sesionCerrada');
-
-    }
-
   public function manejarEventoLogout(){
 
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
@@ -149,12 +143,11 @@ class FrontController extends Controller
           if($status[1]==200){
             @session_start();
             $_SESSION=array();
-            //destruye sesion
-            @session_destroy();
             //elimina los cookie de este sitio
             @setcookie();
-
-              return redirect()->action('FrontController@mostrarSesionCerrada');
+            $_SESSION['exito'] = "Cerró sesión con éxito";
+            $_SESSION['Middleware'] =false;
+              return redirect()->action('FormularioController@mostrarFormularioLogin');
           }
           else{
               //no se pudo cerrar sesion correctamente

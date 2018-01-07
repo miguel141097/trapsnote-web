@@ -40,5 +40,3 @@ Route::delete('Tarea/Editar', 'FrontController@manejarEventoEliminarTarea');
 
 Route::get('Logout', 'FrontController@mostrarLogout')->middleware(SinAutenticar::class);
 Route::delete('Logout', 'FrontController@manejarEventoLogout');
-
-Route::get('cerrada', 'FrontController@mostrarSesionCerrada')->middleware(Autenticado::class);

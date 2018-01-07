@@ -56,19 +56,23 @@ class RecursoHTTP{
 			if($flag==1){
 					//obteniendo el tamaño del header
 					$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
-					//obteniendo el header
+					if($header_size!=0){//obteniendo el header
 			    $header = substr($respuesta, 0, $header_size);
 					//ya que obtenemos el header la respuesta se desarma por lo tanto necesitamos obtener el body aparte
 					$body = substr($respuesta, $header_size);
 					//separando el header para agarrar el tokken
 					$porciones = explode("X-Auth: ", $header);
-					$porciones2 = explode(" ", $porciones[1]);
-					//token de autenticacion
-					$token = explode("Content-Type:", $porciones2[0]);
-					//pasandole a la sesion el tokken
-					$_SESSION['token']=$token[0];
+					if(strlen($porciones[0]) != $header_size){
+						$porciones2 = explode(" ", $porciones[1]);
+						//token de autenticacion
+						$token = explode("Content-Type:", $porciones2[0]);
+						//pasandole a la sesion el tokken
+						$_SESSION['token']=$token[0];
+					}
+
 					//necesario porque si no la respuesta es NULL
 					$respuesta=$body;
+
 			}
 			// Cierra el recurso cURLy libera recursos del sistema
 			curl_close($conexion);
@@ -87,6 +91,7 @@ class RecursoHTTP{
 		return $respuesta;
 
 	}
+}
 
 
 	public function GET($url){
