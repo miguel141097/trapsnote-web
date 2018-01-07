@@ -4,6 +4,8 @@ namespace trapsnoteWeb\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use trapsnoteWeb\Rules\ValidarCaracteresAlfaNumericosYEspacios;
+
 class CrearTareaRequest extends FormRequest
 {
     /**
@@ -24,8 +26,8 @@ class CrearTareaRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required', 'max:255',
-            'descripcion' => 'required', 'max:255',
+            'nombre' => ['required' , 'max:255' , new ValidarCaracteresAlfaNumericosYEspacios],
+            'descripcion' => ['required' , 'max:255' , new ValidarCaracteresAlfaNumericosYEspacios],
             'categoria' =>'required',
         ];
     }

@@ -156,12 +156,13 @@ header nav ul li a:hover {
 	padding-top: 20px;
 	padding-left: 5%;
 	padding-right: 5%;
-
+	
 	/*Si se quiere mover esta sección*/
 	position: relative;
 	z-index: 1;
-	left: 20px;
+
 }
+
 .contenidoTarea {
 	padding-top: 20px;
 	padding-left: 5%;
@@ -170,6 +171,9 @@ header nav ul li a:hover {
 	/*Si se quiere mover esta sección*/
 	position: relative;
 	z-index: 1;
-	left: 20px;
+	
+	/*Separacion Externa*/
+	margin-left: 5%;
+	margin-right: 5%;
 
 }

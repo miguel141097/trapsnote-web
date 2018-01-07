@@ -5,8 +5,6 @@ namespace trapsnoteWeb\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use trapsnoteWeb\Rules\ValidarLetrasyEspacios;
 use trapsnoteWeb\Rules\ValidarSinEspacios;
-use trapsnoteWeb\Rules\ValidarCorreoRepetido;
-use trapsnoteWeb\Rules\ValidarUsernameRepetido;
 
 class EditarUsuario extends FormRequest
 {

@@ -59,7 +59,7 @@
 
 				<tr class="nombreTarea">
 
-					<td >Categoria: {!! $tarea['categoria'] !!} - {!!$tarea['descripcion']!!}
+					<td >Categoria: {!! $tarea['categoria'] !!}
 						<button class="btn btn-success titulo" style="float: right" onclick="window.location='Tarea/Editar?id=<?php echo $id ?>'">edit</button>
 					</td>
 				</tr>

@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="css/estilosFormularios.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 
+    <!-- la siguiente etiqueta se utiliza para que se adapte en pantallas mas pequeñas -->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
   </head>
 
   <body>

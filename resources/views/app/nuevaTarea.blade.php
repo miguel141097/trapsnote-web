@@ -32,9 +32,9 @@
 		    		{!! Form::textarea('descripcion',null,['placeholder' => 'Descripcion ...', 'class' => 'form-control']) !!}
 		    	</div>
 
-					<div class="form-group">
-					   {!! Form::select('categoria', ["Estudios", "Trabajo", "Hogar", "Actividad", "Ejercicio", "Plan", "Informacion"], "Estudios",  array('class' => 'form-control')) !!}
-					</div>
+				<div class="form-group">
+				   {!! Form::select('categoria', ['Estudios' => 'Estudios', 'Trabajo' => 'Trabajo', 'Hogar' => 'Hogar', 'Actividad' => 'Actividad', 'Ejercicio' => 'Ejercicio', 'Plan' => 'Plan', 'Informacion' => 'Informacion'], null, array('class' => 'form-control')) !!}
+				</div>
 
 				<div class="form-group">
 		    		<label> ¿Desea Colocar Una Fecha Limite? </label>
@@ -62,13 +62,49 @@
 		    	<div class = "form-group" id = "fechaDesplegable" style="display:none">
 	    			{!! Form::selectRange('day', 1, 31) !!}
 	    			{!! Form::selectMonth('month') !!}
-	    			{!! Form::selectRange('year', date('o'), 2030 ) !!}
+	    			{!! Form::selectYear('year', date('o'), date('o') + 10) !!}
+
+	    			<?php  
+
+	    				/*Se utiliza para que el formato de hora sea 00:00 y no 0:0*/
+
+	    				$horas = array();
+
+        				for ($i = 0; $i < 24; $i ++) {
+        					if($i < 10)
+        						$i = '0'.$i;
+			    			array_push($horas, $i);
+						}
+
+						$minutos = array();
+
+        				for ($i = 0; $i < 60; $i ++) {
+        					if($i < 10)
+        						$i = '0'.$i;
+			    			array_push($minutos, $i);
+						}
+
+	    			?>
+
+	    			<div class = "form-group hora">
+
+		    			<label>HORA</label>
+		    			{!! Form::select('hour',$horas) !!}
+		    			<label class = "puntos">:</label>
+		    			{!! Form::select('minute',$minutos) !!}
+
+	    			</div>
+
     			</div>
 
 
-		    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+    			<div class = "form-group" >
 
-		    	<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
+			    	{!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+			    	<button type="reset" class="btn btn-warning" onclick="deploy(this)" value="NO">Cancelar</button>
+
+		    	</div>
+
 
 			{!! Form::close() !!}
 

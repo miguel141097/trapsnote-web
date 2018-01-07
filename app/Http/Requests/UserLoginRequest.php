@@ -4,7 +4,6 @@ namespace trapsnoteWeb\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-use trapsnoteWeb\Rules\ValidarLetrasyEspacios;
 use trapsnoteWeb\Rules\ValidarSinEspacios;
 
 class UserLoginRequest extends FormRequest

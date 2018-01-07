@@ -12,9 +12,14 @@ class SinAutenticar {
      * @return mixed
      */
     public function handle($request, Closure $next){
-  @session_start();
-  if($_SESSION==NULL)
-    return redirect()->action('FormularioController@mostrarFormularioLogin');
-        return $next($request);
+        
+        @session_start();
+
+        if( isset($_SESSION['username']) )
+            return $next($request);
+
+        return redirect()->action('FormularioController@mostrarFormularioLogin');            
+        
     }
+
 }

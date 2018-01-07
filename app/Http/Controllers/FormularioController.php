@@ -50,10 +50,11 @@ class FormularioController extends Controller{
 
   }
 
-
   public function manejarEventoLogin(UserLoginRequest $request){
 
     $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
+
+    date_default_timezone_set($request['ZonaHoraria']);
 
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta = $recurso->postLogin($arregloConDatosDelUsuario);
