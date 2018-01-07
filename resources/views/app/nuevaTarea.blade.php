@@ -23,7 +23,7 @@
 	<div class="row">
 
 		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-			
+
 			<h3 class = "titulo">Nueva Tarea <a href="../Tarea" class="retorno"><span class="icon-arrow-left retorno"></span></a> </h3>
 
 			@if($listaCategorias != false)
@@ -71,7 +71,7 @@
 		    			{!! Form::selectMonth('month') !!}
 		    			{!! Form::selectYear('year', date('o'), date('o') + 10) !!}
 
-		    			<?php  
+		    			<?php
 
 		    				/*Se utiliza para que el formato de hora sea 00:00 y no 0:0*/
 
