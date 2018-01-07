@@ -139,27 +139,35 @@ class FrontController extends Controller
 
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta=  $recurso->DeleteLogout();
+    if($respuesta!= NULL){
 
-    //separa el header para obtener el status de la respuesta del servidor
-    $porciones = explode("HTTP/1.1", $respuesta);
-    $status=explode(" ", $porciones[1]);
+      //separa el header para obtener el status de la respuesta del servidor
+      $porciones = explode("HTTP/1.1", $respuesta);
+      $status=explode(" ", $porciones[1]);
 
-      //si es 200 define que no hubo problema en cerrar sesion
-        if($status[1]==200){
-          @session_start();
-          $_SESSION=array();
-          //destruye sesion
-          @session_destroy();
-          //elimina los cookie de este sitio S
-          @setcookie();
+        //si es 200 define que no hubo problema en cerrar sesion
+          if($status[1]==200){
+            @session_start();
+            $_SESSION=array();
+            //destruye sesion
+            @session_destroy();
+            //elimina los cookie de este sitio
+            @setcookie();
 
-            return redirect()->action('FrontController@mostrarSesionCerrada');
-        }
-        else{
-            //no se pudo cerrar sesion correctamente
-            return  redirect()->action('FrontController@mostrarLogout');
-        }
-  }
+              return redirect()->action('FrontController@mostrarSesionCerrada');
+          }
+          else{
+              //no se pudo cerrar sesion correctamente
+              $_SESSION['error']="NO se pudo cerrar sesion correctamente";
+              return  redirect()->action('FrontController@mostrarLogout');
+          }
+    }
+    else{
+      $_SESSION['error']="Fallo la conexion a Trapsnote";
+      return  redirect()->action('FrontController@mostrarLogout');
+    }
+    }
+
 
 
 
