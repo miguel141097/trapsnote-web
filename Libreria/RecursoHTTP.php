@@ -20,77 +20,76 @@ class RecursoHTTP{
 		//Si no hubo ningún error, se procede a enviar los datos al servidor
         if($conexion != false){
 
-		//se define la url de la peticion
-			curl_setopt($conexion, CURLOPT_URL,$url);
+					//se define la url de la peticion
+						curl_setopt($conexion, CURLOPT_URL,$url);
 
-			//Hace que la respuesta no sea SOLO true o false, si no, que sea la respuesta de la base de datos
-			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
+						//Hace que la respuesta no sea SOLO true o false, si no, que sea la respuesta de la base de datos
+						curl_setopt($conexion, CURLOPT_RETURNTRANSFER, true);
 
-				if($flag==1){
-						curl_setopt($conexion, CURLOPT_VERBOSE, 1);
-						//queremos el header por lo tanto es true
-          	curl_setopt($conexion, CURLOPT_HEADER, 1);
-				}
-				else {
-					//HEADER es false no queremos el header
-					curl_setopt($conexion, CURLOPT_HEADER, FALSE);
-				}
-
-
-			//Petición POST
-			curl_setopt($conexion, CURLOPT_POST, 1);
-
-			//HTTPGET a false porque no se trata de una petición GET
-			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+									if($flag==1){
+											curl_setopt($conexion, CURLOPT_VERBOSE, 1);
+											//queremos el header por lo tanto es true
+					          	curl_setopt($conexion, CURLOPT_HEADER, 1);
+									}
+									else {
+										//HEADER es false no queremos el header
+										curl_setopt($conexion, CURLOPT_HEADER, FALSE);
+									}
 
 
-			//Datos que se van a enviar por POST
-			curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
+						//Petición POST
+						curl_setopt($conexion, CURLOPT_POST, 1);
 
-			//Cabecera incluyendo la longitud de los datos de envio
-			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON)));
+						//HTTPGET a false porque no se trata de una petición GET
+						curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
 
-			//Captura la RESPUESTA y envia los datos a la base de datos
-			$respuesta = curl_exec($conexion);
 
-			if($flag==1){
-					//obteniendo el tamaño del header
-					$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
-					if($header_size!=0){//obteniendo el header
-			    $header = substr($respuesta, 0, $header_size);
-					//ya que obtenemos el header la respuesta se desarma por lo tanto necesitamos obtener el body aparte
-					$body = substr($respuesta, $header_size);
-					//separando el header para agarrar el tokken
-					$porciones = explode("X-Auth: ", $header);
-					if(strlen($porciones[0]) != $header_size){
-						$porciones2 = explode(" ", $porciones[1]);
-						//token de autenticacion
-						$token = explode("Content-Type:", $porciones2[0]);
-						//pasandole a la sesion el tokken
-						$_SESSION['token']=$token[0];
+						//Datos que se van a enviar por POST
+						curl_setopt($conexion, CURLOPT_POSTFIELDS,$JSON);
+
+						//Cabecera incluyendo la longitud de los datos de envio
+						curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json', 'Content-Length: '.strlen($JSON)));
+
+						//Captura la RESPUESTA y envia los datos a la base de datos
+						$respuesta = curl_exec($conexion);
+
+								if($flag==1){
+										//obteniendo el tamaño del header
+										$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
+										if($header_size!=0){//obteniendo el header
+								    $header = substr($respuesta, 0, $header_size);
+										//ya que obtenemos el header la respuesta se desarma por lo tanto necesitamos obtener el body aparte
+										$body = substr($respuesta, $header_size);
+										//separando el header para agarrar el tokken
+										$porciones = explode("X-Auth: ", $header);
+										if(strlen($porciones[0]) != $header_size){
+											$porciones2 = explode(" ", $porciones[1]);
+											//token de autenticacion
+											$token = explode("Content-Type:", $porciones2[0]);
+											//pasandole a la sesion el tokken
+											$_SESSION['token']=$token[0];
+										}
+
+								//necesario porque si no la respuesta es NULL
+								$respuesta=$body;
+
+						}
+						// Cierra el recurso cURLy libera recursos del sistema
+						curl_close($conexion);
+
+						if( ($respuesta == false)||(strpos($respuesta,'Cannot POST') != false) ){
+							$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+							return false;
+						}
 					}
 
-					//necesario porque si no la respuesta es NULL
-					$respuesta=$body;
-
-			}
-			// Cierra el recurso cURLy libera recursos del sistema
-			curl_close($conexion);
-
-			if( ($respuesta == false)||(strpos($respuesta,'Cannot POST') != false) ){
-				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
-				return false;
-			}
-
-		}
+				}
 		else{
 			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
 			return false;
 		}
 
 		return $respuesta;
-
-	}
 }
 
 
@@ -596,49 +595,49 @@ class RecursoHTTP{
 
 
 	public function DeleteLogout(){
-	@session_start();
-	$token=$_SESSION['token'];
-$url='https://dry-forest-40048.herokuapp.com/usuarios/logout';
-	$conexion = curl_init($url);
+		@session_start();
+		$token=$_SESSION['token'];
+		$url='https://dry-forest-40048.herokuapp.com/usuarios/logout';
+		$conexion = curl_init($url);
 
-	if($conexion != false){
-		//Para que devuelva la respuesta
-		curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
+		if($conexion != false){
+			//Para que devuelva la respuesta
+			curl_setopt($conexion, CURLOPT_RETURNTRANSFER, 1);
 
-		curl_setopt($conexion, CURLOPT_URL,$url);
-		curl_setopt($conexion, CURLOPT_VERBOSE, 1);
-    curl_setopt($conexion, CURLOPT_HEADER, 1);
+			curl_setopt($conexion, CURLOPT_URL,$url);
+			curl_setopt($conexion, CURLOPT_VERBOSE, 1);
+	    curl_setopt($conexion, CURLOPT_HEADER, 1);
 
-		//Cabecera
-		curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json','X-Auth: '.$token));
+			//Cabecera
+			curl_setopt($conexion, CURLOPT_HTTPHEADER,array('Content-Type: application/json','X-Auth: '.$token));
 
-		//Petición DELETE
-		curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "DELETE");
+			//Petición DELETE
+			curl_setopt($conexion, CURLOPT_CUSTOMREQUEST, "DELETE");
 
-		//HTTPGET a false porque no se trata de una petición GET
-		curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
+			//HTTPGET a false porque no se trata de una petición GET
+			curl_setopt($conexion, CURLOPT_HTTPGET, FALSE);
 
 
 
-		//Respuesta
-		$respuesta = curl_exec($conexion);
-		$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
-      $header = substr($respuesta, 0, $header_size);
-		curl_close($conexion);
+			//Respuesta
+			$respuesta = curl_exec($conexion);
+			$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
+	      $header = substr($respuesta, 0, $header_size);
+			curl_close($conexion);
 
-		//Se pueden presentar estos errores al hacer la solicitud
-		if( ($respuesta == "")||(strpos($respuesta,'Cannot DELETE') != false) ){
-			$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+			//Se pueden presentar estos errores al hacer la solicitud
+			if( ($respuesta == "")||(strpos($respuesta,'Cannot DELETE') != false) ){
+				$_SESSION['error'] = "ERROR la conexion a Trapsnote ha fallado";
+				return false;
+			}
+
+			return $header;
+
+		}
+		else{
+			$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
 			return false;
 		}
-
-		return $header;
-
-	}
-	else{
-		$_SESSION['error'] = "ERROR no se pudo establecer conexion a Trapsnote";
-		return false;
-	}
 
 
 }

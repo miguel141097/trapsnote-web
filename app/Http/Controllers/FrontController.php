@@ -79,7 +79,7 @@ class FrontController extends Controller
    if($respuesta == true)
      return redirect()->action('FrontController@mostrarTarea');
    else
-     return redirect()->action('FormularioController@crearTarea');
+     return redirect()->action('FrontController@crearTarea');
  }
 
     public function mostrarEditarPerfil(){
