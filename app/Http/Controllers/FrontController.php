@@ -14,7 +14,7 @@ class FrontController extends Controller
   public function mostrarTarea(){
   	return view('app.getTarea');
   }
-  
+
   public function mostrarDetalles(){
     return view('app.editarTarea');
 
@@ -58,50 +58,29 @@ class FrontController extends Controller
 
 
     public function manejarEventoCrearTarea(CrearTareaRequest $request){
+   if($request['fecha'] == "SI"){
 
-        if($request['fecha'] == "SI"){
-            //Concatena la fecha
-            $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
-        }
-        else
-            $fechaLimite = null;
-
-        switch($request['categoria']){
-          case 0:
-            $request['categoria'] = 'Estudios';
-            break;
-          case 1:
-            $request['categoria'] = 'Trabajo';
-            break;
-          case 2:
-            $request['categoria'] = 'Hogar';
-            break;
-          case 3:
-            $request['categoria'] = 'Actividad';
-            break;
-          case 4:
-            $request['categoria'] = 'Ejercicio';
-            break;
-          case 5:
-            $request['categoria'] = 'Plan';
-            break;
-          case 6:
-            $request['categoria'] = 'Informacion';
-            break;
-        }
-
-    		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
-
-    		//Esta clase maneja el envio de los datos por parte del usuario
-        	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-        	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
-
-            if($respuesta == true)
-                return redirect()->action('FrontController@mostrarTarea');
-            else
-                return redirect()->action('FormularioController@crearTarea');
-    }
-
+     @session_start();
+     //Concatena la fecha
+     $fechaLimite = $request['year'] . '-' . $request['month'] . '-' . $request['day']. 'T' . $request['hour'] . ':' . $request['minute'];
+     $fechaParaEnviar = $fechaLimite." ".$_SESSION['horaEnviar'];
+     $fechaParaEnviar = date('Y-m-d H:i:s', strtotime($fechaParaEnviar));
+     if( strtotime($fechaParaEnviar) <= strtotime(gmdate('Y-m-d H:i:s')) ){
+       $_SESSION['error'] = "No se permite modificar. La fecha limite debe ser mayor a la fecha actual";
+       return false;
+     }
+   }
+   else
+     $fechaParaEnviar = null;
+   $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaParaEnviar );
+   //Esta clase maneja el envio de los datos por parte del usuario
+   $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+   $respuesta = $recurso->postNuevaTarea($arregloDeTarea);
+   if($respuesta == true)
+     return redirect()->action('FrontController@mostrarTarea');
+   else
+     return redirect()->action('FormularioController@crearTarea');
+ }
 
     public function mostrarEditarPerfil(){
 
