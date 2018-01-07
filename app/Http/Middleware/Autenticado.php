@@ -13,15 +13,13 @@ class Autenticado
      * @param  \Closure  $next
      * @return mixed
      */
+     /*si se inicio sesion no permite que se intente iniciar con otra cuenta*/
      public function handle($request, Closure $next){
-        
         @session_start();
+          if($_SESSION !=NULL)
+              if($_SESSION['Middleware']==true)
+                    return redirect()->action('FrontController@mostrarLogout');
 
-        if( isset($_SESSION['username']) )
-            return redirect()->action('FrontController@mostrarLogout');
-
-        return $next($request);
-
+         return $next($request);
      }
-     
 }
