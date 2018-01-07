@@ -286,7 +286,7 @@ class RecursoHTTP{
 
 			//No presenta fallas
 				if($respuesta != false){
-
+					$_SESSION['exito'] = "Se ha registrado con exito";
 					return true;
 				}
 
