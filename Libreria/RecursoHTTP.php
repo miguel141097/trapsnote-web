@@ -296,18 +296,22 @@ class RecursoHTTP{
 	}
 
 
-	public function getCategoriasActivas(){
-		$nombres = array();
-		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
-		$listaDeCategorias = $listaCategorias['categorias'];
-		foreach($listaDeCategorias as $categoria){
-		$nombres[] = $categoria['nombre'];
-		}
-		sort($nombres);
-
+	public function getCategorias(){
 		@session_start();
-		$_SESSION['categorias'] = $nombres;
 
+		$nombres = array();
+		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
+		/*Se presentó alguna falla al hacer el GET*/
+		if($listaCategorias != false){
+			$listaDeCategorias = $listaCategorias['categorias'];
+			foreach($listaDeCategorias as $categoria){
+				$nombres[ $categoria['nombre'] ] = $categoria['nombre'];
+			}
+			return $nombres;
+		}
+		$_SESSION['error'] = "Se presento un error al cargar las categorias";
+		return false;
 	}
 
 
@@ -391,12 +395,17 @@ class RecursoHTTP{
 				return false;
 			}
 
+			if( (strpos($errores,'{"errormsg":"Su usuario se encuentra bloqueado"}')) != false){
+				$_SESSION['error'] = "Ese Usuario se encuentra BLOQUEADO";
+				return false;
+			}
+
 			$usuario = json_decode($respuesta, true);
 			$nombre = $usuario['username'];
 			//abriendo sesion
 			@session_start();
 
-			//Variables globales
+			//------- VARIABLES GLOBALES ------
 			$_SESSION['username'] = $usuario['username'];
 			$_SESSION['url'] = "https://dry-forest-40048.herokuapp.com/$nombre/"."tareas";
 			//Se le pasa a la vista el link generado
@@ -404,6 +413,24 @@ class RecursoHTTP{
 			$_SESSION['name'] = $usuario['name'];
 			$_SESSION['last_name'] = $usuario['last_name'];
 			$_SESSION['menu'] = 0;
+
+			/*Se devuelve +02:00 o -02:00 (Diferencia con la hora de Greenwich [GMT]). En nuestro caso (Venezuela) es -04:00*/
+			$diferencia = date("P");
+			$signo = substr($diferencia, 0, 1);
+
+			$horaSinSigno = substr($diferencia, 1, 2);
+			$minutoSinSigno = substr($diferencia, 4);
+
+			/*Si es una hora negativa*/
+			if($signo == '-'){
+				$_SESSION['horaMostrar'] = "- ".$horaSinSigno." hours - ".$minutoSinSigno." minutes";
+				$_SESSION['horaEnviar'] = "+ ".$horaSinSigno." hours + ".$minutoSinSigno." minutes";
+			}
+			else{
+				$_SESSION['horaMostrar'] = "+ ".$horaSinSigno." hours + ".$minutoSinSigno." minutes";
+				$_SESSION['horaEnviar'] = "- ".$horaSinSigno." hours - ".$minutoSinSigno." minutes";
+			}
+
 
 			//Fue exitoso el inicio de sesión
 

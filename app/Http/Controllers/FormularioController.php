@@ -56,7 +56,7 @@ class FormularioController extends Controller{
     $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
     //define que no hay sesion activa
     $_SESSION['Middleware']=false;
-
+    date_default_timezone_set($request['ZonaHoraria']);
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta = $recurso->postLogin($arregloConDatosDelUsuario);
 

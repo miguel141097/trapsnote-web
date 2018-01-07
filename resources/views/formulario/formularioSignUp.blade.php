@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="css/estilosFormularios.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 
+    <!-- la siguiente etiqueta se utiliza para que se adapte en pantallas mas pequeñas -->
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
   </head>
 
   <body>
@@ -33,7 +36,7 @@
                 $_SESSION['error'] = "";
                 $_SESSION['exito'] = "";
                 $_SESSION['falla'] = false;
-                //bandera que indica que no hay sesion activa 
+                //bandera que indica que no hay sesion activa
                 $_SESSION['Middleware']=false;
             ?>
 
@@ -41,28 +44,28 @@
             <input type="hidden" name="formaRegistro" value="web">
 
             <div class="indicadorInput">
-                {!! Form::text('username',null,['placeholder' => 'Username']) !!}
+                {!! Form::text('username',null,['placeholder' => 'Username', 'class' => 'form-control']) !!}
                 <!-- {placeholder: Campo donde se escribe} -->
             </div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('name',null,['placeholder' => 'Name']) !!}
+    			{!! Form::text('name',null,['placeholder' => 'Name', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('last_name',null,['placeholder' => 'Last Name']) !!}
+    			{!! Form::text('last_name',null,['placeholder' => 'Last Name', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::text('email',null,['placeholder' => 'Email']) !!}
+    			{!! Form::text('email',null,['placeholder' => 'Email', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::password('password',['placeholder' => 'Password']) !!}
+    			{!! Form::password('password',['placeholder' => 'Password', 'class' => 'form-control']) !!}
     		</div>
 
     		<div class="indicadorInput">
-    			{!! Form::password('password_repeat',['placeholder' => 'Repeat Password', 'id' => 'ultimoInput']) !!}
+    			{!! Form::password('password_repeat',['placeholder' => 'Repeat Password', 'id' => 'ultimoInput', 'class' => 'form-control']) !!}
     		</div>
 
     		<div>
@@ -76,7 +79,9 @@
             </div>
 
         		{!! Form::submit('Registrar', ['class' => 'button']) !!}
-            <button type="button" class ='button' onclick="window.location='{{ url("Login") }}'">Ya tienes una cuenta?</button>
+            <button type="button" class ='button' onclick="window.location='../Login'">Ya tienes una cuenta?</button>
+          </div>
+
 
 		{!! Form::close() !!}
 
