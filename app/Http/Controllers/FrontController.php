@@ -11,167 +11,201 @@ use trapsnoteWeb\Http\Requests\EditarUsuario;
 class FrontController extends Controller
 {
 
-  public function mostrarTarea(){
+    public function mostrarTarea(){
 
-  	return view('app.getTarea');
-
-  }
-
-
-  public function mostrarDetalles(){
-
-    return view('app.editarTarea');
-
-  }
-
-
-  public function manejarEventoEditarTarea(CrearTareaRequest $request){
-
-    $error = false;
-
-    if($request['fecha'] == "SI"){
-        
-      @session_start();
-      //Concatena la fecha
-      $fechaLimite = $request['year'] . '-' . $request['month'] . '-' . $request['day']. 'T' . $request['hour'] . ':' . $request['minute'];
-
-      $fechaParaEnviar = $fechaLimite." ".$_SESSION['horaEnviar'];
-      $fechaParaEnviar = date('Y-m-d H:i:s', strtotime($fechaParaEnviar));
-
-      if( strtotime($fechaParaEnviar) <= strtotime(gmdate('Y-m-d H:i:s')) ){
-        $_SESSION['error'] = "No se permite modificar. La fecha limite debe ser mayor a la fecha actual";
-        $error = true;
-      }
-        
-    }
-    else
-      $fechaParaEnviar = null;
-
-    if($error == false){
-
-      $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaParaEnviar );
-
-      //Usa el recurso PATCH
-      $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-      $respuesta = $recurso->patchTarea($arregloDeTarea);
-
-      if( ($respuesta != false) && ($request['completado'] == true) ){
-        $completado = array('completado' => $request['completado']);
-        $recurso->putCompletado($completado);
-      }
+    	return view('app.getTarea');
 
     }
 
-    return redirect()->action('FrontController@mostrarTarea');
 
-  }
+    public function mostrarDetalles(){
 
-
-  public function crearTarea(){
-
-    return view('app.nuevaTarea');
-
-  }
-
-
-  public function manejarEventoCrearTarea(CrearTareaRequest $request){
-
-    if($request['fecha'] == "SI"){
-        
-      @session_start();
-      //Concatena la fecha
-      $fechaLimite = $request['year'] . '-' . $request['month'] . '-' . $request['day']. 'T' . $request['hour'] . ':' . $request['minute'];
-
-      $fechaParaEnviar = $fechaLimite." ".$_SESSION['horaEnviar'];
-      $fechaParaEnviar = date('Y-m-d H:i:s', strtotime($fechaParaEnviar));
-
-      if( strtotime($fechaParaEnviar) <= strtotime(gmdate('Y-m-d H:i:s')) ){
-        $_SESSION['error'] = "No se permite modificar. La fecha limite debe ser mayor a la fecha actual";
-        return false;
-      }
+        return view('app.editarTarea');
 
     }
-    else
-      $fechaParaEnviar = null;
-
-    $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaParaEnviar );
-
-    //Esta clase maneja el envio de los datos por parte del usuario
-    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $respuesta = $recurso->postNuevaTarea($arregloDeTarea);
-
-    if($respuesta == true)
-      return redirect()->action('FrontController@mostrarTarea');
-    else
-      return redirect()->action('FormularioController@crearTarea');
-
-  }
 
 
-  public function mostrarEditarPerfil(){
+    public function manejarEventoEditarTarea(CrearTareaRequest $request){
 
-    return view('app.editarPerfil');
+        if($request['fecha'] == "SI"){
+            //Concatena la fecha
+            $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
+        }
+        else
+            $fechaLimite = null;
 
-  }
-
-
-  public function manejarEventoEditarPerfil(EditarUsuario $request){
-
-    $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
-
-    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $respuesta = $recurso->postEditarUsuario($arregloEdicion);
-
-    if ($respuesta == true)
-      return redirect()->action('FrontController@mostrarTarea');
-    else {
-      return redirect()->action('FrontController@mostrarEditarPerfil');
-    }
-
-  }
-
-
-  public function manejarEventoEliminarTarea(){
-
-    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    $recurso->deleteTarea();
-
-    return redirect()->action('FrontController@mostrarTarea');
-
-  }
-
-
-  public function manejarEventoMenu(){
-        session_start();
-            if ($_SESSION['menu'] == 0){
-                  $_SESSION['menu'] = 1;
+            switch($request['categoria']){
+              case 0:
+                $request['categoria'] = 'Estudios';
+                break;
+              case 1:
+                $request['categoria'] = 'Trabajo';
+                break;
+              case 2:
+                $request['categoria'] = 'Hogar';
+                break;
+              case 3:
+                $request['categoria'] = 'Actividad';
+                break;
+              case 4:
+                $request['categoria'] = 'Ejercicio';
+                break;
+              case 5:
+                $request['categoria'] = 'Plan';
+                break;
+              case 6:
+                $request['categoria'] = 'Informacion';
+                break;
             }
-            else $_SESSION['menu'] = 0;
-        return Redirect::back();
-  }
+
+        $arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
+
+        //Usa el recurso PATCH
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->patchTarea($arregloDeTarea);
+
+        if( ($respuesta != false) && ($request['completado'] == true) ){
+            $completado = array('completado' => $request['completado']);
+            $recurso->putCompletado($completado);
+        }
+
+        return redirect()->action('FrontController@mostrarTarea');
+
+    }
 
 
-  public function mostrarLogout(){
+    public function crearTarea(){
 
-      return view('app.logout');
+        return view('app.nuevaTarea');
 
-  }
+    }
+
+
+    public function manejarEventoCrearTarea(CrearTareaRequest $request){
+
+        if($request['fecha'] == "SI"){
+            //Concatena la fecha
+            $fechaLimite = $request['year'] . '/' . $request['month'] . '/' . $request['day'];
+        }
+        else
+            $fechaLimite = null;
+
+        switch($request['categoria']){
+          case 0:
+            $request['categoria'] = 'Estudios';
+            break;
+          case 1:
+            $request['categoria'] = 'Trabajo';
+            break;
+          case 2:
+            $request['categoria'] = 'Hogar';
+            break;
+          case 3:
+            $request['categoria'] = 'Actividad';
+            break;
+          case 4:
+            $request['categoria'] = 'Ejercicio';
+            break;
+          case 5:
+            $request['categoria'] = 'Plan';
+            break;
+          case 6:
+            $request['categoria'] = 'Informacion';
+            break;
+        }
+
+    		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
+
+    		//Esta clase maneja el envio de los datos por parte del usuario
+        	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
+
+            if($respuesta == true)
+                return redirect()->action('FrontController@mostrarTarea');
+            else
+                return redirect()->action('FormularioController@crearTarea');
+    }
+
+
+    public function mostrarEditarPerfil(){
+
+      return view('app.editarPerfil');
+
+    }
+
+
+    public function manejarEventoEditarPerfil(EditarUsuario $request){
+
+        $arregloEdicion = array('name' => $request['name'], 'last_name' => $request['last_name'], 'password' => $request['password']);
+
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $respuesta = $recurso->postEditarUsuario($arregloEdicion);
+
+        if ($respuesta == true)
+            return redirect()->action('FrontController@mostrarTarea');
+        else {
+            return redirect()->action('FrontController@mostrarEditarPerfil');
+        }
+
+    }
+
+
+    public function manejarEventoEliminarTarea(){
+
+        $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        $recurso->deleteTarea();
+
+        return redirect()->action('FrontController@mostrarTarea');
+
+    }
+
+
+    public function manejarEventoMenu(){
+          session_start();
+              if ($_SESSION['menu'] == 0){
+                    $_SESSION['menu'] = 1;
+              }
+              else $_SESSION['menu'] = 0;
+          return Redirect::back();
+    }
+    public function mostrarLogout(){
+
+        return view('app.logout');
+
+    }
+
+    public function mostrarSesionCerrada(){
+
+        return view('app.sesionCerrada');
+
+    }
 
   public function manejarEventoLogout(){
 
-    //$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    //$recurso->logout();
-    @session_start();
-    $_SESSION = array();
-    //@session_destroy();
-    @setcookie();
+    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    $respuesta=  $recurso->DeleteLogout();
 
-    $_SESSION['exito'] = "Cerró sesión con éxito";
+    //separa el header para obtener el status de la respuesta del servidor
+    $porciones = explode("HTTP/1.1", $respuesta);
+    $status=explode(" ", $porciones[1]);
 
-    return redirect()->action('FormularioController@mostrarFormularioLogin');
+      //si es 200 define que no hubo problema en cerrar sesion
+        if($status[1]==200){
+          @session_start();
+          $_SESSION=array();
+          //destruye sesion
+          @session_destroy();
+          //elimina los cookie de este sitio S
+          @setcookie();
 
+            return redirect()->action('FrontController@mostrarSesionCerrada');
+        }
+        else{
+            //no se pudo cerrar sesion correctamente
+            return  redirect()->action('FrontController@mostrarLogout');
+        }
   }
 
 
 
-}
+  }
