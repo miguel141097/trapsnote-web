@@ -114,18 +114,17 @@ class FrontController extends Controller
             break;
         }
 
-		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
+    		$arregloDeTarea = array( 'nombre' => $request['nombre'], 'descripcion' => $request['descripcion'],'categoria'=>$request['categoria'], 'username' =>$request['username'], 'fechaLimite' => $fechaLimite );
 
-		//Esta clase maneja el envio de los datos por parte del usuario
-    	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
+    		//Esta clase maneja el envio de los datos por parte del usuario
+        	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+        	$respuesta = $recurso->postNuevaTarea($arregloDeTarea);
 
-        if($respuesta == true)
-            return redirect()->action('FrontController@mostrarTarea');
-        else
-            return redirect()->action('FormularioController@crearTarea');
-
-	}
+            if($respuesta == true)
+                return redirect()->action('FrontController@mostrarTarea');
+            else
+                return redirect()->action('FormularioController@crearTarea');
+    }
 
 
     public function mostrarEditarPerfil(){
@@ -159,6 +158,8 @@ class FrontController extends Controller
         return redirect()->action('FrontController@mostrarTarea');
 
     }
+
+
     public function manejarEventoMenu(){
           session_start();
               if ($_SESSION['menu'] == 0){
@@ -173,28 +174,38 @@ class FrontController extends Controller
 
     }
 
+    public function mostrarSesionCerrada(){
+
+        return view('app.sesionCerrada');
+
+    }
+
   public function manejarEventoLogout(){
 
-      $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta=  $recurso->DeleteLogout();
 
+    //separa el header para obtener el status de la respuesta del servidor
+    $porciones = explode("HTTP/1.1", $respuesta);
+    $status=explode(" ", $porciones[1]);
 
-  $porciones = explode("HTTP/1.1", $respuesta);
-  $libre=explode(" ", $porciones[1]);
-if($libre[1]==200){
-  @session_start();
-$_SESSION=array();
-@session_destroy();
-@setcookie();
-echo "CERRO SESION CORRECTAMENTE     ";
-}
-  else{
-$_SESSION['error']="NO PUDO CERRAR SESION CORRECTAMENTE";
-      return  redirect()->action('FrontController@mostrarLogout');
+      //si es 200 define que no hubo problema en cerrar sesion
+        if($status[1]==200){
+          @session_start();
+          $_SESSION=array();
+          //destruye sesion
+          @session_destroy();
+          //elimina los cookie de este sitio S
+          @setcookie();
+
+            return redirect()->action('FrontController@mostrarSesionCerrada');
+        }
+        else{
+            //no se pudo cerrar sesion correctamente
+            return  redirect()->action('FrontController@mostrarLogout');
+        }
   }
 
+
+
   }
-
-
-
-}

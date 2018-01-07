@@ -6,9 +6,10 @@ class RecursoHTTP{
 
 
 	public function POST($datos, $url, $flag){
+		//flag es un numero que indica si queremos agarrar el header o no si $flag=1 agarramos el header si no NO
 
 		//Convierte el arreglo con todos los datos en un JSON
-        $JSON = json_encode($datos);
+    $JSON = json_encode($datos);
 
  		//Crea un nuevo recurso cURL
 		$conexion = curl_init($url);
@@ -19,6 +20,7 @@ class RecursoHTTP{
 		//Si no hubo ningún error, se procede a enviar los datos al servidor
         if($conexion != false){
 
+		//se define la url de la peticion
 			curl_setopt($conexion, CURLOPT_URL,$url);
 
 			//Hace que la respuesta no sea SOLO true o false, si no, que sea la respuesta de la base de datos
@@ -26,10 +28,11 @@ class RecursoHTTP{
 
 				if($flag==1){
 						curl_setopt($conexion, CURLOPT_VERBOSE, 1);
+						//queremos el header por lo tanto es true
           	curl_setopt($conexion, CURLOPT_HEADER, 1);
 				}
 				else {
-					//HEADER a false
+					//HEADER es false no queremos el header
 					curl_setopt($conexion, CURLOPT_HEADER, FALSE);
 				}
 
@@ -51,9 +54,21 @@ class RecursoHTTP{
 			$respuesta = curl_exec($conexion);
 
 			if($flag==1){
+					//obteniendo el tamaño del header
 					$header_size = curl_getinfo($conexion, CURLINFO_HEADER_SIZE);
+					//obteniendo el header
 			    $header = substr($respuesta, 0, $header_size);
-					$_SESSION['header']=$header;
+					//ya que obtenemos el header la respuesta se desarma por lo tanto necesitamos obtener el body aparte
+					$body = substr($respuesta, $header_size);
+					//separando el header para agarrar el tokken
+					$porciones = explode("X-Auth: ", $header);
+					$porciones2 = explode(" ", $porciones[1]);
+					//token de autenticacion
+					$token = explode("Content-Type:", $porciones2[0]);
+					//pasandole a la sesion el tokken
+					$_SESSION['token']=$token[0];
+					//necesario porque si no la respuesta es NULL
+					$respuesta=$body;
 			}
 			// Cierra el recurso cURLy libera recursos del sistema
 			curl_close($conexion);
@@ -257,7 +272,6 @@ class RecursoHTTP{
 	}
 
 
-
 	public function postNuevoUsuario($usuario){
 
     	//URL de la base de datos en Heroku
@@ -266,17 +280,21 @@ class RecursoHTTP{
     	//Usa el recurso POST
  		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     	$respuesta = $recurso->POST($usuario, $url,0);
+			@session_start();
+			//definiendo como que no hay sesion activa
+			$_SESSION['Middleware']=false;
 
-		//No presenta fallas
-		if($respuesta != false){
-			$_SESSION['exito'] = "Se ha registrado con exito";
-			return true;
-		}
+			//No presenta fallas
+				if($respuesta != false){
+
+					return true;
+				}
 
 		//Se presentó algún error
 		return false;
 
 	}
+
 
 	public function getCategoriasActivas(){
 		$nombres = array();
@@ -375,7 +393,7 @@ class RecursoHTTP{
 
 			$usuario = json_decode($respuesta, true);
 			$nombre = $usuario['username'];
-
+			//abriendo sesion
 			@session_start();
 
 			//Variables globales
@@ -388,6 +406,7 @@ class RecursoHTTP{
 			$_SESSION['menu'] = 0;
 
 			//Fue exitoso el inicio de sesión
+
 			return true;
 		}
 
@@ -414,7 +433,6 @@ class RecursoHTTP{
 		return false;
 
 	}
-
 
 
 	public function getTarea(){
@@ -544,8 +562,10 @@ class RecursoHTTP{
 
 	}
 
-public function DeleteLogout(){
-	$token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhNGQ3YjJiNzE2Mzg5MDAxNGJhNzU1MyIsImFjY2VzcyI6ImF1dGgiLCJpYXQiOjE1MTUyNzcyODl9.j2iVJzJUeCkA8w4R303tMPLA8iLQ19n5Ff-6aMeOyuk';
+
+	public function DeleteLogout(){
+	@session_start();
+	$token=$_SESSION['token'];
 $url='https://dry-forest-40048.herokuapp.com/usuarios/logout';
 	$conexion = curl_init($url);
 

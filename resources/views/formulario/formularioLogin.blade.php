@@ -33,10 +33,9 @@
           $_SESSION['error'] = "";
           $_SESSION['exito'] = "";
           $_SESSION['falla'] = false;
-          @session_start();
-          $_SESSION=array();
-          @session_destroy();
-          @setcookie();
+          //bandera que indica que no hay sesion activa 
+          $_SESSION['Middleware']=false;
+
         ?>
 
         <div class="indicadorInput">

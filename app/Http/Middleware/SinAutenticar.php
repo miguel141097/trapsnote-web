@@ -12,9 +12,13 @@ class SinAutenticar {
      * @return mixed
      */
     public function handle($request, Closure $next){
-  @session_start();
-  if($_SESSION==NULL)
-    return redirect()->action('FormularioController@mostrarFormularioLogin');
+        @session_start();
+          if($_SESSION!=NULL){if (  $_SESSION['Middleware']== false)
+                  return redirect()->action('FormularioController@mostrarFormularioLogin');
+          }
+          else
+                  return redirect()->action('FormularioController@mostrarFormularioLogin');
+
         return $next($request);
     }
 }

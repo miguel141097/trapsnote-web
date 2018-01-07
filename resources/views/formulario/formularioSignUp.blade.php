@@ -15,7 +15,7 @@
 
   <body>
 
-    <?php   
+    <?php
         @session_start();
     ?>
 
@@ -29,10 +29,12 @@
     	{!! Form::open( ['action' => 'FormularioController@manejarEventoCrearSesion', 'method' => 'POST', 'class' => 'datosDeRegistro'] ) !!}
 
             <?php
-                //Se inicializa para NO repetir los errores al recargar la página  
+                //Se inicializa para NO repetir los errores al recargar la página
                 $_SESSION['error'] = "";
                 $_SESSION['exito'] = "";
                 $_SESSION['falla'] = false;
+                //bandera que indica que no hay sesion activa 
+                $_SESSION['Middleware']=false;
             ?>
 
             <!-- {Indica que el registro se llevó a caba desde la aplicación web} -->
