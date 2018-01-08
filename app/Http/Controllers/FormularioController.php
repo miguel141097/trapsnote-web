@@ -28,7 +28,8 @@ class FormularioController extends Controller{
   public function manejarEventoCrearSesion(UserCreateRequest $request){
 
     @session_start();
-    $_SESSION['Middleware']=false;
+    $_SESSION['Middleware'] = false;
+
     if( (isset($_SESSION['falla'])) && ($_SESSION['falla'] == false) ){
 
       //Concatena la fecha
@@ -52,23 +53,27 @@ class FormularioController extends Controller{
 
 
   public function manejarEventoLogin(UserLoginRequest $request){
+
     @session_start();
     $arregloConDatosDelUsuario = array('email' => $request['email'], 'password' => $request['password']);
-    //define que no hay sesion activa
-    $_SESSION['Middleware']=false;
+
+    //Define que no hay sesion activa
+    $_SESSION['Middleware'] = false;
     date_default_timezone_set($request['ZonaHoraria']);
+
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta = $recurso->postLogin($arregloConDatosDelUsuario);
 
     //Redirecciona dependiendo de si fue exitoso o no
-        if($respuesta == true){
-              //define que hay una sesion abierta para que el Middleware excluya
-              $_SESSION['Middleware']=true;
-              return redirect()->action('FrontController@mostrarTarea');
-        }
+    if($respuesta == true){
+      //Define que hay una sesion abierta para que el Middleware excluya
+      $_SESSION['Middleware'] = true;
+      return redirect()->action('FrontController@mostrarTarea');
+    }
 
-        else
-              return redirect()->action('FormularioController@mostrarFormularioLogin');
+    else
+      return redirect()->action('FormularioController@mostrarFormularioLogin');
 
   }
+
 }
