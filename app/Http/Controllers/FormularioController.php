@@ -60,6 +60,7 @@ class FormularioController extends Controller{
     //Define que no hay sesion activa
     $_SESSION['Middleware'] = false;
     date_default_timezone_set($request['ZonaHoraria']);
+    $_SESSION['ZonaHoraria'] = $request['ZonaHoraria'];
 
     $recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
     $respuesta = $recurso->postLogin($arregloConDatosDelUsuario);
