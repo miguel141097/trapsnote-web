@@ -31,8 +31,8 @@
 	color: #000000;
 	background-color: #A8AEC2;
 	text-align: center;
-	overflow:hidden;
 }
+
 
 /*.table:hover .thead-inverse th{
 	background-color: #265B8C;
@@ -43,6 +43,21 @@
 	background-color: #D2D6DA;
 	cursor: pointer;
 }*/
+
+
+.table tr .tareaCompletada{
+	background-color: #3AB438;
+}
+
+
+.table tr .tareaNoCompletada{
+	background-color: #F3C313;
+}
+
+.table tr .tareaExpirada{
+	background-color: #E32616;
+}
+
 
 .titulo {
 	font-family: "Times New Roman", Times, serif;
