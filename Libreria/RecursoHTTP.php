@@ -300,22 +300,30 @@ class RecursoHTTP{
 	}
 
 
-	public function getCategorias(){
+	public function getCategoriasActivas(){
+
 		@session_start();
 
 		$nombres = array();
+
 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
 		$listaCategorias = $recurso->GET('https://dry-forest-40048.herokuapp.com/categorias');
+
 		/*Se presentó alguna falla al hacer el GET*/
 		if($listaCategorias != false){
+
 			$listaDeCategorias = $listaCategorias['categorias'];
+
 			foreach($listaDeCategorias as $categoria){
 				$nombres[ $categoria['nombre'] ] = $categoria['nombre'];
 			}
 			return $nombres;
+
 		}
+
 		$_SESSION['error'] = "Se presento un error al cargar las categorias";
 		return false;
+
 	}
 
 
@@ -375,14 +383,46 @@ class RecursoHTTP{
 	}
 
 
+	public function getNumeroDeIntentos($email){
+
+    	//URL de la base de datos en Heroku
+    	$url = 'https://dry-forest-40048.herokuapp.com/usuarios';
+
+    	//Usa el recurso GET
+ 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$respuesta = $recurso->GET($url);
+
+    	if($respuesta != false){
+
+        	foreach ($respuesta['usuarios'] as $valor) {
+
+        		if($valor['email'] === $email){
+        			return $valor['intentos'];
+        		}
+
+			}
+
+		}
+
+		return -1;
+
+	}
+
+
 	public function postLogin($usuario){
+
+		@session_start();
 
     	//URL de la base de datos en Heroku
     	$url = 'https://dry-forest-40048.herokuapp.com/login';
 
+    	//Obtiene la cantidad de intentos fallidos de inicio de sesion por parte del usuario
+    	$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
+    	$intentos = $recurso->getNumeroDeIntentos($usuario['email']);
+    	$_SESSION['error'] = "";
+
     	//Usa el recurso POST
- 		$recurso = new \trapsnoteWeb\Libreria\RecursoHTTP();
-    	$respuesta = $recurso->POST($usuario, $url,1);
+    	$respuesta = $recurso->POST($usuario, $url, 1);
 
     	if($respuesta != false){
 
@@ -390,7 +430,16 @@ class RecursoHTTP{
 			$errores = "." . $respuesta;
 
 			if( (strpos($errores,'{"errormsg":"Contraseña incorrecta"}')) != false){
-				$_SESSION['error'] = "Contraseña incorrecta";
+				if( ($intentos < 4)&&($intentos != -1) ){
+					$intentos++;
+					$_SESSION['error'] = "Contraseña incorrecta. Resta: ".(5 - $intentos)." intentos";	
+				}
+				else
+					if($intentos != -1) 
+						$_SESSION['error'] = "Contraseña incorrecta. El Usuario ha sido bloqueado";
+					else	
+						$_SESSION['error'] = "Contraseña incorrecta";
+
 				return false;
 			}
 
@@ -406,7 +455,8 @@ class RecursoHTTP{
 
 			$usuario = json_decode($respuesta, true);
 			$nombre = $usuario['username'];
-			//abriendo sesion
+			
+			//Abriendo sesion
 			@session_start();
 
 			//------- VARIABLES GLOBALES ------
@@ -541,10 +591,13 @@ class RecursoHTTP{
     	$respuesta = $recurso->PATCH($edicion, $url, $_SESSION['username']);
 
 		if($respuesta != false){
+
 	        $_SESSION['exito'] = "El usuario fue modificado exitosamente";
-					$usuario = json_decode($respuesta, true);
-					$_SESSION['name'] = $edicion['name'];
-					$_SESSION['last_name'] = $edicion['last_name'];
+			
+			$usuario = json_decode($respuesta, true);
+			$_SESSION['name'] = $edicion['name'];
+			$_SESSION['last_name'] = $edicion['last_name'];
+
 	        return true;
 		}
 

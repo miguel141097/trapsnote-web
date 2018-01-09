@@ -35,7 +35,7 @@
     transition: all 0.4s ease-in-out;
 
     /*Largo y color del fondo*/
-    background-color: #F60B0B;
+    background-color: #F3C313;
     width: 40px;
 
 }
@@ -44,7 +44,7 @@
 /*Opcion NO (Punto)*/
 .switch > label:after {
 
-    background-color: #F60B0B;
+    background-color: #F3C313;
     border-radius: 16px;
 
     /* "Crea" el punto*/
@@ -107,7 +107,7 @@
 /*Opcion SI (Barra)*/
 .switchCompletado > input[type="checkbox"]:checked + label::before {
 
-    background-color: #F60B0B;
+    background-color: #F3C313;
     opacity: 0.5;
 
 }
@@ -116,7 +116,7 @@
 /*Opcion SI (Punto)*/
 .switchCompletado > input[type="checkbox"]:checked + label::after {
 
-    background-color: #F60B0B;
+    background-color: #F3C313;
 
     /*Distancia de recorrido hacia la derecha*/
     left: 150px;
